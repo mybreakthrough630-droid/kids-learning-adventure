@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kids Learning Adventure</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #27364a;
+      --muted: #637083;
+      --line: #d8dee8;
+      --paper: #f9fbff;
+      --panel: #ffffff;
+      --reading: #ed7d8f;
+      --sentence: #2474d2;
+      --active: #fff1b8;
+      --shadow: 0 12px 30px rgba(39, 54, 74, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Avenir Next", "Segoe UI", "PingFang HK", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(255, 209, 102, 0.36), transparent 23rem),
+        radial-gradient(circle at 92% 4%, rgba(130, 201, 255, 0.34), transparent 24rem),
+        linear-gradient(135deg, #f9fbff 0%, #fff7ea 50%, #f2fff8 100%);
+    }
+
+    .site-shell {
+      width: min(1440px, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
+      padding: 4px 2px 14px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      flex: 0 0 68px;
+      width: 68px;
+      height: 68px;
+      border: 4px solid #ffffff;
+      border-radius: 50%;
+      background: #ffd36b;
+      box-shadow: 0 5px 16px rgba(39, 54, 74, 0.18);
+      color: #27364a;
+      font-size: 31px;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 50px);
+      line-height: 1;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .subtitle {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 22px);
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .mode-label {
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .switcher {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 10px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .lesson-tab {
+      position: relative;
+      min-height: 74px;
+      padding: 10px 14px 10px 64px;
+      border: 3px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      font: inherit;
+      font-size: clamp(21px, 2.8vw, 30px);
+      font-weight: 950;
+      line-height: 1.05;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 130ms ease, border-color 130ms ease, background 130ms ease;
+    }
+
+    .lesson-tab::before {
+      content: attr(data-icon);
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: #edf4ff;
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    .lesson-tab small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: clamp(14px, 1.5vw, 17px);
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .lesson-tab:hover {
+      transform: translateY(-1px);
+    }
+
+    .lesson-tab:focus-visible,
+    .direct-link:focus-visible,
+    iframe:focus-visible {
+      outline: 4px solid rgba(36, 116, 210, 0.24);
+      outline-offset: 3px;
+    }
+
+    .lesson-tab.active {
+      border-color: #d59b27;
+      background: var(--active);
+    }
+
+    .lesson-tab[data-kind="reading"]::before {
+      color: #a93449;
+      background: #ffe6eb;
+    }
+
+    .lesson-tab[data-kind="sentence"]::before {
+      color: #1558a6;
+      background: #e4f1ff;
+    }
+
+    .lesson-tab[data-kind="math"]::before {
+      color: #08705f;
+      background: #def8ee;
+    }
+
+    .learning-stage {
+      margin-top: 12px;
+    }
+
+    .stage-bar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 50px;
+      padding: 8px 12px;
+      border: 2px solid var(--line);
+      border-bottom: 0;
+      border-radius: 8px 8px 0 0;
+      background: #ffffff;
+    }
+
+    .stage-title {
+      margin: 0;
+      font-size: clamp(18px, 2.4vw, 25px);
+      font-weight: 950;
+    }
+
+    .direct-link {
+      flex: 0 0 auto;
+      color: #1558a6;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .frame-wrap {
+      position: relative;
+      min-height: 680px;
+      overflow: hidden;
+      border: 2px solid var(--line);
+      border-radius: 0 0 8px 8px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .loading {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      color: var(--muted);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .frame-wrap.ready .loading {
+      display: none;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: max(680px, calc(100vh - 250px));
+      min-height: 680px;
+      border: 0;
+      background: #ffffff;
+    }
+
+    @media (max-width: 720px) {
+      .site-shell {
+        padding: 10px;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .brand {
+        gap: 10px;
+      }
+
+      .brand-mark {
+        flex-basis: 54px;
+        width: 54px;
+        height: 54px;
+        font-size: 25px;
+      }
+
+      .mode-label {
+        display: none;
+      }
+
+      .switcher {
+        gap: 7px;
+        padding: 7px;
+      }
+
+      .lesson-tab {
+        min-height: 72px;
+        padding: 9px 8px;
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .lesson-tab::before {
+        display: none;
+      }
+
+      .lesson-tab small {
+        font-size: 13px;
+      }
+
+      .stage-bar {
+        align-items: flex-start;
+      }
+
+      .direct-link {
+        font-size: 14px;
+      }
+
+      .frame-wrap,
+      iframe {
+        min-height: 620px;
+      }
+
+      iframe {
+        height: calc(100vh - 240px);
+      }
+    }
+
+    @media (max-width: 390px) {
+      .lesson-tab small {
+        display: none;
+      }
+
+      .lesson-tab {
+        min-height: 58px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="site-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">1+</div>
+        <div>
+          <h1>Kids Learning Adventure</h1>
+          <p class="subtitle">一年級英文與數學互動練習</p>
+        </div>
+      </div>
+      <div class="mode-label">Choose an activity</div>
+    </header>
+
+    <nav class="switcher" aria-label="選擇學習活動">
+      <button
+        class="lesson-tab active"
+        type="button"
+        data-kind="reading"
+        data-icon="R"
+        data-src="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
+        data-title="閱讀理解 Reading Fun"
+      >
+        閱讀理解
+        <small>10篇圖文閱讀與選擇題</small>
+      </button>
+      <button
+        class="lesson-tab"
+        type="button"
+        data-kind="sentence"
+        data-icon="S"
+        data-src="english-sentence-builder.html"
+        data-title="英文造句 Sentence Builder"
+      >
+        英文造句
+        <small>5個Level隨機重組句子</small>
+      </button>
+      <button
+        class="lesson-tab"
+        type="button"
+        data-kind="math"
+        data-icon="M"
+        data-src="https://mybreakthrough630-droid.github.io/kids-math-learning-site/"
+        data-title="數學樂園 Maths Fun"
+      >
+        數學練習
+        <small>基礎數學與一年級奧數</small>
+      </button>
+    </nav>
+
+    <section class="learning-stage" aria-labelledby="stageTitle">
+      <div class="stage-bar">
+        <h2 class="stage-title" id="stageTitle">閱讀理解 Reading Fun</h2>
+        <a
+          class="direct-link"
+          id="directLink"
+          href="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
+          target="_blank"
+          rel="noopener"
+        >在新頁開啟</a>
+      </div>
+      <div class="frame-wrap" id="frameWrap">
+        <div class="loading" id="loading" role="status">正在準備學習內容...</div>
+        <iframe
+          id="lessonFrame"
+          title="閱讀理解 Reading Fun"
+          src="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
+          allow="autoplay"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const frame = document.getElementById("lessonFrame");
+    const frameWrap = document.getElementById("frameWrap");
+    const stageTitle = document.getElementById("stageTitle");
+    const directLink = document.getElementById("directLink");
+    const tabs = document.querySelectorAll("[data-src]");
+
+    function openLesson(tab) {
+      tabs.forEach((item) => {
+        const isActive = item === tab;
+        item.classList.toggle("active", isActive);
+        item.setAttribute("aria-current", isActive ? "page" : "false");
+      });
+
+      frameWrap.classList.remove("ready");
+      frame.src = tab.dataset.src;
+      frame.title = tab.dataset.title;
+      stageTitle.textContent = tab.dataset.title;
+      directLink.href = tab.dataset.src;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => openLesson(tab));
+    });
+
+    frame.addEventListener("load", () => {
+      frameWrap.classList.add("ready");
+    });
+  </script>
+</body>
+</html>
