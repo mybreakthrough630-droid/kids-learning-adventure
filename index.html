@@ -99,7 +99,7 @@
 
     .switcher {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
       padding: 10px;
       border: 2px solid var(--line);
@@ -174,6 +174,11 @@
     .lesson-tab[data-kind="sentence"]::before {
       color: #1558a6;
       background: #e4f1ff;
+    }
+
+    .lesson-tab[data-kind="chinese"]::before {
+      color: #8a3f7d;
+      background: #f8e6f5;
     }
 
     .lesson-tab[data-kind="math"]::before {
@@ -272,6 +277,7 @@
       }
 
       .switcher {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 7px;
         padding: 7px;
       }
@@ -327,7 +333,7 @@
         <div class="brand-mark" aria-hidden="true">1+</div>
         <div>
           <h1>Kids Learning Adventure</h1>
-          <p class="subtitle">一年級英文與數學互動練習</p>
+          <p class="subtitle">一年級中英文與數學互動練習</p>
         </div>
       </div>
       <div class="mode-label">Choose an activity</div>
@@ -355,6 +361,17 @@
       >
         英文造句
         <small>5個Level隨機重組句子</small>
+      </button>
+      <button
+        class="lesson-tab"
+        type="button"
+        data-kind="chinese"
+        data-icon="C"
+        data-src="chinese-sentence-builder.html"
+        data-title="中文造句 Chinese Sentence Builder"
+      >
+        中文造句
+        <small>5個Level隨機重組中文句子</small>
       </button>
       <button
         class="lesson-tab"

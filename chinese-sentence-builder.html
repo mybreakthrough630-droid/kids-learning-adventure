@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中文句子重組練習</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #24364b;
+      --muted: #66758a;
+      --line: #d7dee8;
+      --paper: #fffdf5;
+      --panel: #ffffff;
+      --blue: #246bb2;
+      --green: #167a4a;
+      --red: #b94b27;
+      --yellow: #f4cf61;
+      --teal: #148477;
+      --shadow: 0 16px 38px rgba(36, 54, 75, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Avenir Next", "PingFang HK", "Microsoft JhengHei", "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(244, 207, 97, 0.4), transparent 24rem),
+        radial-gradient(circle at 91% 12%, rgba(89, 183, 175, 0.25), transparent 24rem),
+        linear-gradient(135deg, #fffdf5 0%, #f2f9ff 52%, #f4fff8 100%);
+    }
+
+    main {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 6vw, 56px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .challenge-label {
+      flex: 0 0 auto;
+      padding: 9px 14px;
+      border: 2px solid #d8b23e;
+      border-radius: 8px;
+      background: #fff1b8;
+      font-size: clamp(17px, 2.3vw, 23px);
+      font-weight: 900;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 270px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .workspace,
+    .side {
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .workspace {
+      padding: clamp(18px, 3vw, 30px);
+    }
+
+    .side {
+      position: sticky;
+      top: 14px;
+      padding: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .pill {
+      min-height: 48px;
+      padding: 8px 13px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: #f8fbff;
+      font-size: clamp(19px, 2.7vw, 27px);
+      font-weight: 900;
+    }
+
+    .clue {
+      margin: 0 0 18px;
+      padding: 15px 16px;
+      border-left: 8px solid var(--yellow);
+      border-radius: 6px;
+      background: #fff7d6;
+      font-size: clamp(24px, 3.8vw, 36px);
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .zone-label {
+      margin: 17px 0 9px;
+      color: var(--muted);
+      font-size: clamp(19px, 2.7vw, 25px);
+      font-weight: 900;
+    }
+
+    .sentence-box,
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      align-content: flex-start;
+      min-height: 112px;
+      padding: 14px;
+      border: 3px dashed #a8b3c5;
+      border-radius: 8px;
+      background: #f8fbff;
+    }
+
+    .sentence-box {
+      min-height: 126px;
+      background: #ffffff;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .word {
+      min-width: 68px;
+      min-height: 58px;
+      padding: 9px 15px;
+      border: 3px solid #8fa0b4;
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      box-shadow: 0 5px 0 #cbd5e1;
+      font-size: clamp(25px, 4.2vw, 39px);
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+    }
+
+    .word:hover,
+    .word:focus-visible {
+      border-color: var(--blue);
+      outline: 4px solid rgba(36, 107, 178, 0.18);
+    }
+
+    .word:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #cbd5e1;
+    }
+
+    .answer-word {
+      border-color: var(--blue);
+      background: #eaf4ff;
+      box-shadow: 0 5px 0 #9cc7ec;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .control {
+      min-height: 58px;
+      padding: 9px 10px;
+      border: 0;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: clamp(18px, 2.6vw, 25px);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .check { background: var(--green); }
+    .clear { background: #677386; }
+    .hint { background: #8b4db2; }
+    .next { background: var(--blue); }
+
+    .feedback {
+      min-height: 72px;
+      margin-top: 17px;
+      padding: 13px 15px;
+      border: 2px solid #bfdbfe;
+      border-radius: 8px;
+      background: #eef6ff;
+      font-size: clamp(23px, 3.5vw, 34px);
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .feedback.good {
+      color: var(--green);
+      border-color: #86d5a9;
+      background: #eaf9f0;
+    }
+
+    .feedback.try {
+      color: var(--red);
+      border-color: #f0bd9f;
+      background: #fff3e9;
+    }
+
+    .side h2 {
+      margin: 0 0 10px;
+      font-size: 27px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 21px;
+      margin: 11px 0 13px;
+      overflow: hidden;
+      border: 2px solid #cbd5e1;
+      border-radius: 999px;
+      background: #e5e7eb;
+    }
+
+    .progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #2ab477, #2f79c6);
+      transition: width 180ms ease;
+    }
+
+    .score-line {
+      margin: 8px 0 13px;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .level-menu {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .level-button {
+      min-height: 54px;
+      padding: 8px 10px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      text-align: left;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .level-button span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .level-button.active {
+      border-color: var(--blue);
+      background: #eaf4ff;
+      color: #174f88;
+    }
+
+    .level-button.done {
+      border-color: #6ac28f;
+    }
+
+    .sound-toggle {
+      width: 100%;
+      min-height: 50px;
+      margin-top: 6px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--teal);
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .instructions {
+      margin: 13px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 850px) {
+      main { padding: 13px; }
+      .app { grid-template-columns: 1fr; }
+      .side { position: static; }
+      .controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 450px) {
+      .topbar { align-items: flex-start; }
+      .challenge-label { font-size: 15px; }
+      .word { min-width: 58px; padding: 8px 11px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <h1>中文句子重組</h1>
+      <div class="challenge-label">五級挑戰</div>
+    </header>
+
+    <div class="app">
+      <section class="workspace" aria-labelledby="levelLabel">
+        <div class="meta">
+          <span class="pill" id="levelLabel">Level 1：短句</span>
+          <span class="pill" id="questionLabel">本級練習 1</span>
+        </div>
+
+        <p class="clue" id="clue">情境提示</p>
+
+        <div class="zone-label">我的句子</div>
+        <div class="sentence-box" id="answer" aria-live="polite"></div>
+
+        <div class="zone-label">請按正確次序點選詞語和標點</div>
+        <div class="word-bank" id="wordBank"></div>
+
+        <div class="controls">
+          <button class="control check" type="button" id="checkBtn">檢查</button>
+          <button class="control clear" type="button" id="clearBtn">重來</button>
+          <button class="control hint" type="button" id="hintBtn">提示</button>
+          <button class="control next" type="button" id="nextBtn">隨機新句子</button>
+        </div>
+
+        <div class="feedback" id="feedback">把詞語排成一句完整中文句子吧！</div>
+      </section>
+
+      <aside class="side">
+        <h2>本級進度</h2>
+        <div class="progress" aria-label="本級進度"><span id="progressBar"></span></div>
+        <p class="score-line">答啱：<span id="levelScore">0</span> / 5 句</p>
+        <div class="level-menu" id="levelMenu" aria-label="五個中文程度"></div>
+        <button class="sound-toggle" type="button" id="soundBtn">音效：開</button>
+        <p class="instructions">點選詞語放入「我的句子」。點已選詞語可放回去。每級答啱5句便完成該級。</p>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const levels = [
+      { name: "Level 1：短句", detail: "人物、動作和事物" },
+      { name: "Level 2：完整句", detail: "時間、地點和活動" },
+      { name: "Level 3：描寫句", detail: "加入形容詞和修飾語" },
+      { name: "Level 4：連接句", detail: "因為、所以、先、再" },
+      { name: "Level 5：複合句", detail: "條件、轉折和較長句子" }
+    ];
+
+    const sentenceParts = {
+      level1: {
+        subjects: ["我", "哥哥", "妹妹", "小明", "小美"],
+        actions: [
+          { text: "喜歡閱讀", object: "圖書", clue: "誰喜歡看書？" },
+          { text: "拿着", object: "雨傘", clue: "誰手上有雨傘？" },
+          { text: "看見", object: "小鳥", clue: "誰看見天空的小鳥？" },
+          { text: "吃了", object: "蘋果", clue: "誰吃了水果？" },
+          { text: "抱着", object: "小熊", clue: "誰抱着玩具？" }
+        ],
+        feelings: ["很開心", "很勇敢", "很用心", "很安靜", "很有禮貌"]
+      },
+      level2: {
+        learners: ["我", "哥哥", "姐姐", "同學們"],
+        times: ["每天", "早上", "放學後", "星期日"],
+        routines: ["閱讀圖書", "做功課", "喝牛奶", "練習寫字", "踢足球"],
+        places: [
+          { place: "在公園裏", action: "一起玩耍", clue: "大家在哪裏玩耍？" },
+          { place: "在課室裏", action: "專心學習", clue: "大家在哪裏學習？" },
+          { place: "在圖書館裏", action: "安靜閱讀", clue: "大家在哪裏閱讀？" },
+          { place: "在操場上", action: "練習跑步", clue: "大家在哪裏跑步？" }
+        ]
+      },
+      level3: {
+        objects: [
+          { owner: "我的", description: "紅色", noun: "書包", state: "很漂亮" },
+          { owner: "妹妹的", description: "黃色", noun: "雨衣", state: "很鮮艷" },
+          { owner: "哥哥的", description: "藍色", noun: "單車", state: "很新淨" },
+          { owner: "小美的", description: "可愛", noun: "小狗", state: "很活潑" }
+        ],
+        scenes: [
+          { time: "今天早上", subject: "我們", place: "在學校裏", action: "開心地唱歌" },
+          { time: "星期日下午", subject: "一家人", place: "在公園裏", action: "愉快地野餐" },
+          { time: "放學後", subject: "同學們", place: "在操場上", action: "努力地練習跑步" },
+          { time: "晚飯後", subject: "我和妹妹", place: "在客廳裏", action: "安靜地閱讀" }
+        ]
+      },
+      level4: {
+        reasons: [
+          { reason: "天下大雨", subject: "我", result: "帶了雨傘" },
+          { reason: "弟弟肚子餓", subject: "媽媽", result: "給他一塊麵包" },
+          { reason: "明天有默書", subject: "姐姐", result: "認真溫習" },
+          { reason: "天氣很炎熱", subject: "我們", result: "多喝清水" }
+        ],
+        sequences: [
+          { subject: "我", first: "整理書包", second: "上床睡覺" },
+          { subject: "妹妹", first: "洗乾淨雙手", second: "吃晚飯" },
+          { subject: "同學們", first: "排好隊伍", second: "進入禮堂" },
+          { subject: "爸爸", first: "準備食物", second: "和我們去野餐" }
+        ]
+      },
+      level5: {
+        conditions: [
+          { condition: "明天天氣晴朗", subject: "我們", result: "到郊外遠足" },
+          { condition: "我完成功課", subject: "媽媽", result: "讓我到公園玩" },
+          { condition: "大家愛護環境", subject: "城市", result: "變得更美麗" },
+          { condition: "你每天練習", subject: "中文", result: "慢慢進步" }
+        ],
+        contrasts: [
+          { first: "今天下着雨", subject: "同學們", second: "準時回到學校" },
+          { first: "這道題目很困難", subject: "哥哥", second: "沒有放棄" },
+          { first: "妹妹年紀還小", subject: "她", second: "懂得照顧別人" },
+          { first: "路程十分遙遠", subject: "我們", second: "仍然堅持走下去" }
+        ],
+        events: [
+          { event: "老師走進課室", subject: "同學們", action: "立刻安靜下來" },
+          { event: "我遇到困難", subject: "好朋友", action: "總會主動幫助我" },
+          { event: "春天來臨", subject: "公園裏的花朵", action: "漸漸盛開" },
+          { event: "音樂響起", subject: "小朋友們", action: "一起快樂地跳舞" }
+        ]
+      }
+    };
+
+    const state = {
+      level: 0,
+      current: null,
+      answer: [],
+      bank: [],
+      scores: [0, 0, 0, 0, 0],
+      attempts: [0, 0, 0, 0, 0],
+      solved: false,
+      lastSentence: ["", "", "", "", ""],
+      soundOn: true,
+      audio: null
+    };
+
+    const els = {
+      levelLabel: document.getElementById("levelLabel"),
+      questionLabel: document.getElementById("questionLabel"),
+      clue: document.getElementById("clue"),
+      answer: document.getElementById("answer"),
+      wordBank: document.getElementById("wordBank"),
+      feedback: document.getElementById("feedback"),
+      progressBar: document.getElementById("progressBar"),
+      levelScore: document.getElementById("levelScore"),
+      levelMenu: document.getElementById("levelMenu"),
+      soundBtn: document.getElementById("soundBtn")
+    };
+
+    document.getElementById("checkBtn").addEventListener("click", checkAnswer);
+    document.getElementById("clearBtn").addEventListener("click", resetCurrent);
+    document.getElementById("hintBtn").addEventListener("click", showHint);
+    document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+    els.soundBtn.addEventListener("click", toggleSound);
+
+    function pick(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function shuffle(items) {
+      const copy = [...items];
+      for (let index = copy.length - 1; index > 0; index--) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
+      }
+      return copy;
+    }
+
+    function makeQuestion(level) {
+      if (level === 0) {
+        if (Math.random() < 0.72) {
+          const subject = pick(sentenceParts.level1.subjects);
+          const action = pick(sentenceParts.level1.actions);
+          return {
+            clue: action.clue,
+            parts: [subject, action.text, action.object, "。"]
+          };
+        }
+        const subject = pick(sentenceParts.level1.subjects);
+        const feeling = pick(sentenceParts.level1.feelings);
+        return { clue: `${subject}有甚麼表現？`, parts: [subject, feeling, "。"] };
+      }
+
+      if (level === 1) {
+        if (Math.random() < 0.58) {
+          const subject = pick(sentenceParts.level2.learners);
+          const time = pick(sentenceParts.level2.times);
+          const routine = pick(sentenceParts.level2.routines);
+          return {
+            clue: `${subject}在甚麼時候做甚麼？`,
+            parts: [subject, time, routine, "。"]
+          };
+        }
+        const subject = pick(sentenceParts.level2.learners);
+        const scene = pick(sentenceParts.level2.places);
+        return { clue: scene.clue, parts: [subject, scene.place, scene.action, "。"] };
+      }
+
+      if (level === 2) {
+        if (Math.random() < 0.45) {
+          const object = pick(sentenceParts.level3.objects);
+          return {
+            clue: `請描寫${object.noun}。`,
+            parts: [object.owner, object.description, object.noun, object.state, "。"]
+          };
+        }
+        const scene = pick(sentenceParts.level3.scenes);
+        return {
+          clue: "請把時間、人物、地點和活動排好。",
+          parts: [scene.time, "，", scene.subject, scene.place, scene.action, "。"]
+        };
+      }
+
+      if (level === 3) {
+        if (Math.random() < 0.55) {
+          const item = pick(sentenceParts.level4.reasons);
+          return {
+            clue: "請用「因為……所以……」連接原因和結果。",
+            parts: ["因為", item.reason, "，", "所以", item.subject, item.result, "。"]
+          };
+        }
+        const item = pick(sentenceParts.level4.sequences);
+        return {
+          clue: "請把先後次序排正確。",
+          parts: [item.subject, "先", item.first, "，", "再", item.second, "。"]
+        };
+      }
+
+      const pattern = Math.floor(Math.random() * 3);
+      if (pattern === 0) {
+        const item = pick(sentenceParts.level5.conditions);
+        return {
+          clue: "請用「如果……就會……」組成條件句。",
+          parts: ["如果", item.condition, "，", item.subject, "就會", item.result, "。"]
+        };
+      }
+      if (pattern === 1) {
+        const item = pick(sentenceParts.level5.contrasts);
+        return {
+          clue: "請用「雖然……但是……」表達轉折。",
+          parts: ["雖然", item.first, "，", "但是", item.subject, item.second, "。"]
+        };
+      }
+      const item = pick(sentenceParts.level5.events);
+      return {
+        clue: "事情發生時，人物有甚麼反應？",
+        parts: ["當", item.event, "的時候", "，", item.subject, item.action, "。"]
+      };
+    }
+
+    function createRandomQuestion(level) {
+      let question = makeQuestion(level);
+      let sentence = question.parts.join("");
+      for (let attempt = 0; attempt < 8 && sentence === state.lastSentence[level]; attempt++) {
+        question = makeQuestion(level);
+        sentence = question.parts.join("");
+      }
+      state.lastSentence[level] = sentence;
+      return question;
+    }
+
+    function shuffledParts(parts) {
+      const items = parts.map((text, index) => ({ id: `${Date.now()}-${index}`, text }));
+      let mixed = shuffle(items);
+      for (let attempt = 0; attempt < 6 && mixed.map((item) => item.text).join("") === parts.join(""); attempt++) {
+        mixed = shuffle(items);
+      }
+      if (mixed.length > 2 && mixed.map((item) => item.text).join("") === parts.join("")) {
+        [mixed[0], mixed[1]] = [mixed[1], mixed[0]];
+      }
+      return mixed;
+    }
+
+    function loadQuestion(level, existingQuestion = null) {
+      state.level = level;
+      state.current = existingQuestion || createRandomQuestion(level);
+      state.answer = [];
+      state.bank = shuffledParts(state.current.parts);
+      state.solved = false;
+      if (!existingQuestion) state.attempts[level] += 1;
+
+      els.levelLabel.textContent = levels[level].name;
+      els.questionLabel.textContent = `本級練習 ${state.attempts[level]}`;
+      els.clue.textContent = state.current.clue;
+      els.feedback.className = "feedback";
+      els.feedback.textContent = "把詞語排成一句完整中文句子吧！";
+      render();
+    }
+
+    function render() {
+      renderWords(els.answer, state.answer, moveToBank, true);
+      renderWords(els.wordBank, state.bank, moveToAnswer, false);
+      els.levelScore.textContent = Math.min(state.scores[state.level], 5);
+      els.progressBar.style.width = `${Math.min(state.scores[state.level], 5) * 20}%`;
+      renderLevelMenu();
+    }
+
+    function renderWords(container, words, handler, isAnswer) {
+      container.innerHTML = "";
+      words.forEach((word) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = isAnswer ? "word answer-word" : "word";
+        button.textContent = word.text;
+        button.setAttribute("aria-label", word.text);
+        button.addEventListener("click", () => handler(word.id));
+        container.appendChild(button);
+      });
+    }
+
+    function renderLevelMenu() {
+      els.levelMenu.innerHTML = "";
+      levels.forEach((level, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "level-button";
+        if (index === state.level) button.classList.add("active");
+        if (state.scores[index] >= 5) button.classList.add("done");
+        button.innerHTML = `${level.name}<span>${level.detail}</span>`;
+        button.addEventListener("click", () => {
+          playSound("next");
+          loadQuestion(index);
+        });
+        els.levelMenu.appendChild(button);
+      });
+    }
+
+    function moveToAnswer(id) {
+      const word = takeWord(state.bank, id);
+      if (!word) return;
+      state.answer.push(word);
+      playSound("tap");
+      clearFeedback();
+      render();
+    }
+
+    function moveToBank(id) {
+      const word = takeWord(state.answer, id);
+      if (!word) return;
+      state.bank.push(word);
+      playSound("back");
+      clearFeedback();
+      render();
+    }
+
+    function takeWord(list, id) {
+      const index = list.findIndex((word) => word.id === id);
+      if (index === -1) return null;
+      return list.splice(index, 1)[0];
+    }
+
+    function checkAnswer() {
+      const answer = state.answer.map((word) => word.text).join("");
+      const expected = state.current.parts.join("");
+
+      if (answer === expected && state.bank.length === 0) {
+        if (!state.solved) {
+          state.scores[state.level] += 1;
+          state.solved = true;
+        }
+        els.feedback.className = "feedback good";
+        els.feedback.textContent = state.scores[state.level] >= 5 && state.level < levels.length - 1
+          ? `答啱了！${expected} 本級完成，可以挑戰下一級！`
+          : `答啱了！${expected}`;
+        playSound("correct");
+      } else {
+        els.feedback.className = "feedback try";
+        els.feedback.textContent = "差一點點，請再檢查詞語次序和標點。";
+        playSound("wrong");
+      }
+      render();
+    }
+
+    function resetCurrent() {
+      const wasSolved = state.solved;
+      playSound("clear");
+      loadQuestion(state.level, state.current);
+      state.solved = wasSolved;
+    }
+
+    function showHint() {
+      const expected = state.current.parts;
+      let position = 0;
+      while (position < state.answer.length && state.answer[position].text === expected[position]) {
+        position += 1;
+      }
+      const next = expected[position] || expected[0];
+      els.feedback.className = "feedback";
+      els.feedback.textContent = `提示：第 ${position + 1} 個位置是「${next}」`;
+      playSound("hint");
+    }
+
+    function nextQuestion() {
+      let nextLevel = state.level;
+      if (state.scores[state.level] >= 5 && state.level < levels.length - 1) {
+        nextLevel += 1;
+      }
+      playSound("next");
+      loadQuestion(nextLevel);
+    }
+
+    function clearFeedback() {
+      els.feedback.className = "feedback";
+      els.feedback.textContent = "很好，繼續排下去。";
+    }
+
+    function toggleSound() {
+      state.soundOn = !state.soundOn;
+      els.soundBtn.textContent = state.soundOn ? "音效：開" : "音效：關";
+      if (state.soundOn) playSound("hint");
+    }
+
+    function getAudio() {
+      if (!state.audio) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return null;
+        state.audio = new AudioContext();
+      }
+      if (state.audio.state === "suspended") state.audio.resume();
+      return state.audio;
+    }
+
+    function playSound(kind) {
+      if (!state.soundOn) return;
+      const audio = getAudio();
+      if (!audio) return;
+
+      const sounds = {
+        tap: [{ frequency: 520, start: 0, duration: 0.07, type: "sine", volume: 0.1 }],
+        back: [{ frequency: 330, start: 0, duration: 0.07, type: "triangle", volume: 0.08 }],
+        hint: [
+          { frequency: 660, start: 0, duration: 0.08, type: "sine", volume: 0.1 },
+          { frequency: 880, start: 0.08, duration: 0.1, type: "sine", volume: 0.1 }
+        ],
+        next: [
+          { frequency: 440, start: 0, duration: 0.07, type: "triangle", volume: 0.09 },
+          { frequency: 660, start: 0.07, duration: 0.1, type: "triangle", volume: 0.09 }
+        ],
+        clear: [{ frequency: 260, start: 0, duration: 0.08, type: "sine", volume: 0.07 }],
+        wrong: [
+          { frequency: 220, start: 0, duration: 0.1, type: "sawtooth", volume: 0.045 },
+          { frequency: 180, start: 0.1, duration: 0.12, type: "sawtooth", volume: 0.04 }
+        ],
+        correct: [
+          { frequency: 523.25, start: 0, duration: 0.07, type: "triangle", volume: 0.11 },
+          { frequency: 659.25, start: 0.07, duration: 0.07, type: "triangle", volume: 0.11 },
+          { frequency: 783.99, start: 0.14, duration: 0.08, type: "triangle", volume: 0.12 },
+          { frequency: 1046.5, start: 0.24, duration: 0.12, type: "sine", volume: 0.1 }
+        ]
+      };
+
+      (sounds[kind] || sounds.tap).forEach((note) => playNote(audio, note));
+    }
+
+    function playNote(audio, note) {
+      const now = audio.currentTime + note.start;
+      const oscillator = audio.createOscillator();
+      const gain = audio.createGain();
+      oscillator.type = note.type;
+      oscillator.frequency.setValueAtTime(note.frequency, now);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.exponentialRampToValueAtTime(note.volume, now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + note.duration);
+      oscillator.connect(gain);
+      gain.connect(audio.destination);
+      oscillator.start(now);
+      oscillator.stop(now + note.duration + 0.03);
+    }
+
+    loadQuestion(0);
+  </script>
+</body>
+</html>
