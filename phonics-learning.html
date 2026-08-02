@@ -448,7 +448,7 @@
 <body>
   <header class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">British English · Systematic Phonics</p>
+      <p class="eyebrow">British English · Jolly Phonics Sequence</p>
       <h1>英語拼音樂園</h1>
       <p>聽清楚每個音，將音拼成字，再把字放入句子。</p>
     </div>
@@ -456,7 +456,7 @@
 
   <main>
     <nav class="lesson-modes" aria-label="選擇拼音活動">
-      <button class="mode-button active" type="button" data-view="sounds">44個音素</button>
+      <button class="mode-button active" type="button" data-view="sounds">42個字母音</button>
       <button class="mode-button" type="button" data-view="blend">拼讀 Blend</button>
       <button class="mode-button" type="button" data-view="segment">拆音 Segment</button>
       <button class="mode-button" type="button" data-view="tricky">Tricky Words</button>
@@ -466,19 +466,21 @@
     <section class="lesson-view active" id="view-sounds">
       <div class="section-heading">
         <div>
-          <h2>44個英語音素</h2>
-          <p>先按學習階段篩選，再點選音卡聽英式例字。</p>
+          <h2>Jolly Phonics 42個字母音</h2>
+          <p>依照七組教學次序學純音，再用拼讀和拆音鞏固。</p>
         </div>
-        <span class="help-text" id="soundCount">44 sounds</span>
+        <span class="help-text" id="soundCount">42 sounds</span>
       </div>
 
-      <div class="filters" id="soundFilters" aria-label="音素篩選">
-        <button class="filter-button active" type="button" data-filter="all">全部44音</button>
-        <button class="filter-button" type="button" data-filter="2">Phase 2</button>
-        <button class="filter-button" type="button" data-filter="3">Phase 3</button>
-        <button class="filter-button" type="button" data-filter="5">Phase 5</button>
-        <button class="filter-button" type="button" data-filter="consonant">輔音</button>
-        <button class="filter-button" type="button" data-filter="vowel">元音</button>
+      <div class="filters" id="soundFilters" aria-label="Jolly Phonics 七組字母音">
+        <button class="filter-button active" type="button" data-filter="all">全部42音</button>
+        <button class="filter-button" type="button" data-filter="1">第1組</button>
+        <button class="filter-button" type="button" data-filter="2">第2組</button>
+        <button class="filter-button" type="button" data-filter="3">第3組</button>
+        <button class="filter-button" type="button" data-filter="4">第4組</button>
+        <button class="filter-button" type="button" data-filter="5">第5組</button>
+        <button class="filter-button" type="button" data-filter="6">第6組</button>
+        <button class="filter-button" type="button" data-filter="7">第7組</button>
       </div>
 
       <div class="sound-layout">
@@ -487,13 +489,14 @@
           <div class="focus-letter" id="focusLetter">s</div>
           <h3 id="focusIpa">/s/</h3>
           <p class="focus-word" id="focusWord">sun</p>
-          <p class="focus-spellings" id="focusSpellings">常見寫法：s, ss, c</p>
+          <p class="focus-spellings" id="focusSpellings">第 1 組 · 常見寫法：s, ss, c</p>
           <div class="action-row">
-            <button class="primary-action phoneme-action" id="playPhoneme" type="button">▶ 獨立音素 /s/</button>
+            <button class="primary-action phoneme-action" id="playPhoneme" type="button">▶ 女聲純音 /s/</button>
             <button class="primary-action" id="playExample" type="button">▶ 英式例字 sun</button>
             <a class="secondary-action" id="dictionaryLink" href="https://dictionary.cambridge.org/pronunciation/english/sun" target="_blank" rel="noopener">Cambridge UK</a>
+            <a class="secondary-action" href="https://jollylearning.com/our-programmes/jolly-phonics/jolly-phonics-app" target="_blank" rel="noopener">Jolly 官方42音</a>
           </div>
-          <div class="feedback" id="soundTip">嘴角微微張開，讓氣流由牙齒之間送出。先聽 sun，再模仿第一個音。</div>
+          <div class="feedback" id="soundTip">牙齒輕輕合近，讓氣流持續送出，不要在尾部加 /uh/。先聽 sun，再模仿目標音。</div>
         </aside>
       </div>
     </section>
@@ -588,6 +591,7 @@
     <footer class="resources">
       <h3>老師與家長參考</h3>
       <div class="resource-links">
+        <a href="https://jollylearning.com/our-programmes/jolly-phonics/jolly-phonics-app" target="_blank" rel="noopener">Jolly Learning：官方42音與歌曲</a>
         <a href="https://www.gov.uk/government/publications/choosing-a-phonics-teaching-programme" target="_blank" rel="noopener">GOV.UK：Systematic Synthetic Phonics</a>
         <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/190599/Letters_and_Sounds_-_DFES-00281-2007.pdf" target="_blank" rel="noopener">Letters and Sounds</a>
         <a href="https://learnenglishkids.britishcouncil.org/apps/sounds-right" target="_blank" rel="noopener">British Council Sounds Right</a>
@@ -598,50 +602,54 @@
 
   <script>
     const sounds = [
-      { g: "p", ipa: "/p/", word: "pig", spellings: "p, pp", type: "consonant", phase: 2, tip: "雙唇輕合後放開，送出短促氣流。" },
-      { g: "b", ipa: "/b/", word: "bus", spellings: "b, bb", type: "consonant", phase: 2, tip: "雙唇輕合後發聲，喉嚨會震動。" },
-      { g: "t", ipa: "/t/", word: "top", spellings: "t, tt", type: "consonant", phase: 2, tip: "舌尖碰上齒齦，快速放開。" },
-      { g: "d", ipa: "/d/", word: "dog", spellings: "d, dd", type: "consonant", phase: 2, tip: "舌尖碰上齒齦並發聲。" },
-      { g: "c / k", ipa: "/k/", word: "cat", spellings: "c, k, ck, ch", type: "consonant", phase: 2, tip: "舌後部抬起，送出短促氣流。" },
-      { g: "g", ipa: "/g/", word: "goat", spellings: "g, gg", type: "consonant", phase: 2, tip: "舌後部抬起並讓喉嚨震動。" },
-      { g: "f", ipa: "/f/", word: "fish", spellings: "f, ff, ph", type: "consonant", phase: 2, tip: "上門牙輕碰下唇，讓氣流持續送出。" },
-      { g: "v", ipa: "/v/", word: "van", spellings: "v, ve", type: "consonant", phase: 3, tip: "口形像 /f/，但喉嚨要震動。" },
-      { g: "th", ipa: "/θ/", word: "thin", spellings: "th", type: "consonant", phase: 3, tip: "舌尖輕放上下牙之間，送氣但不發聲。" },
-      { g: "th", ipa: "/ð/", word: "this", spellings: "th", type: "consonant", phase: 3, tip: "舌尖輕放上下牙之間，喉嚨要震動。" },
-      { g: "s", ipa: "/s/", word: "sun", spellings: "s, ss, c", type: "consonant", phase: 2, tip: "嘴角微微張開，讓氣流由牙齒之間送出。" },
-      { g: "z", ipa: "/z/", word: "zip", spellings: "z, zz, s", type: "consonant", phase: 3, tip: "口形像 /s/，但喉嚨要震動。" },
-      { g: "sh", ipa: "/ʃ/", word: "ship", spellings: "sh, ti, ci", type: "consonant", phase: 3, tip: "嘴唇稍向前，安靜地送出長氣流。" },
-      { g: "s", ipa: "/ʒ/", word: "treasure", spellings: "s, si, ge", type: "consonant", phase: 5, tip: "口形像 /sh/，同時讓喉嚨震動。" },
-      { g: "h", ipa: "/h/", word: "hat", spellings: "h", type: "consonant", phase: 2, tip: "張口輕輕呼氣，不要加 /uh/ 尾音。" },
-      { g: "ch", ipa: "/tʃ/", word: "chin", spellings: "ch, tch", type: "consonant", phase: 3, tip: "先做短 /t/，立即接 /sh/。" },
-      { g: "j", ipa: "/dʒ/", word: "jam", spellings: "j, g, ge, dge", type: "consonant", phase: 3, tip: "先做短 /d/，立即接有聲的 /zh/。" },
-      { g: "m", ipa: "/m/", word: "moon", spellings: "m, mm, mb", type: "consonant", phase: 2, tip: "雙唇合上，聲音由鼻腔送出。" },
-      { g: "n", ipa: "/n/", word: "nest", spellings: "n, nn, kn", type: "consonant", phase: 2, tip: "舌尖靠上齒齦，聲音由鼻腔送出。" },
-      { g: "ng", ipa: "/ŋ/", word: "ring", spellings: "ng, n", type: "consonant", phase: 3, tip: "舌後部抬起，聲音由鼻腔送出。" },
-      { g: "l", ipa: "/l/", word: "leg", spellings: "l, ll", type: "consonant", phase: 2, tip: "舌尖碰上齒齦，氣流由舌旁流出。" },
-      { g: "r", ipa: "/r/", word: "red", spellings: "r, rr, wr", type: "consonant", phase: 2, tip: "舌尖不要碰到口腔頂部，嘴唇稍圓。" },
-      { g: "w", ipa: "/w/", word: "web", spellings: "w, wh", type: "consonant", phase: 3, tip: "嘴唇先收圓，再快速張開。" },
-      { g: "y", ipa: "/j/", word: "yes", spellings: "y", type: "consonant", phase: 3, tip: "舌前部抬高，快速滑向下一個元音。" },
-      { g: "ee", ipa: "/iː/", word: "sheep", spellings: "ee, ea, e, y", type: "vowel", phase: 3, tip: "嘴角向兩旁拉，聲音較長。" },
-      { g: "i", ipa: "/ɪ/", word: "fish", spellings: "i, y", type: "vowel", phase: 2, tip: "短促輕鬆，不要拉成長 /ee/。" },
-      { g: "e", ipa: "/e/", word: "bed", spellings: "e, ea", type: "vowel", phase: 2, tip: "嘴巴自然張開，讀短音。" },
-      { g: "a", ipa: "/æ/", word: "cat", spellings: "a", type: "vowel", phase: 2, tip: "嘴巴張開，舌頭放低，讀短音。" },
-      { g: "ar", ipa: "/ɑː/", word: "car", spellings: "ar, a", type: "vowel", phase: 3, tip: "嘴巴張開，聲音拉長；英式讀音不捲舌。" },
-      { g: "o", ipa: "/ɒ/", word: "dog", spellings: "o, a", type: "vowel", phase: 2, tip: "嘴唇略圓，發短而開的音。" },
-      { g: "or", ipa: "/ɔː/", word: "fork", spellings: "or, aw, au", type: "vowel", phase: 3, tip: "嘴唇收圓，聲音拉長；英式讀音不捲舌。" },
-      { g: "oo", ipa: "/ʊ/", word: "book", spellings: "oo, u", type: "vowel", phase: 3, tip: "嘴唇稍圓，聲音短促。" },
-      { g: "oo", ipa: "/uː/", word: "moon", spellings: "oo, u-e, ue, ew", type: "vowel", phase: 3, tip: "嘴唇收圓，聲音拉長。" },
-      { g: "u", ipa: "/ʌ/", word: "sun", spellings: "u, o", type: "vowel", phase: 2, tip: "嘴巴自然張開，讀短音。" },
-      { g: "ur", ipa: "/ɜː/", word: "bird", spellings: "ur, ir, er, ear", type: "vowel", phase: 3, tip: "舌頭放鬆，聲音拉長；英式讀音不捲舌。" },
-      { g: "er", ipa: "/ə/", word: "farmer", spellings: "er, a, e, o", type: "vowel", phase: 3, tip: "這是輕而短的弱讀音，不要用力。" },
-      { g: "ai", ipa: "/eɪ/", word: "rain", spellings: "ai, ay, a-e, eigh", type: "vowel", phase: 3, tip: "由 /e/ 平滑滑向 /ɪ/。" },
-      { g: "igh", ipa: "/aɪ/", word: "night", spellings: "igh, i-e, y, ie", type: "vowel", phase: 3, tip: "由開口音平滑滑向 /ɪ/。" },
-      { g: "oi", ipa: "/ɔɪ/", word: "coin", spellings: "oi, oy", type: "vowel", phase: 3, tip: "由圓唇音平滑滑向 /ɪ/。" },
-      { g: "oa", ipa: "/əʊ/", word: "boat", spellings: "oa, ow, o-e, oe", type: "vowel", phase: 3, tip: "英式讀音由輕音滑向圓唇音。" },
-      { g: "ow", ipa: "/aʊ/", word: "cow", spellings: "ow, ou", type: "vowel", phase: 3, tip: "由張口音快速滑向圓唇音。" },
-      { g: "ear", ipa: "/ɪə/", word: "ear", spellings: "ear, eer, ere", type: "vowel", phase: 3, tip: "由短 /i/ 滑向輕弱音。" },
-      { g: "air", ipa: "/eə/", word: "chair", spellings: "air, are, ear", type: "vowel", phase: 3, tip: "由 /e/ 滑向輕弱音。" },
-      { g: "ure", ipa: "/ʊə/", word: "pure", spellings: "ure, our", type: "vowel", phase: 5, tip: "先圓唇，再滑向輕弱音；現代英式口音有不同讀法。" }
+      { g: "s", ipa: "/s/", word: "sun", spellings: "s, ss, c", type: "consonant", group: 1, tip: "牙齒輕輕合近，讓氣流持續送出，不要在尾部加 /uh/。" },
+      { g: "a", ipa: "/æ/", word: "ant", spellings: "a", type: "vowel", group: 1, tip: "嘴巴張開，舌頭放低，讀短音。" },
+      { g: "t", ipa: "/t/", word: "top", spellings: "t, tt", type: "consonant", group: 1, tip: "舌尖碰上齒齦後快速放開，聲音要短。" },
+      { g: "i", ipa: "/ɪ/", word: "ink", spellings: "i, y", type: "vowel", group: 1, tip: "短促輕鬆，不要拉成長 /ee/。" },
+      { g: "p", ipa: "/p/", word: "pig", spellings: "p, pp", type: "consonant", group: 1, tip: "雙唇輕合後放開，只送出短促氣流。" },
+      { g: "n", ipa: "/n/", word: "nest", spellings: "n, nn, kn", type: "consonant", group: 1, tip: "舌尖靠上齒齦，讓聲音由鼻腔送出。" },
+
+      { g: "c k", ipa: "/k/", word: "cat", spellings: "c, k, ck", type: "consonant", group: 2, tip: "舌後部抬起再放開，聲音短而清楚，不要加 /uh/。" },
+      { g: "e", ipa: "/e/", word: "egg", spellings: "e, ea", type: "vowel", group: 2, tip: "嘴巴自然張開，讀短而輕的音。" },
+      { g: "h", ipa: "/h/", word: "hat", spellings: "h", type: "consonant", group: 2, tip: "張口輕輕呼氣，像在玻璃上呵氣，不要加尾音。" },
+      { g: "r", ipa: "/r/", word: "red", spellings: "r, rr, wr", type: "consonant", group: 2, tip: "舌尖不要碰到口腔頂部，嘴唇稍微收圓。" },
+      { g: "m", ipa: "/m/", word: "map", spellings: "m, mm, mb", type: "consonant", group: 2, tip: "雙唇合上，讓聲音由鼻腔持續送出。" },
+      { g: "d", ipa: "/d/", word: "dog", spellings: "d, dd", type: "consonant", group: 2, tip: "舌尖碰上齒齦後放開，喉嚨會震動。" },
+
+      { g: "g", ipa: "/g/", word: "goat", spellings: "g, gg", type: "consonant", group: 3, tip: "舌後部抬起再放開，喉嚨會震動。" },
+      { g: "o", ipa: "/ɒ/", word: "hot", spellings: "o, a", type: "vowel", group: 3, tip: "嘴唇略圓，讀短而開的英式音。" },
+      { g: "u", ipa: "/ʌ/", word: "sun", spellings: "u, o", type: "vowel", group: 3, tip: "嘴巴自然張開，讀短音，不要拉長。" },
+      { g: "l", ipa: "/l/", word: "leg", spellings: "l, ll", type: "consonant", group: 3, tip: "舌尖碰上齒齦，讓氣流由舌頭兩旁流出。" },
+      { g: "f", ipa: "/f/", word: "fish", spellings: "f, ff, ph", type: "consonant", group: 3, tip: "上門牙輕碰下唇，讓氣流持續送出，不要加尾音。" },
+      { g: "b", ipa: "/b/", word: "bus", spellings: "b, bb", type: "consonant", group: 3, tip: "雙唇輕合後放開並發聲，喉嚨會震動。" },
+
+      { g: "ai", ipa: "/eɪ/", word: "rain", spellings: "ai, ay, a-e", type: "vowel", group: 4, tip: "由 /e/ 平滑滑向 /ɪ/，兩個字母合作發一個音。" },
+      { g: "j", ipa: "/dʒ/", word: "jam", spellings: "j, g, ge, dge", type: "consonant", group: 4, tip: "先做很短的 /d/，立即接有聲的 /zh/。" },
+      { g: "oa", ipa: "/əʊ/", word: "boat", spellings: "oa, ow, o-e", type: "vowel", group: 4, tip: "英式讀音由輕音平滑滑向圓唇音。" },
+      { g: "ie", ipa: "/aɪ/", word: "pie", spellings: "ie, igh, i-e, y", type: "vowel", group: 4, tip: "先張口，再平滑滑向短 /ɪ/。" },
+      { g: "ee", ipa: "/iː/", word: "sheep", spellings: "ee, ea, e, y", type: "vowel", group: 4, tip: "嘴角向兩旁拉，聲音平穩地拉長。" },
+      { g: "or", ipa: "/ɔː/", word: "fork", spellings: "or, aw, au", type: "vowel", group: 4, tip: "嘴唇收圓，聲音拉長；英式讀音不捲舌。" },
+
+      { g: "z", ipa: "/z/", word: "zip", spellings: "z, zz, s", type: "consonant", group: 5, tip: "口形像 /s/，但要讓喉嚨持續震動。" },
+      { g: "w", ipa: "/w/", word: "web", spellings: "w, wh", type: "consonant", group: 5, tip: "嘴唇先收圓，再快速張開滑向下一個音。" },
+      { g: "ng", ipa: "/ŋ/", word: "ring", spellings: "ng, n", type: "consonant", group: 5, tip: "舌後部抬起，讓聲音由鼻腔送出，不要再讀 /g/。" },
+      { g: "v", ipa: "/v/", word: "van", spellings: "v, ve", type: "consonant", group: 5, tip: "上門牙輕碰下唇，像 /f/ 一樣送氣，同時震動喉嚨。" },
+      { g: "oo", ipa: "/ʊ/", word: "book", spellings: "oo, u", type: "vowel", group: 5, tip: "嘴唇稍圓，讀短促的 oo 音。" },
+      { g: "oo", ipa: "/uː/", word: "moon", spellings: "oo, u-e, ue, ew", type: "vowel", group: 5, tip: "嘴唇收圓，平穩地拉長 oo 音。" },
+
+      { g: "y", ipa: "/j/", word: "yes", spellings: "y", type: "consonant", group: 6, tip: "舌前部抬高，快速滑向下一個元音。" },
+      { g: "x", ipa: "/ks/", word: "box", spellings: "x", type: "consonant", group: 6, tip: "先讀短 /k/，立即接 /s/，中間不要加元音。" },
+      { g: "ch", ipa: "/tʃ/", word: "chin", spellings: "ch, tch", type: "consonant", group: 6, tip: "先做很短的 /t/，立即接 /sh/。" },
+      { g: "sh", ipa: "/ʃ/", word: "ship", spellings: "sh", type: "consonant", group: 6, tip: "嘴唇稍向前，安靜地送出長氣流。" },
+      { g: "th", ipa: "/θ/", word: "thin", spellings: "th", type: "consonant", group: 6, tip: "舌尖輕放上下牙之間，送氣但不要讓喉嚨震動。" },
+      { g: "th", ipa: "/ð/", word: "this", spellings: "th", type: "consonant", group: 6, tip: "舌尖輕放上下牙之間，送氣並讓喉嚨震動。" },
+
+      { g: "qu", ipa: "/kw/", word: "queen", spellings: "qu", type: "consonant", group: 7, tip: "先讀短 /k/，立即把嘴唇收圓滑向 /w/。" },
+      { g: "ou", ipa: "/aʊ/", word: "cloud", spellings: "ou, ow", type: "vowel", group: 7, tip: "由張口音快速滑向圓唇音。" },
+      { g: "oi", ipa: "/ɔɪ/", word: "coin", spellings: "oi, oy", type: "vowel", group: 7, tip: "由圓唇音平滑滑向 /ɪ/。" },
+      { g: "ue", ipa: "/uː/", word: "blue", spellings: "ue, oo, u-e, ew", type: "vowel", group: 7, tip: "嘴唇收圓，平穩地拉長 /oo/ 音。" },
+      { g: "er", ipa: "/ə/", word: "farmer", spellings: "er", type: "vowel", group: 7, tip: "在英式詞尾讀輕而短的弱音，不要捲舌或用力。" },
+      { g: "ar", ipa: "/ɑː/", word: "car", spellings: "ar, a", type: "vowel", group: 7, tip: "嘴巴張開，聲音拉長；英式讀音不捲舌。" }
     ];
 
     const levelNotes = [
@@ -783,7 +791,7 @@
       "/iː/": "i-long", "/ɪ/": "i-short", "/e/": "e", "/æ/": "a", "/ɑː/": "ar", "/ɒ/": "o-short",
       "/ɔː/": "or", "/ʊ/": "u-short", "/uː/": "u-long", "/ʌ/": "uh", "/ɜː/": "ur", "/ə/": "schwa",
       "/eɪ/": "ai", "/aɪ/": "igh", "/ɔɪ/": "oi", "/əʊ/": "oa", "/aʊ/": "ow",
-      "/ɪə/": "ear", "/eə/": "air", "/ʊə/": "ure"
+      "/ɪə/": "ear", "/eə/": "air", "/ʊə/": "ure", "/ks/": "x", "/kw/": "qu"
     };
 
     const graphemeIpa = {
@@ -859,8 +867,7 @@
       soundGrid.innerHTML = "";
       const visible = sounds.filter((sound) => (
         state.filter === "all"
-        || String(sound.phase) === state.filter
-        || sound.type === state.filter
+        || String(sound.group) === state.filter
       ));
       document.getElementById("soundCount").textContent = `${visible.length} sounds`;
 
@@ -880,10 +887,10 @@
       focusLetter.textContent = sound.g;
       focusIpa.textContent = sound.ipa;
       focusWord.textContent = sound.word;
-      focusSpellings.textContent = `常見寫法：${sound.spellings}`;
+      focusSpellings.textContent = `第 ${sound.group} 組 · 常見寫法：${sound.spellings}`;
       soundTip.textContent = `${sound.tip} 先聽 ${sound.word}，再模仿目標音。`;
       dictionaryLink.href = `https://dictionary.cambridge.org/pronunciation/english/${encodeURIComponent(sound.word)}`;
-      playPhonemeButton.textContent = `▶ 獨立音素 ${sound.ipa}`;
+      playPhonemeButton.textContent = `▶ 女聲純音 ${sound.ipa}`;
       playExampleButton.textContent = `▶ 英式例字 ${sound.word}`;
       renderSounds();
       if (window.matchMedia("(max-width: 850px)").matches) {

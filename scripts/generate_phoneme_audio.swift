@@ -50,7 +50,9 @@ let phonemes = [
     Phoneme(fileName: "ow", ipa: "aʊ"),
     Phoneme(fileName: "ear", ipa: "ɪə"),
     Phoneme(fileName: "air", ipa: "eə"),
-    Phoneme(fileName: "ure", ipa: "ʊə")
+    Phoneme(fileName: "ure", ipa: "ʊə"),
+    Phoneme(fileName: "x", ipa: "ks"),
+    Phoneme(fileName: "qu", ipa: "kw")
 ]
 
 let outputDirectory = URL(fileURLWithPath: CommandLine.arguments.dropFirst().first ?? "assets/phonemes", isDirectory: true)
