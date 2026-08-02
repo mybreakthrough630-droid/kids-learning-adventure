@@ -56,9 +56,13 @@
     }
 
     .stars {
-      display: flex;
-      gap: 8px;
-      font-size: clamp(26px, 4vw, 42px);
+      flex: 0 0 auto;
+      padding: 9px 14px;
+      border: 2px solid #d8b23e;
+      border-radius: 8px;
+      background: #fff1b8;
+      font-size: clamp(17px, 2.3vw, 23px);
+      font-weight: 900;
       white-space: nowrap;
     }
 
@@ -179,6 +183,41 @@
       border-color: var(--blue);
       box-shadow: 0 5px 0 #93c5fd;
     }
+
+    .word.person { border-color: #3b82c4; background: #eaf4ff; }
+    .word.time { border-color: #c99518; background: #fff7cf; }
+    .word.place { border-color: #27926b; background: #e9faef; }
+    .word.verb { border-color: #d85c45; background: #fff0eb; }
+    .word.adjective { border-color: #9158b5; background: #f7edff; }
+    .word.conjunction { border-color: #158a85; background: #e8f9f7; }
+
+    .word-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 12px;
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .word-legend span::before {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      border: 2px solid currentColor;
+      border-radius: 3px;
+      vertical-align: -1px;
+    }
+
+    .legend-person { color: #2569a3; }
+    .legend-time { color: #98700d; }
+    .legend-place { color: #16734f; }
+    .legend-verb { color: #b84431; }
+    .legend-adjective { color: #774296; }
+    .legend-conjunction { color: #126f6b; }
 
     .answer-token {
       display: inline-flex;
@@ -330,6 +369,21 @@
       color: #1d4ed8;
     }
 
+    .level-jump span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .level-jump.done::after {
+      content: "完成";
+      float: right;
+      color: #15803d;
+      font-size: 14px;
+    }
+
     .small {
       color: var(--muted);
       font-size: 19px;
@@ -395,13 +449,13 @@
   <main>
     <div class="topbar">
       <h1>英文句子重組</h1>
-      <div class="stars" aria-label="stars">★ ★ ★</div>
+      <div class="stars">五級挑戰</div>
     </div>
 
     <div class="app">
       <section class="workspace" aria-labelledby="question-title">
         <div class="meta">
-          <span id="question-title" class="pill">第 1 / 50 題</span>
+          <span id="question-title" class="pill">本級練習 1</span>
           <span id="level" class="pill">Level 1</span>
         </div>
 
@@ -410,7 +464,16 @@
         <div class="zone-label">我的句子</div>
         <div id="answer" class="sentence-box" aria-live="polite"></div>
 
-        <div class="zone-label">請按正確次序點選英文單字</div>
+        <div class="zone-label">請按正確次序點選英文詞語和標點</div>
+        <div class="word-legend" aria-label="英文詞語顏色分類">
+          <span class="legend-person">人物</span>
+          <span class="legend-time">時間</span>
+          <span class="legend-place">地點</span>
+          <span class="legend-verb">動詞</span>
+          <span class="legend-adjective">形容詞</span>
+          <span class="legend-conjunction">連接詞</span>
+          <span>其他詞語</span>
+        </div>
         <div id="wordBank" class="word-bank"></div>
 
         <div class="controls">
@@ -420,206 +483,153 @@
           <button class="control next" type="button" id="nextBtn">隨機新句子</button>
         </div>
 
-        <div id="feedback" class="feedback">把單字排成一句完整英文吧！</div>
+        <div id="feedback" class="feedback">把詞語排成一句完整英文句子吧！</div>
       </section>
 
       <aside class="side">
-        <h2>進度</h2>
-        <div class="progress" aria-label="progress"><span id="progressBar"></span></div>
-        <p class="score-line">答對：<span id="score">0</span> 題</p>
-        <p class="score-line">已完成：<span id="doneCount">0</span> / 50</p>
+        <h2>本級進度</h2>
+        <div class="progress" aria-label="本級進度"><span id="progressBar"></span></div>
+        <p class="score-line">答對：<span id="score">0</span> / 5 句</p>
         <button id="soundBtn" class="sound-toggle" type="button">音效：開</button>
-        <p class="small">玩法：點下面的英文單字，把它們放到「我的句子」。用 Aa 改變大小寫。每個 Level 都會按文法即場創作新句子。</p>
+        <p class="small">玩法：每題都會按文法即場創作。顏色幫助分辨詞語功能，用 Aa 改變大小寫。每級答啱5句便完成該級。</p>
         <div id="levelMenu" class="level-menu" aria-label="level list"></div>
-        <div id="questionDots" class="list" aria-label="question list"></div>
       </aside>
     </div>
   </main>
 
   <script>
     const levels = [
-      "Level 1：短句",
-      "Level 2：動作",
-      "Level 3：物件和顏色",
-      "Level 4：地點和時間",
-      "Level 5：較長句子"
-    ];
-
-    const questions = [
-      // Level 1: very short be-verb and like/have sentences.
-      { zh: "我是一個男孩。", sentence: "I am a boy." },
-      { zh: "我是一個女孩。", sentence: "I am a girl." },
-      { zh: "你很高興。", sentence: "You are happy." },
-      { zh: "他是我的爸爸。", sentence: "He is my dad." },
-      { zh: "她是我的媽媽。", sentence: "She is my mom." },
-      { zh: "這是一隻貓。", sentence: "It is a cat." },
-      { zh: "那是一隻狗。", sentence: "That is a dog." },
-      { zh: "我喜歡蘋果。", sentence: "I like apples." },
-      { zh: "我喜歡香蕉。", sentence: "I like bananas." },
-      { zh: "我有一支筆。", sentence: "I have a pen." },
-
-      // Level 2: action words and can.
-      { zh: "我有一個球。", sentence: "I have a ball." },
-      { zh: "我看到一隻鳥。", sentence: "I see a bird." },
-      { zh: "我看到一條魚。", sentence: "I see a fish." },
-      { zh: "我可以跑。", sentence: "I can run." },
-      { zh: "我可以跳。", sentence: "I can jump." },
-      { zh: "我會唱歌。", sentence: "I can sing." },
-      { zh: "我會游泳。", sentence: "I can swim." },
-      { zh: "狗會跑。", sentence: "The dog can run." },
-      { zh: "貓會跳。", sentence: "The cat can jump." },
-      { zh: "鳥會飛。", sentence: "The bird can fly." },
-
-      // Level 3: nouns, colors, adjectives, and simple requests.
-      { zh: "太陽很熱。", sentence: "The sun is hot." },
-      { zh: "冰是冷的。", sentence: "The ice is cold." },
-      { zh: "我的書是紅色的。", sentence: "My book is red." },
-      { zh: "我的書包是藍色的。", sentence: "My bag is blue." },
-      { zh: "我的鞋子是新的。", sentence: "My shoes are new." },
-      { zh: "這個球是大的。", sentence: "The ball is big." },
-      { zh: "這隻貓是小的。", sentence: "The cat is small." },
-      { zh: "我想要水。", sentence: "I want water." },
-      { zh: "我想要牛奶。", sentence: "I want milk." },
-      { zh: "我想要一塊餅乾。", sentence: "I want a cookie." },
-
-      // Level 4: commands, places, and daily routines.
-      { zh: "請坐下。", sentence: "Please sit down." },
-      { zh: "請站起來。", sentence: "Please stand up." },
-      { zh: "請打開門。", sentence: "Please open the door." },
-      { zh: "請關上門。", sentence: "Please close the door." },
-      { zh: "我在吃午餐。", sentence: "I eat lunch." },
-      { zh: "我喝水。", sentence: "I drink water." },
-      { zh: "我讀一本書。", sentence: "I read a book." },
-      { zh: "我玩玩具。", sentence: "I play with toys." },
-      { zh: "我們去學校。", sentence: "We go to school." },
-      { zh: "我們在公園玩。", sentence: "We play in the park." },
-
-      // Level 5: longer sentences with extra details.
-      { zh: "這是我的老師。", sentence: "This is my teacher." },
-      { zh: "這是我的好朋友。", sentence: "This is my good friend." },
-      { zh: "我今天很高興。", sentence: "I am happy today." },
-      { zh: "我早上喝牛奶。", sentence: "I drink milk in the morning." },
-      { zh: "我放學後玩足球。", sentence: "I play football after school." },
-      { zh: "她有一個漂亮的洋娃娃。", sentence: "She has a pretty doll." },
-      { zh: "他有一輛紅色的車。", sentence: "He has a red car." },
-      { zh: "我們在星期日去公園。", sentence: "We go to the park on Sunday." },
-      { zh: "我喜歡我的老師，因為她很友善。", sentence: "I like my teacher because she is kind." },
-      { zh: "我愛我的家人，因為他們幫助我。", sentence: "I love my family because they help me." }
+      { name: "Level 1：短句", detail: "人物、動詞和形容詞" },
+      { name: "Level 2：動作句", detail: "人物、動作和物件" },
+      { name: "Level 3：描寫句", detail: "時間、人物和外觀" },
+      { name: "Level 4：情境句", detail: "時間、地點、人物和事情" },
+      { name: "Level 5：複合句", detail: "完整情境、原因和連接詞" }
     ];
 
     const sentenceParts = {
       level1: {
         people: [
-          { en: "I", zh: "我", be: "am" },
-          { en: "You", zh: "你", be: "are" },
-          { en: "He", zh: "他", be: "is" },
-          { en: "She", zh: "她", be: "is" }
+          { en: "I", zh: "我", be: "am", third: false },
+          { en: "You", zh: "你", be: "are", third: false },
+          { en: "He", zh: "他", be: "is", third: true },
+          { en: "She", zh: "她", be: "is", third: true }
         ],
         feelings: [
           { en: "happy", zh: "高興" },
-          { en: "sad", zh: "傷心" },
+          { en: "kind", zh: "友善" },
           { en: "hungry", zh: "肚餓" },
-          { en: "tired", zh: "疲倦" }
+          { en: "tired", zh: "疲倦" },
+          { en: "brave", zh: "勇敢" }
         ],
-        likes: [
-          { en: "apples", zh: "蘋果" },
-          { en: "bananas", zh: "香蕉" },
-          { en: "milk", zh: "牛奶" },
-          { en: "books", zh: "圖書" }
+        actions: [
+          { base: "like", third: "likes", noun: "apples", zh: "喜歡蘋果" },
+          { base: "read", third: "reads", noun: "books", zh: "閱讀圖書" },
+          { base: "see", third: "sees", article: "a", noun: "bird", zh: "看見一隻鳥" },
+          { base: "have", third: "has", article: "a", noun: "ball", zh: "有一個球" }
         ]
       },
       level2: {
-        abilities: [
-          { subject: "I", subjectZh: "我", verb: "run", verbZh: "跑" },
-          { subject: "I", subjectZh: "我", verb: "jump", verbZh: "跳" },
-          { subject: "I", subjectZh: "我", verb: "sing", verbZh: "唱歌" },
-          { subject: "She", subjectZh: "她", verb: "dance", verbZh: "跳舞" },
-          { subject: "He", subjectZh: "他", verb: "swim", verbZh: "游泳" },
-          { subject: "The dog", subjectZh: "狗", verb: "run", verbZh: "跑" },
-          { subject: "The cat", subjectZh: "貓", verb: "jump", verbZh: "跳" },
-          { subject: "The bird", subjectZh: "鳥", verb: "fly", verbZh: "飛" },
-          { subject: "The fish", subjectZh: "魚", verb: "swim", verbZh: "游泳" }
+        people: [
+          { en: "I", zh: "我", third: false },
+          { en: "We", zh: "我們", third: false },
+          { en: "Ben", zh: "Ben", third: true },
+          { en: "Lily", zh: "Lily", third: true },
+          { en: "My brother", zh: "我的哥哥", third: true }
         ],
         actions: [
-          { en: "I kick the ball", zh: "我踢球" },
-          { en: "I read a book", zh: "我讀一本書" },
-          { en: "I drink water", zh: "我喝水" },
-          { en: "We sing a song", zh: "我們唱一首歌" },
-          { en: "We play a game", zh: "我們玩遊戲" }
+          { base: "kick", third: "kicks", article: "the", noun: "ball", zh: "踢球" },
+          { base: "read", third: "reads", article: "a", noun: "book", zh: "閱讀一本書" },
+          { base: "drink", third: "drinks", noun: "water", zh: "喝水" },
+          { base: "sing", third: "sings", article: "a", noun: "song", zh: "唱一首歌" },
+          { base: "draw", third: "draws", article: "a", noun: "star", zh: "畫一顆星" }
         ]
       },
       level3: {
-        things: [
-          { en: "book", zh: "書" },
-          { en: "bag", zh: "書包" },
-          { en: "ball", zh: "球" },
-          { en: "kite", zh: "風箏" },
-          { en: "hat", zh: "帽" }
+        people: [
+          { en: "I", zh: "我", third: false },
+          { en: "We", zh: "我們", third: false },
+          { en: "Ben", zh: "Ben", third: true },
+          { en: "Lily", zh: "Lily", third: true },
+          { en: "My sister", zh: "我的姐姐", third: true }
         ],
-        descriptions: [
-          { en: "red", zh: "紅色" },
-          { en: "blue", zh: "藍色" },
-          { en: "green", zh: "綠色" },
-          { en: "big", zh: "大" },
-          { en: "small", zh: "小" },
-          { en: "new", zh: "新" }
+        times: [
+          { en: "Today", zh: "今天" },
+          { en: "This morning", zh: "今天早上" },
+          { en: "After school", zh: "放學後" },
+          { en: "On Sunday", zh: "星期日" }
         ],
-        wants: [
-          { en: "a cookie", zh: "一塊餅乾" },
-          { en: "some water", zh: "一些水" },
-          { en: "a red apple", zh: "一個紅蘋果" },
-          { en: "a new toy", zh: "一件新玩具" }
+        places: [
+          { en: "at school", zh: "在學校" },
+          { en: "in the classroom", zh: "在課室裏" },
+          { en: "in the park", zh: "在公園裏" },
+          { en: "at home", zh: "在家中" }
+        ],
+        items: [
+          { article: "a", adjective: "red", noun: "bag", zh: "一個紅色書包" },
+          { article: "a", adjective: "blue", noun: "kite", zh: "一隻藍色風箏" },
+          { article: "a", adjective: "small", noun: "puppy", zh: "一隻小狗" },
+          { article: "a", adjective: "new", noun: "book", zh: "一本新書" },
+          { article: "a", adjective: "pretty", noun: "doll", zh: "一個漂亮洋娃娃" }
         ]
       },
       level4: {
-        routines: [
-          { en: "read a book", zh: "讀一本書" },
-          { en: "eat lunch", zh: "吃午餐" },
-          { en: "drink milk", zh: "喝牛奶" },
-          { en: "play football", zh: "踢足球" },
-          { en: "draw a picture", zh: "畫一幅畫" }
+        people: [
+          { en: "I", zh: "我", third: false },
+          { en: "We", zh: "我們", third: false },
+          { en: "Ben", zh: "Ben", third: true },
+          { en: "Lily", zh: "Lily", third: true },
+          { en: "My brother", zh: "我的哥哥", third: true }
         ],
         times: [
-          { en: "in the morning", zh: "早上" },
-          { en: "after school", zh: "放學後" },
-          { en: "in the afternoon", zh: "下午" },
-          { en: "on Sunday", zh: "星期日" }
+          { en: "In the morning", zh: "早上" },
+          { en: "After school", zh: "放學後" },
+          { en: "In the afternoon", zh: "下午" },
+          { en: "On Sunday", zh: "星期日" }
         ],
-        places: [
-          { action: "read books", actionZh: "讀書", en: "in the library", zh: "圖書館" },
-          { action: "play games", actionZh: "玩遊戲", en: "in the classroom", zh: "課室" },
-          { action: "play football", actionZh: "踢足球", en: "in the park", zh: "公園" },
-          { action: "eat lunch", actionZh: "吃午餐", en: "at school", zh: "學校" }
+        scenes: [
+          { base: "read", third: "reads", article: "an", adjective: "interesting", noun: "storybook", place: "in the library", actionZh: "閱讀一本有趣的故事書", placeZh: "在圖書館裏" },
+          { base: "play", third: "plays", article: "an", adjective: "exciting", noun: "game", place: "in the park", actionZh: "玩一個刺激的遊戲", placeZh: "在公園裏" },
+          { base: "draw", third: "draws", article: "a", adjective: "colourful", noun: "picture", place: "in the classroom", actionZh: "畫一幅色彩繽紛的圖畫", placeZh: "在課室裏" },
+          { base: "eat", third: "eats", article: "a", adjective: "healthy", noun: "lunch", place: "at school", actionZh: "吃一頓健康的午餐", placeZh: "在學校" },
+          { base: "ride", third: "rides", article: "a", adjective: "blue", noun: "bike", place: "in the playground", actionZh: "踏一架藍色單車", placeZh: "在遊樂場裏" }
         ]
       },
       level5: {
+        people: [
+          { en: "I", zh: "我", third: false, pronoun: "I" },
+          { en: "We", zh: "我們", third: false, pronoun: "we" },
+          { en: "Ben", zh: "Ben", third: true, pronoun: "he" },
+          { en: "Lily", zh: "Lily", third: true, pronoun: "she" },
+          { en: "My sister", zh: "我的姐姐", third: true, pronoun: "she" }
+        ],
+        times: [
+          { en: "After school", zh: "放學後" },
+          { en: "On Saturday", zh: "星期六" },
+          { en: "In the afternoon", zh: "下午" },
+          { en: "Before dinner", zh: "晚飯前" }
+        ],
+        scenes: [
+          { base: "read", third: "reads", article: "an", adjective: "interesting", noun: "storybook", place: "in the library", actionZh: "閱讀一本有趣的故事書", placeZh: "在圖書館裏" },
+          { base: "play", third: "plays", article: "a", adjective: "friendly", noun: "match", place: "in the park", actionZh: "參加一場友誼比賽", placeZh: "在公園裏" },
+          { base: "draw", third: "draws", article: "a", adjective: "colourful", noun: "picture", place: "in the classroom", actionZh: "畫一幅色彩繽紛的圖畫", placeZh: "在課室裏" },
+          { base: "practise", third: "practises", adjective: "spoken", noun: "English", place: "at school", actionZh: "練習英語會話", placeZh: "在學校" }
+        ],
         reasons: [
-          { first: "I like my teacher", firstZh: "我喜歡我的老師", second: "she is kind", secondZh: "她很友善" },
-          { first: "I love my family", firstZh: "我愛我的家人", second: "they help me", secondZh: "他們幫助我" },
-          { first: "I like this book", firstZh: "我喜歡這本書", second: "it is funny", secondZh: "它很有趣" },
-          { first: "He likes the park", firstZh: "他喜歡公園", second: "he can run there", secondZh: "他可以在那裏跑" },
-          { first: "She likes music", firstZh: "她喜歡音樂", second: "she loves to sing", secondZh: "她喜歡唱歌" }
-        ],
-        events: [
-          { feeling: "happy", feelingZh: "高興", event: "I play with my friends", eventZh: "我和朋友玩" },
-          { feeling: "excited", feelingZh: "興奮", event: "we go to the park", eventZh: "我們去公園" },
-          { feeling: "proud", feelingZh: "自豪", event: "I finish my homework", eventZh: "我完成家課" },
-          { feeling: "calm", feelingZh: "平靜", event: "I read a book", eventZh: "我讀書" }
-        ],
-        pairs: [
-          { first: "read books", firstZh: "讀書", second: "draw pictures", secondZh: "畫畫" },
-          { first: "sing songs", firstZh: "唱歌", second: "dance with my friends", secondZh: "和朋友跳舞" },
-          { first: "play football", firstZh: "踢足球", second: "ride my bike", secondZh: "踏單車" }
+          { adjective: "curious", zh: "充滿好奇心" },
+          { adjective: "hard-working", zh: "十分勤奮" },
+          { adjective: "excited", zh: "感到興奮" },
+          { adjective: "confident", zh: "充滿信心" }
         ]
       }
     };
 
     const state = {
-      index: 0,
+      level: 0,
       answer: [],
       bank: [],
-      completed: new Set(),
-      correct: new Set(),
+      scores: [0, 0, 0, 0, 0],
+      attempts: [0, 0, 0, 0, 0],
+      solved: false,
       currentQuestion: null,
       lastSentenceByLevel: Array(levels.length).fill(""),
       soundOn: true,
@@ -634,11 +644,9 @@
       wordBank: document.getElementById("wordBank"),
       feedback: document.getElementById("feedback"),
       score: document.getElementById("score"),
-      doneCount: document.getElementById("doneCount"),
       progressBar: document.getElementById("progressBar"),
       soundBtn: document.getElementById("soundBtn"),
-      levelMenu: document.getElementById("levelMenu"),
-      dots: document.getElementById("questionDots")
+      levelMenu: document.getElementById("levelMenu")
     };
 
     document.getElementById("checkBtn").addEventListener("click", checkAnswer);
@@ -647,8 +655,8 @@
     document.getElementById("nextBtn").addEventListener("click", nextQuestion);
     els.soundBtn.addEventListener("click", toggleSound);
 
-    function wordsFor(sentence) {
-      return sentence.replace(".", " .").split(" ");
+    function joinWords(words) {
+      return words.join(" ").replace(/\s+([,.!?])/g, "$1");
     }
 
     function shuffle(items) {
@@ -664,81 +672,119 @@
       return items[Math.floor(Math.random() * items.length)];
     }
 
+    function token(text, type = "other") {
+      return { text, type };
+    }
+
+    function objectTokens(item) {
+      return [
+        item.article ? token(item.article) : null,
+        item.adjective ? token(item.adjective, "adjective") : null,
+        token(item.noun)
+      ].filter(Boolean);
+    }
+
+    function englishQuestion(zh, parts, elements = null) {
+      return {
+        zh,
+        parts,
+        sentence: joinWords(parts.map((part) => part.text)),
+        elements
+      };
+    }
+
     function buildRandomQuestion(level) {
       if (level === 0) {
         if (Math.random() < 0.65) {
           const person = pick(sentenceParts.level1.people);
           const feeling = pick(sentenceParts.level1.feelings);
-          return {
-            zh: `${person.zh}很${feeling.zh}。`,
-            sentence: `${person.en} ${person.be} ${feeling.en}.`
-          };
+          return englishQuestion(`${person.zh}很${feeling.zh}。`, [
+            token(person.en, "person"),
+            token(person.be, "verb"),
+            token(feeling.en, "adjective"),
+            token(".")
+          ]);
         }
-        const item = pick(sentenceParts.level1.likes);
-        return { zh: `我喜歡${item.zh}。`, sentence: `I like ${item.en}.` };
+        const person = pick(sentenceParts.level1.people);
+        const action = pick(sentenceParts.level1.actions);
+        const verb = person.third ? action.third : action.base;
+        return englishQuestion(`${person.zh}${action.zh}。`, [
+          token(person.en, "person"),
+          token(verb, "verb"),
+          ...objectTokens(action),
+          token(".")
+        ]);
       }
 
       if (level === 1) {
-        if (Math.random() < 0.7) {
-          const ability = pick(sentenceParts.level2.abilities);
-          return {
-            zh: `${ability.subjectZh}會${ability.verbZh}。`,
-            sentence: `${ability.subject} can ${ability.verb}.`
-          };
-        }
+        const person = pick(sentenceParts.level2.people);
         const action = pick(sentenceParts.level2.actions);
-        return { zh: `${action.zh}。`, sentence: `${action.en}.` };
+        const verb = person.third ? action.third : action.base;
+        return englishQuestion(`${person.zh}${action.zh}。`, [
+          token(person.en, "person"),
+          token(verb, "verb"),
+          ...objectTokens(action),
+          token(".")
+        ]);
       }
 
       if (level === 2) {
-        if (Math.random() < 0.7) {
-          const thing = pick(sentenceParts.level3.things);
-          const description = pick(sentenceParts.level3.descriptions);
-          return {
-            zh: `我的${thing.zh}是${description.zh}的。`,
-            sentence: `My ${thing.en} is ${description.en}.`
-          };
-        }
-        const wanted = pick(sentenceParts.level3.wants);
-        return { zh: `我想要${wanted.zh}。`, sentence: `I want ${wanted.en}.` };
+        const person = pick(sentenceParts.level3.people);
+        const time = pick(sentenceParts.level3.times);
+        const place = pick(sentenceParts.level3.places);
+        const item = pick(sentenceParts.level3.items);
+        const have = person.third ? "has" : "have";
+        return englishQuestion(`${time.zh}，${person.zh}${place.zh}有${item.zh}。`, [
+          token(time.en, "time"),
+          token(","),
+          token(person.en, "person"),
+          token(have, "verb"),
+          ...objectTokens(item),
+          token(place.en, "place"),
+          token(".")
+        ], { time: time.en, person: person.en, place: place.en, event: item.noun });
       }
 
       if (level === 3) {
-        if (Math.random() < 0.55) {
-          const routine = pick(sentenceParts.level4.routines);
-          const time = pick(sentenceParts.level4.times);
-          return {
-            zh: `我${time.zh}${routine.zh}。`,
-            sentence: `I ${routine.en} ${time.en}.`
-          };
-        }
-        const place = pick(sentenceParts.level4.places);
-        return {
-          zh: `我們在${place.zh}${place.actionZh}。`,
-          sentence: `We ${place.action} ${place.en}.`
-        };
+        const person = pick(sentenceParts.level4.people);
+        const time = pick(sentenceParts.level4.times);
+        const scene = pick(sentenceParts.level4.scenes);
+        const verb = person.third ? scene.third : scene.base;
+        return englishQuestion(`${time.zh}，${person.zh}${scene.placeZh}${scene.actionZh}。`, [
+          token(time.en, "time"),
+          token(","),
+          token(person.en, "person"),
+          token(verb, "verb"),
+          ...objectTokens(scene),
+          token(scene.place, "place"),
+          token(".")
+        ], { time: time.en, person: person.en, place: scene.place, event: scene.noun });
       }
 
-      const pattern = Math.floor(Math.random() * 3);
-      if (pattern === 0) {
-        const reason = pick(sentenceParts.level5.reasons);
-        return {
-          zh: `${reason.firstZh}，因為${reason.secondZh}。`,
-          sentence: `${reason.first} because ${reason.second}.`
-        };
-      }
-      if (pattern === 1) {
-        const event = pick(sentenceParts.level5.events);
-        return {
-          zh: `當${event.eventZh}時，我感到${event.feelingZh}。`,
-          sentence: `I feel ${event.feeling} when ${event.event}.`
-        };
-      }
-      const pair = pick(sentenceParts.level5.pairs);
-      return {
-        zh: `我放學後${pair.firstZh}和${pair.secondZh}。`,
-        sentence: `I ${pair.first} and ${pair.second} after school.`
-      };
+      const person = pick(sentenceParts.level5.people);
+      const time = pick(sentenceParts.level5.times);
+      const scene = pick(sentenceParts.level5.scenes);
+      const reason = pick(sentenceParts.level5.reasons);
+      const verb = person.third ? scene.third : scene.base;
+      const reasonBe = person.pronoun === "I" ? "am" : person.pronoun === "we" ? "are" : "is";
+      const pronounZh = person.pronoun === "I" ? "我" : person.pronoun === "we" ? "我們" : person.pronoun === "he" ? "他" : "她";
+      return englishQuestion(
+        `${time.zh}，${person.zh}${scene.placeZh}${scene.actionZh}，因為${pronounZh}${reason.zh}。`,
+        [
+          token(time.en, "time"),
+          token(","),
+          token(person.en, "person"),
+          token(verb, "verb"),
+          ...objectTokens(scene),
+          token(scene.place, "place"),
+          token("because", "conjunction"),
+          token(person.pronoun, "person"),
+          token(reasonBe, "verb"),
+          token(reason.adjective, "adjective"),
+          token(".")
+        ],
+        { time: time.en, person: person.en, place: scene.place, event: scene.noun }
+      );
     }
 
     function createRandomQuestion(level) {
@@ -750,39 +796,41 @@
       return question;
     }
 
-    function loadQuestion(index, existingQuestion = null) {
-      const level = levelFor(index);
+    function loadQuestion(level, existingQuestion = null) {
       const question = existingQuestion || createRandomQuestion(level);
-      const words = wordsFor(question.sentence);
+      const parts = question.parts.map((part) => ({ ...part }));
 
       if (Math.random() < 0.5) {
-        words[0] = words[0].toLowerCase();
+        parts[0].text = parts[0].text.toLowerCase();
       }
 
-      state.index = index;
+      state.level = level;
       state.currentQuestion = question;
       state.answer = [];
-      state.bank = shuffle(words.map((text, wordIndex) => ({
-        id: `${index}-${wordIndex}-${text}`,
-        text
+      state.solved = Boolean(existingQuestion && state.solved);
+      if (!existingQuestion) {
+        state.attempts[level] += 1;
+      }
+      state.bank = shuffle(parts.map((part, partIndex) => ({
+        id: `${level}-${state.attempts[level]}-${partIndex}-${part.text}`,
+        text: part.text,
+        type: part.type
       })));
 
-      els.title.textContent = `第 ${index + 1} / ${questions.length} 題`;
-      els.level.textContent = levels[level];
+      els.title.textContent = `本級練習 ${state.attempts[level]}`;
+      els.level.textContent = levels[level].name;
       els.meaning.textContent = question.zh;
       els.feedback.className = "feedback";
-      els.feedback.textContent = "把單字排成一句完整英文吧！";
+      els.feedback.textContent = "把詞語排成一句完整英文句子吧！";
       render();
     }
 
     function render() {
       renderWords(els.answer, state.answer, moveToBank, true);
       renderWords(els.wordBank, state.bank, moveToAnswer, false);
-      els.score.textContent = state.correct.size;
-      els.doneCount.textContent = state.completed.size;
-      els.progressBar.style.width = `${(state.completed.size / questions.length) * 100}%`;
+      els.score.textContent = Math.min(state.scores[state.level], 5);
+      els.progressBar.style.width = `${Math.min(state.scores[state.level] / 5, 1) * 100}%`;
       renderLevelMenu();
-      renderDots();
     }
 
     function renderWords(container, words, handler, isAnswer) {
@@ -790,7 +838,7 @@
       words.forEach((word) => {
         const button = document.createElement("button");
         button.type = "button";
-        button.className = isAnswer ? "word answer-word" : "word";
+        button.className = `${isAnswer ? "word answer-word" : "word"} ${word.type || "other"}`;
         button.textContent = word.text;
         button.setAttribute("aria-label", word.text === "." ? "period" : word.text);
         button.addEventListener("click", () => handler(word.id));
@@ -816,45 +864,26 @@
       });
     }
 
-    function renderDots() {
-      els.dots.innerHTML = "";
-      questions.forEach((_, index) => {
-        const dot = document.createElement("button");
-        dot.type = "button";
-        dot.className = state.completed.has(index) ? "dot done" : "dot";
-        dot.textContent = index + 1;
-        dot.addEventListener("click", () => loadQuestion(index));
-        els.dots.appendChild(dot);
-      });
-    }
-
     function renderLevelMenu() {
       els.levelMenu.innerHTML = "";
-      levels.forEach((label, index) => {
+      levels.forEach((level, index) => {
         const button = document.createElement("button");
         button.type = "button";
-        button.className = index === levelFor(state.index) ? "level-jump active" : "level-jump";
-        button.textContent = label;
+        button.className = [
+          "level-jump",
+          index === state.level ? "active" : "",
+          state.scores[index] >= 5 ? "done" : ""
+        ].filter(Boolean).join(" ");
+        button.append(document.createTextNode(level.name));
+        const detail = document.createElement("span");
+        detail.textContent = level.detail;
+        button.appendChild(detail);
         button.addEventListener("click", () => {
           playSound("next");
-          loadQuestion(randomQuestionForLevel(index));
+          loadQuestion(index);
         });
         els.levelMenu.appendChild(button);
       });
-    }
-
-    function levelFor(index) {
-      return Math.floor(index / 10);
-    }
-
-    function randomQuestionForLevel(level) {
-      const start = level * 10;
-      const unanswered = Array.from({ length: 10 }, (_, offset) => start + offset)
-        .filter((index) => !state.completed.has(index));
-      const choices = unanswered.length > 0
-        ? unanswered
-        : Array.from({ length: 10 }, (_, offset) => start + offset);
-      return choices[Math.floor(Math.random() * choices.length)];
     }
 
     function moveToAnswer(id) {
@@ -896,23 +925,25 @@
 
     function checkAnswer() {
       const current = state.currentQuestion;
-      const answer = state.answer.map((word) => word.text).join(" ").replace(" .", ".");
+      const answer = joinWords(state.answer.map((word) => word.text));
 
-      state.completed.add(state.index);
       if (answer === current.sentence) {
-        state.correct.add(state.index);
+        if (!state.solved) {
+          state.scores[state.level] += 1;
+          state.solved = true;
+        }
         els.feedback.className = "feedback good";
-        els.feedback.textContent = `答對了！${current.sentence}`;
+        els.feedback.textContent = state.scores[state.level] >= 5
+          ? `太好了！你已完成 ${levels[state.level].name}！`
+          : `答對了！${current.sentence}`;
         playSound("correct");
       } else if (answer.toLowerCase() === current.sentence.toLowerCase()) {
-        state.correct.delete(state.index);
         els.feedback.className = "feedback try";
         els.feedback.textContent = "次序答啱了！請用 Aa 檢查英文大小寫。";
         playSound("wrong");
       } else {
-        state.correct.delete(state.index);
         els.feedback.className = "feedback try";
-        els.feedback.textContent = "差一點點，請再檢查單字次序和句號。";
+        els.feedback.textContent = "差一點點，請再檢查詞語次序和標點。";
         playSound("wrong");
       }
       render();
@@ -920,37 +951,26 @@
 
     function resetCurrent() {
       playSound("clear");
-      loadQuestion(state.index, state.currentQuestion);
+      loadQuestion(state.level, state.currentQuestion);
     }
 
     function showHint() {
-      const words = wordsFor(state.currentQuestion.sentence);
-      const next = words[state.answer.length] || words[0];
+      const expected = state.currentQuestion.parts.map((part) => part.text);
+      const selected = state.answer.map((word) => word.text);
+      const mismatch = selected.findIndex((word, index) => word !== expected[index]);
+      const nextIndex = mismatch === -1 ? selected.length : mismatch;
+      const next = expected[nextIndex] || expected[0];
       els.feedback.className = "feedback";
-      els.feedback.textContent = `提示：下一個單字是「${next}」`;
+      els.feedback.textContent = `提示：下一個詞語是「${next}」`;
       playSound("hint");
     }
 
     function nextQuestion() {
-      const currentLevel = levelFor(state.index);
-      const levelStart = currentLevel * 10;
-      const levelIndexes = Array.from({ length: 10 }, (_, offset) => levelStart + offset);
-      let choices = levelIndexes.filter((index) => (
-        index !== state.index && !state.completed.has(index)
-      ));
-
-      if (choices.length === 0 && levelIndexes.every((index) => state.completed.has(index))) {
-        const nextLevel = (currentLevel + 1) % levels.length;
-        choices = Array.from({ length: 10 }, (_, offset) => nextLevel * 10 + offset);
-      }
-
-      if (choices.length === 0) {
-        choices = levelIndexes.filter((index) => index !== state.index);
-      }
-
-      const next = choices[Math.floor(Math.random() * choices.length)];
+      const nextLevel = state.scores[state.level] >= 5 && state.level < levels.length - 1
+        ? state.level + 1
+        : state.level;
       playSound("next");
-      loadQuestion(next);
+      loadQuestion(nextLevel);
     }
 
     function clearFeedback() {
@@ -1029,7 +1049,7 @@
       oscillator.stop(now + note.duration + 0.03);
     }
 
-    loadQuestion(randomQuestionForLevel(0));
+    loadQuestion(0);
   </script>
 </body>
 </html>

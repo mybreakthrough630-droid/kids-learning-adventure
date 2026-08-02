@@ -99,7 +99,7 @@
 
     .switcher {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 10px;
       padding: 10px;
       border: 2px solid var(--line);
@@ -186,6 +186,11 @@
       background: #def8ee;
     }
 
+    .lesson-tab[data-kind="phonics"]::before {
+      color: #a23e2f;
+      background: #fff0d8;
+    }
+
     .learning-stage {
       margin-top: 12px;
     }
@@ -249,6 +254,12 @@
       min-height: 680px;
       border: 0;
       background: #ffffff;
+    }
+
+    @media (max-width: 1050px) {
+      .switcher {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 720px) {
@@ -333,7 +344,7 @@
         <div class="brand-mark" aria-hidden="true">1+</div>
         <div>
           <h1>Kids Learning Adventure</h1>
-          <p class="subtitle">一年級中英文與數學互動練習</p>
+          <p class="subtitle">一年級中英文、拼音與數學互動練習</p>
         </div>
       </div>
       <div class="mode-label">Choose an activity</div>
@@ -372,6 +383,17 @@
       >
         中文造句
         <small>5個Level隨機重組中文句子</small>
+      </button>
+      <button
+        class="lesson-tab"
+        type="button"
+        data-kind="phonics"
+        data-icon="P"
+        data-src="phonics-learning.html"
+        data-title="英語拼音 British Phonics"
+      >
+        英語拼音
+        <small>44個音素、拼讀和Tricky Words</small>
       </button>
       <button
         class="lesson-tab"

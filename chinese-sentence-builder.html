@@ -182,6 +182,41 @@
       box-shadow: 0 5px 0 #9cc7ec;
     }
 
+    .word.person { border-color: #3b82c4; background: #eaf4ff; }
+    .word.time { border-color: #c99518; background: #fff7cf; }
+    .word.place { border-color: #27926b; background: #e9faef; }
+    .word.verb { border-color: #d85c45; background: #fff0eb; }
+    .word.adjective { border-color: #9158b5; background: #f7edff; }
+    .word.modifier { border-color: #158a85; background: #e8f9f7; }
+
+    .word-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 12px;
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .word-legend span::before {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      border: 2px solid currentColor;
+      border-radius: 3px;
+      vertical-align: -1px;
+    }
+
+    .legend-person { color: #2569a3; }
+    .legend-time { color: #98700d; }
+    .legend-place { color: #16734f; }
+    .legend-verb { color: #b84431; }
+    .legend-adjective { color: #774296; }
+    .legend-modifier { color: #126f6b; }
+
     .controls {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -349,6 +384,15 @@
         <div class="sentence-box" id="answer" aria-live="polite"></div>
 
         <div class="zone-label">請按正確次序點選詞語和標點</div>
+        <div class="word-legend" aria-label="詞語顏色分類">
+          <span class="legend-person">人物</span>
+          <span class="legend-time">時間</span>
+          <span class="legend-place">地點</span>
+          <span class="legend-verb">動詞</span>
+          <span class="legend-adjective">形容詞</span>
+          <span class="legend-modifier">修飾語</span>
+          <span>其他詞語</span>
+        </div>
         <div class="word-bank" id="wordBank"></div>
 
         <div class="controls">
@@ -374,10 +418,10 @@
 
   <script>
     const levels = [
-      { name: "Level 1：短句", detail: "人物、動作和事物" },
-      { name: "Level 2：完整句", detail: "時間、地點和活動" },
+      { name: "Level 1：短句", detail: "分辨人物、動詞和形容詞" },
+      { name: "Level 2：完整句", detail: "時間、人物、地點和事情" },
       { name: "Level 3：描寫句", detail: "加入形容詞和修飾語" },
-      { name: "Level 4：連接句", detail: "因為、所以、先、再" },
+      { name: "Level 4：連接句", detail: "完整情境加連接詞" },
       { name: "Level 5：複合句", detail: "條件、轉折和較長句子" }
     ];
 
@@ -385,71 +429,68 @@
       level1: {
         subjects: ["我", "哥哥", "妹妹", "小明", "小美"],
         actions: [
-          { text: "喜歡閱讀", object: "圖書", clue: "誰喜歡看書？" },
-          { text: "拿着", object: "雨傘", clue: "誰手上有雨傘？" },
-          { text: "看見", object: "小鳥", clue: "誰看見天空的小鳥？" },
-          { text: "吃了", object: "蘋果", clue: "誰吃了水果？" },
-          { text: "抱着", object: "小熊", clue: "誰抱着玩具？" }
+          { verb: "閱讀", object: "圖書", clue: "誰喜歡看書？" },
+          { verb: "拿着", object: "雨傘", clue: "誰手上有雨傘？" },
+          { verb: "看見", object: "小鳥", clue: "誰看見天空的小鳥？" },
+          { verb: "吃", object: "蘋果", clue: "誰吃水果？" },
+          { verb: "抱着", object: "小熊", clue: "誰抱着玩具？" }
         ],
-        feelings: ["很開心", "很勇敢", "很用心", "很安靜", "很有禮貌"]
+        feelings: ["開心", "勇敢", "用心", "安靜", "有禮貌"]
       },
       level2: {
-        learners: ["我", "哥哥", "姐姐", "同學們"],
+        people: ["我", "哥哥", "姐姐", "同學們"],
         times: ["每天", "早上", "放學後", "星期日"],
-        routines: ["閱讀圖書", "做功課", "喝牛奶", "練習寫字", "踢足球"],
-        places: [
-          { place: "在公園裏", action: "一起玩耍", clue: "大家在哪裏玩耍？" },
-          { place: "在課室裏", action: "專心學習", clue: "大家在哪裏學習？" },
-          { place: "在圖書館裏", action: "安靜閱讀", clue: "大家在哪裏閱讀？" },
-          { place: "在操場上", action: "練習跑步", clue: "大家在哪裏跑步？" }
+        places: ["在家中", "在課室裏", "在圖書館裏", "在操場上"],
+        actions: [
+          { verb: "閱讀", object: "圖書" },
+          { verb: "完成", object: "功課" },
+          { verb: "喝", object: "牛奶" },
+          { verb: "練習", object: "寫字" },
+          { verb: "踢", object: "足球" }
         ]
       },
       level3: {
-        objects: [
-          { owner: "我的", description: "紅色", noun: "書包", state: "很漂亮" },
-          { owner: "妹妹的", description: "黃色", noun: "雨衣", state: "很鮮艷" },
-          { owner: "哥哥的", description: "藍色", noun: "單車", state: "很新淨" },
-          { owner: "小美的", description: "可愛", noun: "小狗", state: "很活潑" }
-        ],
+        times: ["今天早上", "星期日下午", "放學後", "晚飯後"],
+        people: ["我們", "一家人", "同學們", "我和妹妹"],
+        places: ["在學校裏", "在公園裏", "在操場上", "在客廳裏"],
         scenes: [
-          { time: "今天早上", subject: "我們", place: "在學校裏", action: "開心地唱歌" },
-          { time: "星期日下午", subject: "一家人", place: "在公園裏", action: "愉快地野餐" },
-          { time: "放學後", subject: "同學們", place: "在操場上", action: "努力地練習跑步" },
-          { time: "晚飯後", subject: "我和妹妹", place: "在客廳裏", action: "安靜地閱讀" }
+          { adverb: "開心地", verb: "唱", amount: "一首", adjective: "好聽的", noun: "歌" },
+          { adverb: "愉快地", verb: "吃", amount: "一頓", adjective: "豐富的", noun: "午餐" },
+          { adverb: "用心地", verb: "畫", amount: "一幅", adjective: "漂亮的", noun: "圖畫" },
+          { adverb: "安靜地", verb: "閱讀", amount: "一本", adjective: "有趣的", noun: "故事書" }
         ]
       },
       level4: {
+        times: ["今天早上", "放學後", "星期六", "晚飯後"],
         reasons: [
-          { reason: "天下大雨", subject: "我", result: "帶了雨傘" },
-          { reason: "弟弟肚子餓", subject: "媽媽", result: "給他一塊麵包" },
-          { reason: "明天有默書", subject: "姐姐", result: "認真溫習" },
-          { reason: "天氣很炎熱", subject: "我們", result: "多喝清水" }
+          { reasonNoun: "雨勢", reasonAdjective: "很大", subject: "我", place: "在學校裏", verb: "帶", object: "雨傘" },
+          { reasonNoun: "弟弟", reasonAdjective: "很餓", subject: "媽媽", place: "在家中", verb: "給", object: "他一塊麵包" },
+          { reasonNoun: "默書內容", reasonAdjective: "很困難", subject: "姐姐", place: "在圖書館裏", verb: "溫習", object: "中文" },
+          { reasonNoun: "天氣", reasonAdjective: "很炎熱", subject: "我們", place: "在公園裏", verb: "喝", object: "清水" }
         ],
         sequences: [
-          { subject: "我", first: "整理書包", second: "上床睡覺" },
-          { subject: "妹妹", first: "洗乾淨雙手", second: "吃晚飯" },
-          { subject: "同學們", first: "排好隊伍", second: "進入禮堂" },
-          { subject: "爸爸", first: "準備食物", second: "和我們去野餐" }
+          { subject: "我", place: "在家中", firstVerb: "整理", firstObject: "書包", secondVerb: "閱讀", secondObject: "故事書" },
+          { subject: "妹妹", place: "在家中", firstVerb: "清洗", firstObject: "雙手", secondVerb: "吃", secondObject: "晚飯" },
+          { subject: "同學們", place: "在學校裏", firstVerb: "排好", firstObject: "隊伍", secondVerb: "進入", secondObject: "禮堂" },
+          { subject: "爸爸", place: "在公園裏", firstVerb: "準備", firstObject: "食物", secondVerb: "享用", secondObject: "午餐" }
         ]
       },
       level5: {
+        times: ["今天", "星期日早上", "放學後", "黃昏時"],
         conditions: [
-          { condition: "明天天氣晴朗", subject: "我們", result: "到郊外遠足" },
-          { condition: "我完成功課", subject: "媽媽", result: "讓我到公園玩" },
-          { condition: "大家愛護環境", subject: "城市", result: "變得更美麗" },
-          { condition: "你每天練習", subject: "中文", result: "慢慢進步" }
+          { conditionPerson: "大家", conditionVerb: "愛護", conditionObject: "環境", subject: "城市", place: "在社區裏", verb: "變得", object: "更加美麗" },
+          { conditionPerson: "我", conditionVerb: "完成", conditionObject: "功課", subject: "媽媽", place: "在家中", verb: "帶", object: "我去玩" },
+          { conditionPerson: "你", conditionVerb: "練習", conditionObject: "中文", subject: "中文能力", place: "在學校裏", verb: "得到", object: "進步" }
         ],
         contrasts: [
-          { first: "今天下着雨", subject: "同學們", second: "準時回到學校" },
-          { first: "這道題目很困難", subject: "哥哥", second: "沒有放棄" },
-          { first: "妹妹年紀還小", subject: "她", second: "懂得照顧別人" },
-          { first: "路程十分遙遠", subject: "我們", second: "仍然堅持走下去" }
+          { conditionNoun: "天氣", adjective: "很惡劣", subject: "同學們", place: "在學校裏", adverb: "仍然", verb: "完成", object: "課堂活動" },
+          { conditionNoun: "題目", adjective: "很困難", subject: "哥哥", place: "在家中", adverb: "一直", verb: "思考", object: "解答方法" },
+          { conditionNoun: "天氣", adjective: "很炎熱", subject: "我們", place: "在公園裏", adverb: "仍然", verb: "參加", object: "戶外活動" }
         ],
         events: [
-          { event: "老師走進課室", subject: "同學們", action: "立刻安靜下來" },
-          { event: "我遇到困難", subject: "好朋友", action: "總會主動幫助我" },
-          { event: "春天來臨", subject: "公園裏的花朵", action: "漸漸盛開" },
-          { event: "音樂響起", subject: "小朋友們", action: "一起快樂地跳舞" }
+          { eventPerson: "老師", eventVerb: "走進", eventObject: "課室", subject: "同學們", place: "在學校裏", adverb: "立刻", verb: "停止", object: "交談" },
+          { eventPerson: "音樂", eventVerb: "開始", eventObject: "播放", subject: "小朋友們", place: "在公園裏", adverb: "快樂地", verb: "跳", object: "舞" },
+          { eventPerson: "朋友", eventVerb: "遇到", eventObject: "困難", subject: "我", place: "在社區裏", adverb: "主動地", verb: "提供", object: "幫助" }
         ]
       }
     };
@@ -499,6 +540,14 @@
       return copy;
     }
 
+    function token(text, type = "other") {
+      return { text, type };
+    }
+
+    function sentenceText(parts) {
+      return parts.map((part) => part.text).join("");
+    }
+
     function makeQuestion(level) {
       if (level === 0) {
         if (Math.random() < 0.72) {
@@ -506,99 +555,149 @@
           const action = pick(sentenceParts.level1.actions);
           return {
             clue: action.clue,
-            parts: [subject, action.text, action.object, "。"]
+            parts: [
+              token(subject, "person"),
+              token(action.verb, "verb"),
+              token(action.object),
+              token("。")
+            ]
           };
         }
         const subject = pick(sentenceParts.level1.subjects);
         const feeling = pick(sentenceParts.level1.feelings);
-        return { clue: `${subject}有甚麼表現？`, parts: [subject, feeling, "。"] };
+        return {
+          clue: `${subject}有甚麼表現？`,
+          parts: [
+            token(subject, "person"),
+            token("很"),
+            token(feeling, "adjective"),
+            token("。")
+          ]
+        };
       }
 
       if (level === 1) {
-        if (Math.random() < 0.58) {
-          const subject = pick(sentenceParts.level2.learners);
-          const time = pick(sentenceParts.level2.times);
-          const routine = pick(sentenceParts.level2.routines);
-          return {
-            clue: `${subject}在甚麼時候做甚麼？`,
-            parts: [subject, time, routine, "。"]
-          };
-        }
-        const subject = pick(sentenceParts.level2.learners);
-        const scene = pick(sentenceParts.level2.places);
-        return { clue: scene.clue, parts: [subject, scene.place, scene.action, "。"] };
+        const subject = pick(sentenceParts.level2.people);
+        const time = pick(sentenceParts.level2.times);
+        const place = pick(sentenceParts.level2.places);
+        const action = pick(sentenceParts.level2.actions);
+        return {
+          clue: "請把時間、人物、地點和事情排好。",
+          parts: [
+            token(time, "time"), token("，"), token(subject, "person"),
+            token(place, "place"), token(action.verb, "verb"),
+            token(action.object), token("。")
+          ]
+        };
       }
 
       if (level === 2) {
-        if (Math.random() < 0.45) {
-          const object = pick(sentenceParts.level3.objects);
-          return {
-            clue: `請描寫${object.noun}。`,
-            parts: [object.owner, object.description, object.noun, object.state, "。"]
-          };
-        }
+        const time = pick(sentenceParts.level3.times);
+        const subject = pick(sentenceParts.level3.people);
+        const place = pick(sentenceParts.level3.places);
         const scene = pick(sentenceParts.level3.scenes);
         return {
-          clue: "請把時間、人物、地點和活動排好。",
-          parts: [scene.time, "，", scene.subject, scene.place, scene.action, "。"]
+          clue: "留意修飾語、動詞和形容詞的位置。",
+          parts: [
+            token(time, "time"), token("，"), token(subject, "person"),
+            token(place, "place"), token(scene.adverb, "modifier"),
+            token(scene.verb, "verb"), token(scene.amount),
+            token(scene.adjective, "adjective"), token(scene.noun), token("。")
+          ]
         };
       }
 
       if (level === 3) {
+        const time = pick(sentenceParts.level4.times);
         if (Math.random() < 0.55) {
           const item = pick(sentenceParts.level4.reasons);
           return {
             clue: "請用「因為……所以……」連接原因和結果。",
-            parts: ["因為", item.reason, "，", "所以", item.subject, item.result, "。"]
+            parts: [
+              token(time, "time"), token("，"), token("因為"),
+              token(item.reasonNoun), token(item.reasonAdjective, "adjective"),
+              token("，"), token("所以"), token(item.subject, "person"),
+              token(item.place, "place"), token(item.verb, "verb"),
+              token(item.object), token("。")
+            ]
           };
         }
         const item = pick(sentenceParts.level4.sequences);
         return {
           clue: "請把先後次序排正確。",
-          parts: [item.subject, "先", item.first, "，", "再", item.second, "。"]
+          parts: [
+            token(time, "time"), token("，"), token(item.subject, "person"),
+            token(item.place, "place"), token("先"), token(item.firstVerb, "verb"),
+            token(item.firstObject), token("，"), token("再"),
+            token(item.secondVerb, "verb"), token(item.secondObject), token("。")
+          ]
         };
       }
 
+      const time = pick(sentenceParts.level5.times);
       const pattern = Math.floor(Math.random() * 3);
       if (pattern === 0) {
         const item = pick(sentenceParts.level5.conditions);
         return {
           clue: "請用「如果……就會……」組成條件句。",
-          parts: ["如果", item.condition, "，", item.subject, "就會", item.result, "。"]
+          parts: [
+            token(time, "time"), token("，"), token("如果"),
+            token(item.conditionPerson, "person"), token(item.conditionVerb, "verb"),
+            token(item.conditionObject), token("，"), token(item.subject, "person"),
+            token(item.place, "place"), token("就會"), token(item.verb, "verb"),
+            token(item.object), token("。")
+          ]
         };
       }
       if (pattern === 1) {
         const item = pick(sentenceParts.level5.contrasts);
         return {
           clue: "請用「雖然……但是……」表達轉折。",
-          parts: ["雖然", item.first, "，", "但是", item.subject, item.second, "。"]
+          parts: [
+            token(time, "time"), token("，"), token("雖然"),
+            token(item.conditionNoun), token(item.adjective, "adjective"), token("，"), token("但是"),
+            token(item.subject, "person"), token(item.place, "place"),
+            token(item.adverb, "modifier"), token(item.verb, "verb"),
+            token(item.object), token("。")
+          ]
         };
       }
       const item = pick(sentenceParts.level5.events);
       return {
         clue: "事情發生時，人物有甚麼反應？",
-        parts: ["當", item.event, "的時候", "，", item.subject, item.action, "。"]
+        parts: [
+          token(time, "time"), token("，"), token("當"),
+          token(item.eventPerson), token(item.eventVerb, "verb"),
+          token(item.eventObject), token("的時候"), token("，"),
+          token(item.subject, "person"), token(item.place, "place"),
+          token(item.adverb, "modifier"), token(item.verb, "verb"),
+          token(item.object), token("。")
+        ]
       };
     }
 
     function createRandomQuestion(level) {
       let question = makeQuestion(level);
-      let sentence = question.parts.join("");
+      let sentence = sentenceText(question.parts);
       for (let attempt = 0; attempt < 8 && sentence === state.lastSentence[level]; attempt++) {
         question = makeQuestion(level);
-        sentence = question.parts.join("");
+        sentence = sentenceText(question.parts);
       }
       state.lastSentence[level] = sentence;
       return question;
     }
 
     function shuffledParts(parts) {
-      const items = parts.map((text, index) => ({ id: `${Date.now()}-${index}`, text }));
+      const items = parts.map((part, index) => ({
+        id: `${Date.now()}-${index}`,
+        text: part.text,
+        type: part.type
+      }));
       let mixed = shuffle(items);
-      for (let attempt = 0; attempt < 6 && mixed.map((item) => item.text).join("") === parts.join(""); attempt++) {
+      for (let attempt = 0; attempt < 6 && mixed.map((item) => item.text).join("") === sentenceText(parts); attempt++) {
         mixed = shuffle(items);
       }
-      if (mixed.length > 2 && mixed.map((item) => item.text).join("") === parts.join("")) {
+      if (mixed.length > 2 && mixed.map((item) => item.text).join("") === sentenceText(parts)) {
         [mixed[0], mixed[1]] = [mixed[1], mixed[0]];
       }
       return mixed;
@@ -633,7 +732,7 @@
       words.forEach((word) => {
         const button = document.createElement("button");
         button.type = "button";
-        button.className = isAnswer ? "word answer-word" : "word";
+        button.className = `${isAnswer ? "word answer-word" : "word"} ${word.type || "other"}`;
         button.textContent = word.text;
         button.setAttribute("aria-label", word.text);
         button.addEventListener("click", () => handler(word.id));
@@ -684,7 +783,7 @@
 
     function checkAnswer() {
       const answer = state.answer.map((word) => word.text).join("");
-      const expected = state.current.parts.join("");
+      const expected = sentenceText(state.current.parts);
 
       if (answer === expected && state.bank.length === 0) {
         if (!state.solved) {
@@ -714,10 +813,10 @@
     function showHint() {
       const expected = state.current.parts;
       let position = 0;
-      while (position < state.answer.length && state.answer[position].text === expected[position]) {
+      while (position < state.answer.length && state.answer[position].text === expected[position].text) {
         position += 1;
       }
-      const next = expected[position] || expected[0];
+      const next = (expected[position] || expected[0]).text;
       els.feedback.className = "feedback";
       els.feedback.textContent = `提示：第 ${position + 1} 個位置是「${next}」`;
       playSound("hint");
