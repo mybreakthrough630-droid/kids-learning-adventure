@@ -855,7 +855,7 @@
         activePhonemeAudio.pause();
         activePhonemeAudio.currentTime = 0;
       }
-      activePhonemeAudio = new Audio(`assets/phonemes/${fileName}.m4a`);
+      activePhonemeAudio = new Audio(`assets/phonemes/${fileName}.m4a?v=20260812-2`);
       activePhonemeAudio.playbackRate = 0.78;
       activePhonemeAudio.preservesPitch = true;
       return new Promise((resolve) => {
@@ -873,7 +873,7 @@
         activePhonemeAudio.pause();
         activePhonemeAudio.currentTime = 0;
       }
-      activePhonemeAudio = new Audio(`assets/phonics-examples/${word}.m4a`);
+      activePhonemeAudio = new Audio(`assets/phonics-examples/${word}.m4a?v=20260812-2`);
       activePhonemeAudio.playbackRate = playbackRate;
       activePhonemeAudio.preservesPitch = true;
       activePhonemeAudio.addEventListener("error", () => speak(word), { once: true });
