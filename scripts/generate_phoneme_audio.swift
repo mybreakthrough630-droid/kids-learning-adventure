@@ -58,10 +58,10 @@ let phonemes = [
 let outputDirectory = URL(fileURLWithPath: CommandLine.arguments.dropFirst().first ?? "assets/phonemes", isDirectory: true)
 try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
 
-let requestedVoice = CommandLine.arguments.dropFirst(2).first ?? "com.apple.voice.super-compact.en-AU.Karen"
+let requestedVoice = CommandLine.arguments.dropFirst(2).first ?? "com.apple.voice.compact.en-GB.Daniel"
 guard let voice = AVSpeechSynthesisVoice(identifier: requestedVoice)
-    ?? AVSpeechSynthesisVoice.speechVoices().first(where: { $0.name == "Karen" && $0.language == "en-AU" }) else {
-    fputs("The female English voice used for phoneme audio is unavailable.\n", stderr)
+    ?? AVSpeechSynthesisVoice.speechVoices().first(where: { $0.name == "Daniel" && $0.language == "en-GB" }) else {
+    fputs("The British English voice used for phoneme audio is unavailable.\n", stderr)
     exit(1)
 }
 

@@ -99,7 +99,7 @@
 
     .switcher {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(8, minmax(0, 1fr));
       gap: 6px;
       padding: 6px;
       border: 2px solid var(--line);
@@ -176,9 +176,19 @@
       background: #e4f1ff;
     }
 
+    .lesson-tab[data-kind="english-words"]::before {
+      color: #1558a6;
+      background: #e6f7ff;
+    }
+
     .lesson-tab[data-kind="chinese"]::before {
       color: #8a3f7d;
       background: #f8e6f5;
+    }
+
+    .lesson-tab[data-kind="chinese-words"]::before {
+      color: #8a3f7d;
+      background: #fff0fa;
     }
 
     .lesson-tab[data-kind="math"]::before {
@@ -263,7 +273,7 @@
 
     @media (max-width: 1050px) {
       .switcher {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
     }
 
@@ -332,12 +342,17 @@
     }
 
     @media (max-width: 390px) {
+      .switcher {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
       .lesson-tab small {
         display: none;
       }
 
       .lesson-tab {
         min-height: 58px;
+        font-size: 16px;
       }
     }
   </style>
@@ -381,6 +396,17 @@
       <button
         class="lesson-tab"
         type="button"
+        data-kind="english-words"
+        data-icon="EW"
+        data-src="english-word-recognition.html"
+        data-title="英文認字 English Word Recognition"
+      >
+        英文認字
+        <small>英式讀音、拼讀與詞義</small>
+      </button>
+      <button
+        class="lesson-tab"
+        type="button"
         data-kind="chinese"
         data-icon="C"
         data-src="chinese-sentence-builder.html"
@@ -388,6 +414,17 @@
       >
         中文造句
         <small>5個Level隨機重組中文句子</small>
+      </button>
+      <button
+        class="lesson-tab"
+        type="button"
+        data-kind="chinese-words"
+        data-icon="中"
+        data-src="chinese-word-recognition.html"
+        data-title="中文認字 Chinese Word Recognition"
+      >
+        中文認字
+        <small>粵語讀音、生字與詞義</small>
       </button>
       <button
         class="lesson-tab"
@@ -441,7 +478,7 @@
           id="lessonFrame"
           title="閱讀理解 Reading Fun"
           src="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
-          allow="autoplay"
+          allow="autoplay; microphone"
           referrerpolicy="strict-origin-when-cross-origin"
         ></iframe>
       </div>

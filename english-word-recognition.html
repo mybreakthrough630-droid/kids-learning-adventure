@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>英文認字小學堂</title>
+  <link rel="stylesheet" href="word-recognition.css">
+</head>
+<body data-language="en">
+  <main class="page">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Primary 2 · British English Word Recognition</p>
+        <h1>英文認字小學堂</h1>
+        <p>睇大字、聽固定英式讀音、逐音拼讀，再了解單字意思。</p>
+      </div>
+      <div class="hero-badge" aria-hidden="true">ABC</div>
+    </header>
+
+    <div class="learning-layout">
+      <aside class="category-panel">
+        <h2>Choose a topic</h2>
+        <nav class="category-list" id="categoryList" aria-label="Word topics"></nav>
+      </aside>
+
+      <section class="word-card" id="wordCard" aria-live="polite">
+        <div class="progress-row">
+          <span class="category-title" id="categoryTitle"></span>
+          <span class="score" id="score">⭐ 0</span>
+        </div>
+        <div class="picture-cue" id="pictureCue" aria-hidden="true"></div>
+        <p class="word" id="word"></p>
+        <p class="pronunciation" id="pronunciation"></p>
+        <div class="sound-builder" id="soundBuilder"></div>
+        <p class="teaching-note" id="teachingNote"></p>
+        <p class="meaning" id="meaning"></p>
+        <div class="actions">
+          <button class="action-button listen" id="listenBtn" type="button">🔊 英式讀音</button>
+          <button class="action-button listen" id="slowBtn" type="button">🐢 慢速讀音</button>
+          <button class="action-button listen" id="buildBtn" type="button">🧩 逐音拼讀</button>
+          <button class="action-button mic" id="micBtn" type="button">🎤 Try saying it</button>
+          <button class="action-button know" id="knowBtn" type="button">✅ I can read it</button>
+          <button class="action-button next" id="nextBtn" type="button">➡ Next word</button>
+        </div>
+        <div class="feedback" id="feedback">Listen, sound it out, then say the word.</div>
+        <p class="support-note" id="supportNote"></p>
+        <div class="confetti" id="confetti" aria-hidden="true"></div>
+      </section>
+    </div>
+  </main>
+  <script src="word-recognition-data.js"></script>
+  <script src="word-recognition.js"></script>
+</body>
+</html>

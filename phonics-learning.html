@@ -448,7 +448,7 @@
 <body>
   <header class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">British English · Jolly Phonics Sequence</p>
+      <p class="eyebrow">British English · Synthetic Phonics</p>
       <h1>英語拼音樂園</h1>
       <p>聽清楚每個音，將音拼成字，再把字放入句子。</p>
     </div>
@@ -466,13 +466,13 @@
     <section class="lesson-view active" id="view-sounds">
       <div class="section-heading">
         <div>
-          <h2>Jolly Phonics 42個字母音</h2>
+          <h2>42個常用英式字母音</h2>
           <p>依照七組教學次序學純音，再用拼讀和拆音鞏固。</p>
         </div>
         <span class="help-text" id="soundCount">42 sounds</span>
       </div>
 
-      <div class="filters" id="soundFilters" aria-label="Jolly Phonics 七組字母音">
+      <div class="filters" id="soundFilters" aria-label="七組常用字母音">
         <button class="filter-button active" type="button" data-filter="all">全部42音</button>
         <button class="filter-button" type="button" data-filter="1">第1組</button>
         <button class="filter-button" type="button" data-filter="2">第2組</button>
@@ -494,7 +494,6 @@
             <button class="primary-action phoneme-action" id="playPhoneme" type="button">▶ 女聲純音 /s/</button>
             <button class="primary-action" id="playExample" type="button">▶ 英式例字 sun</button>
             <a class="secondary-action" id="dictionaryLink" href="https://dictionary.cambridge.org/pronunciation/english/sun" target="_blank" rel="noopener">Cambridge UK</a>
-            <a class="secondary-action" href="https://jollylearning.com/our-programmes/jolly-phonics/jolly-phonics-app" target="_blank" rel="noopener">Jolly 官方42音</a>
           </div>
           <div class="feedback" id="soundTip">牙齒輕輕合近，讓氣流持續送出，不要在尾部加 /uh/。先聽 sun，再模仿目標音。</div>
         </aside>
@@ -591,7 +590,6 @@
     <footer class="resources">
       <h3>老師與家長參考</h3>
       <div class="resource-links">
-        <a href="https://jollylearning.com/our-programmes/jolly-phonics/jolly-phonics-app" target="_blank" rel="noopener">Jolly Learning：官方42音與歌曲</a>
         <a href="https://www.gov.uk/government/publications/choosing-a-phonics-teaching-programme" target="_blank" rel="noopener">GOV.UK：Systematic Synthetic Phonics</a>
         <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/190599/Letters_and_Sounds_-_DFES-00281-2007.pdf" target="_blank" rel="noopener">Letters and Sounds</a>
         <a href="https://learnenglishkids.britishcouncil.org/apps/sounds-right" target="_blank" rel="noopener">British Council Sounds Right</a>
@@ -826,11 +824,11 @@
 
     function britishVoice() {
       const voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
-      const femaleName = /flo|sandy|shelley|serena|kate|stephanie|victoria|fiona|susan|hazel|female/i;
-      return voices.find((voice) => voice.lang.toLowerCase() === "en-gb" && femaleName.test(voice.name))
-        || voices.find((voice) => /british|uk/i.test(`${voice.name} ${voice.lang}`) && femaleName.test(voice.name))
-        || voices.find((voice) => voice.lang.toLowerCase() === "en-gb")
-        || voices.find((voice) => /british|uk/i.test(`${voice.name} ${voice.lang}`));
+      const preferredName = /Daniel|Serena|Kate|Stephanie|Oliver|Arthur/i;
+      return voices.find((voice) => voice.lang.toLowerCase() === "en-gb" && voice.localService && preferredName.test(voice.name))
+        || voices.find((voice) => voice.lang.toLowerCase() === "en-gb" && preferredName.test(voice.name))
+        || voices.find((voice) => voice.lang.toLowerCase() === "en-gb" && voice.localService)
+        || voices.find((voice) => voice.lang.toLowerCase() === "en-gb");
     }
 
     function speak(text, rate = 0.72) {
@@ -861,6 +859,21 @@
         }, { once: true });
         activePhonemeAudio.play().catch(resolve);
       });
+    }
+
+    function playRecordedWord(word, playbackRate = 1) {
+      if (activePhonemeAudio) {
+        activePhonemeAudio.pause();
+        activePhonemeAudio.currentTime = 0;
+      }
+      activePhonemeAudio = new Audio(`assets/phonics-examples/${word}.m4a`);
+      activePhonemeAudio.playbackRate = playbackRate;
+      activePhonemeAudio.addEventListener("error", () => speak(word), { once: true });
+      return activePhonemeAudio.play().catch(() => speak(word));
+    }
+
+    function playRecordedExample(sound) {
+      return playRecordedWord(sound.word);
     }
 
     function renderSounds() {
@@ -914,7 +927,7 @@
     });
 
     playPhonemeButton.addEventListener("click", () => speakPhoneme(state.selectedSound));
-    playExampleButton.addEventListener("click", () => speak(state.selectedSound.word));
+    playExampleButton.addEventListener("click", () => playRecordedExample(state.selectedSound));
 
     function randomNextIndex(length, current) {
       if (length < 2) return 0;
@@ -966,7 +979,7 @@
         await playPart(part, item);
         await new Promise((resolve) => setTimeout(resolve, 120));
       }
-      speak(`${item.word}. ${item.sentence}`, 0.58);
+      playRecordedWord(item.word, 0.82);
     });
 
     document.getElementById("nextBlend").addEventListener("click", () => {
@@ -1019,7 +1032,7 @@
       document.getElementById("segmentFeedback").textContent = count === item.parts.length
         ? `答對了！${item.word} 有 ${item.parts.length} 個音：${item.parts.join(" · ")}。`
         : `再聽一次：${item.parts.join(" · ")}。字母組合可以只代表一個音。`;
-      speak(item.word, 0.6);
+      playRecordedWord(item.word, 0.82);
     }
 
     document.getElementById("nextSegment").addEventListener("click", () => {
@@ -1053,7 +1066,7 @@
           button.textContent = word;
           button.addEventListener("click", () => {
             button.classList.toggle("learned");
-            speak(word);
+            playRecordedWord(word);
           });
           wordList.appendChild(button);
         });
