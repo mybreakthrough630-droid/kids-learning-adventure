@@ -87,7 +87,7 @@ let vocabularyTotal = 0;
 for (const category of library.categories) {
   const items = library.items[category.id];
   vocabularyTotal += items.length;
-  const minimum = category.id === "feelings" ? 35 : 25;
+  const minimum = category.id === "feelings" ? 35 : category.id === "festivals" ? 15 : 25;
   if (items.length < minimum) errors.push(`${category.id} has ${items.length} words; needs at least ${minimum}.`);
   const ids = new Set();
   for (const item of items) {

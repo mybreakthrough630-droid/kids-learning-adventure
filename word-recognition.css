@@ -177,12 +177,6 @@ h1 {
 
 .score { background: #fff4c8; border-color: #ecc766; }
 
-.picture-cue {
-  margin-top: 8px;
-  font-size: clamp(52px, 8vw, 82px);
-  line-height: 1;
-}
-
 .word {
   margin: 8px auto 2px;
   color: #172a44;

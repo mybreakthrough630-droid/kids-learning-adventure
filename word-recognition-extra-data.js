@@ -5,7 +5,7 @@
   const descriptions = {
     animals: "是一種動物。",
     stationery: "是學習或做手工時會用到的文具。",
-    festivals: "是節日或慶祝活動中常見的名稱或事物。",
+    festivals: "是香港公眾假期之一。",
     shapes: "是數學和生活中常見的圖形概念。",
     fruits: "是一種水果。",
     insects: "是一種昆蟲或小型節肢動物。",
@@ -33,7 +33,7 @@
       zh,
       jyutping,
       en,
-      ipa: "英式：按喇叭聽讀音",
+      ipa: "",
       chunks,
       phonemes,
       alternatives: [],
@@ -283,4 +283,25 @@
   Object.entries(extra).forEach(([categoryId, rows]) => {
     library.items[categoryId].push(...rows.map((row) => makeWord(categoryId, row)));
   });
+
+  // Keep this topic focused on simple festival names that are observed as
+  // Hong Kong general holidays. Substitute-day wording and dates change from
+  // year to year, so children learn the festival name itself here.
+  library.items.festivals = [
+    ["hk-new-years-day", "元旦", "jyun4 daan3", "New Year's Day"],
+    ["hk-lunar-new-year", "農曆新年", "nung4 lik6 san1 nin4", "Lunar New Year"],
+    ["hk-ching-ming", "清明節", "cing1 ming4 zit3", "Ching Ming Festival"],
+    ["hk-good-friday", "耶穌受難節", "je4 sou1 sau6 naan6 zit3", "Good Friday"],
+    ["hk-easter-saturday", "復活節星期六", "fuk6 wut6 zit3 sing1 kei4 luk6", "Easter Saturday"],
+    ["hk-easter-monday", "復活節星期一", "fuk6 wut6 zit3 sing1 kei4 jat1", "Easter Monday"],
+    ["hk-labour-day", "勞動節", "lou4 dung6 zit3", "Labour Day"],
+    ["hk-buddhas-birthday", "佛誕", "fat6 daan3", "Birthday of the Buddha"],
+    ["hk-tuen-ng", "端午節", "dyun1 ng5 zit3", "Tuen Ng Festival"],
+    ["hk-establishment-day", "香港特別行政區成立紀念日", "hoeng1 gong2 dak6 bit6 hang4 zing3 keoi1 sing4 lap6 gei2 nim6 jat6", "HKSAR Establishment Day"],
+    ["hk-mid-autumn", "中秋節", "zung1 cau1 zit3", "Mid-Autumn Festival"],
+    ["hk-national-day", "國慶日", "gwok3 hing3 jat6", "National Day"],
+    ["hk-chung-yeung", "重陽節", "cung4 joeng4 zit3", "Chung Yeung Festival"],
+    ["hk-christmas-day", "聖誕節", "sing3 daan3 zit3", "Christmas Day"],
+    ["hk-boxing-day", "聖誕節翌日", "sing3 daan3 zit3 jik6 jat6", "Boxing Day"]
+  ].map((row) => makeWord("festivals", row));
 })();

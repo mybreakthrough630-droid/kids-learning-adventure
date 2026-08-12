@@ -84,11 +84,13 @@
     wordCard.classList.remove("celebrate");
     $("#confetti").innerHTML = "";
     $("#categoryTitle").textContent = `${currentCategory.icon} ${language === "en" ? currentCategory.en : currentCategory.zh}`;
-    $("#pictureCue").textContent = currentCategory.icon;
     wordElement.textContent = language === "en" ? item.en : item.zh;
     const length = [...wordElement.textContent].length;
     wordElement.className = `word${length > 15 ? " long" : length > 8 ? " medium" : ""}`;
-    $("#pronunciation").textContent = language === "en" ? item.ipa : `粵拼：${item.jyutping}`;
+    const pronunciation = $("#pronunciation");
+    const pronunciationText = language === "en" ? item.ipa : "";
+    pronunciation.textContent = pronunciationText;
+    pronunciation.hidden = !pronunciationText;
     renderSoundBuilder(item);
     $("#teachingNote").innerHTML = language === "en"
       ? `<strong>拼讀方法：</strong>${item.enGuide}`

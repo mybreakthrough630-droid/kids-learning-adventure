@@ -491,8 +491,8 @@
           <p class="focus-word" id="focusWord">sun</p>
           <p class="focus-spellings" id="focusSpellings">第 1 組 · 常見寫法：s, ss, c</p>
           <div class="action-row">
-            <button class="primary-action phoneme-action" id="playPhoneme" type="button">▶ 英式音素 /s/</button>
-            <button class="primary-action" id="playExample" type="button">▶ 英式例字 sun</button>
+            <button class="primary-action phoneme-action" id="playPhoneme" type="button">▶ 慢速英式音素 /s/</button>
+            <button class="primary-action" id="playExample" type="button">▶ 慢速英式例字 sun</button>
             <a class="secondary-action" id="dictionaryLink" href="https://dictionary.cambridge.org/pronunciation/english/sun" target="_blank" rel="noopener">Cambridge UK</a>
           </div>
           <div class="feedback" id="soundTip">牙齒輕輕合近，讓氣流持續送出，不要在尾部加 /uh/。先聽 sun，再模仿目標音。</div>
@@ -836,7 +836,7 @@
         || voices.find((voice) => voice.lang.toLowerCase() === "en-gb");
     }
 
-    function speak(text, rate = 0.72) {
+    function speak(text, rate = 0.62) {
       if (!("speechSynthesis" in window)) return;
       speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
@@ -856,6 +856,8 @@
         activePhonemeAudio.currentTime = 0;
       }
       activePhonemeAudio = new Audio(`assets/phonemes/${fileName}.m4a`);
+      activePhonemeAudio.playbackRate = 0.78;
+      activePhonemeAudio.preservesPitch = true;
       return new Promise((resolve) => {
         activePhonemeAudio.addEventListener("ended", resolve, { once: true });
         activePhonemeAudio.addEventListener("error", () => {
@@ -866,19 +868,20 @@
       });
     }
 
-    function playRecordedWord(word, playbackRate = 1) {
+    function playRecordedWord(word, playbackRate = 0.82) {
       if (activePhonemeAudio) {
         activePhonemeAudio.pause();
         activePhonemeAudio.currentTime = 0;
       }
       activePhonemeAudio = new Audio(`assets/phonics-examples/${word}.m4a`);
       activePhonemeAudio.playbackRate = playbackRate;
+      activePhonemeAudio.preservesPitch = true;
       activePhonemeAudio.addEventListener("error", () => speak(word), { once: true });
       return activePhonemeAudio.play().catch(() => speak(word));
     }
 
     function playRecordedExample(sound) {
-      return playRecordedWord(sound.word);
+      return playRecordedWord(sound.word, 0.74);
     }
 
     function renderSounds() {
@@ -908,8 +911,8 @@
       focusSpellings.textContent = `第 ${sound.group} 組 · 常見寫法：${sound.spellings}`;
       soundTip.textContent = `${sound.tip} 先聽 ${sound.word}，再模仿目標音。`;
       dictionaryLink.href = `https://dictionary.cambridge.org/pronunciation/english/${encodeURIComponent(sound.word)}`;
-      playPhonemeButton.textContent = `▶ 英式音素 ${sound.ipa}`;
-      playExampleButton.textContent = `▶ 英式例字 ${sound.word}`;
+      playPhonemeButton.textContent = `▶ 慢速英式音素 ${sound.ipa}`;
+      playExampleButton.textContent = `▶ 慢速英式例字 ${sound.word}`;
       renderSounds();
       if (window.matchMedia("(max-width: 850px)").matches) {
         document.querySelector(".sound-focus").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -982,9 +985,9 @@
       const item = currentBlendItem();
       for (const part of item.parts) {
         await playPart(part, item);
-        await new Promise((resolve) => setTimeout(resolve, 120));
+        await new Promise((resolve) => setTimeout(resolve, 70));
       }
-      playRecordedWord(item.word, 0.82);
+      playRecordedWord(item.word, 0.72);
     });
 
     document.getElementById("nextBlend").addEventListener("click", () => {
@@ -1037,7 +1040,7 @@
       document.getElementById("segmentFeedback").textContent = count === item.parts.length
         ? `答對了！${item.word} 有 ${item.parts.length} 個音：${item.parts.join(" · ")}。`
         : `再聽一次：${item.parts.join(" · ")}。字母組合可以只代表一個音。`;
-      playRecordedWord(item.word, 0.82);
+      playRecordedWord(item.word, 0.74);
     }
 
     document.getElementById("nextSegment").addEventListener("click", () => {

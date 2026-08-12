@@ -23,9 +23,10 @@ function run(command, args) {
 }
 
 const directory = path.join(root, "assets", "phonics-examples");
+const force = process.argv.includes("--force");
 const pending = [...words].filter((word) => {
   const file = path.join(directory, `${word}.m4a`);
-  return !fs.existsSync(file) || fs.statSync(file).size < 1000;
+  return force || !fs.existsSync(file) || fs.statSync(file).size < 1000;
 });
 let index = 0;
 
@@ -34,7 +35,7 @@ async function worker() {
     const word = pending[index++];
     const temporary = path.join(directory, `${word}.caf`);
     const output = path.join(directory, `${word}.m4a`);
-    await run("/usr/bin/say", ["-v", "Daniel", "-r", "150", "-o", temporary, word]);
+    await run("/usr/bin/say", ["-v", "Daniel", "-r", "125", "-o", temporary, word]);
     await run("/usr/bin/afconvert", [temporary, output, "-f", "m4af", "-d", "aac", "-b", "64000", "-q", "127"]);
     fs.unlinkSync(temporary);
     process.stdout.write(`Created ${word}.m4a\n`);
