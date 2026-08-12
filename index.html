@@ -41,20 +41,20 @@
       width: min(1440px, 100%);
       min-height: 100vh;
       margin: 0 auto;
-      padding: 16px;
+      padding: 8px 12px 12px;
     }
 
     .topbar {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: 20px;
+      gap: 14px;
       align-items: center;
-      padding: 4px 2px 14px;
+      padding: 0 2px 7px;
     }
 
     .brand {
       display: flex;
-      gap: 14px;
+      gap: 10px;
       align-items: center;
       min-width: 0;
     }
@@ -62,46 +62,46 @@
     .brand-mark {
       display: grid;
       place-items: center;
-      flex: 0 0 68px;
-      width: 68px;
-      height: 68px;
-      border: 4px solid #ffffff;
+      flex: 0 0 50px;
+      width: 50px;
+      height: 50px;
+      border: 3px solid #ffffff;
       border-radius: 50%;
       background: #ffd36b;
       box-shadow: 0 5px 16px rgba(39, 54, 74, 0.18);
       color: #27364a;
-      font-size: 31px;
+      font-size: 24px;
       font-weight: 950;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(30px, 5vw, 50px);
+      font-size: clamp(26px, 3.7vw, 38px);
       line-height: 1;
       letter-spacing: 0;
       overflow-wrap: anywhere;
     }
 
     .subtitle {
-      margin: 7px 0 0;
+      margin: 3px 0 0;
       color: var(--muted);
-      font-size: clamp(17px, 2vw, 22px);
+      font-size: clamp(14px, 1.5vw, 17px);
       font-weight: 800;
       line-height: 1.25;
     }
 
     .mode-label {
       color: var(--muted);
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 900;
       white-space: nowrap;
     }
 
     .switcher {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 10px;
-      padding: 10px;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 6px;
+      padding: 6px;
       border: 2px solid var(--line);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.94);
@@ -110,14 +110,14 @@
 
     .lesson-tab {
       position: relative;
-      min-height: 74px;
-      padding: 10px 14px 10px 64px;
-      border: 3px solid #cbd5e1;
+      min-height: 58px;
+      padding: 7px 8px 7px 46px;
+      border: 2px solid #cbd5e1;
       border-radius: 8px;
       background: #ffffff;
       color: var(--ink);
       font: inherit;
-      font-size: clamp(21px, 2.8vw, 30px);
+      font-size: clamp(17px, 1.9vw, 22px);
       font-weight: 950;
       line-height: 1.05;
       text-align: left;
@@ -128,24 +128,24 @@
     .lesson-tab::before {
       content: attr(data-icon);
       position: absolute;
-      left: 13px;
+      left: 8px;
       top: 50%;
       display: grid;
       place-items: center;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       transform: translateY(-50%);
       background: #edf4ff;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 950;
     }
 
     .lesson-tab small {
       display: block;
-      margin-top: 6px;
+      margin-top: 3px;
       color: var(--muted);
-      font-size: clamp(14px, 1.5vw, 17px);
+      font-size: clamp(12px, 1.05vw, 14px);
       font-weight: 800;
       line-height: 1.2;
     }
@@ -186,13 +186,18 @@
       background: #def8ee;
     }
 
+    .lesson-tab[data-kind="olympiad"]::before {
+      color: #6a3ea1;
+      background: #f0e6ff;
+    }
+
     .lesson-tab[data-kind="phonics"]::before {
       color: #a23e2f;
       background: #fff0d8;
     }
 
     .learning-stage {
-      margin-top: 12px;
+      margin-top: 8px;
     }
 
     .stage-bar {
@@ -200,8 +205,8 @@
       gap: 12px;
       align-items: center;
       justify-content: space-between;
-      min-height: 50px;
-      padding: 8px 12px;
+      min-height: 42px;
+      padding: 6px 10px;
       border: 2px solid var(--line);
       border-bottom: 0;
       border-radius: 8px 8px 0 0;
@@ -210,7 +215,7 @@
 
     .stage-title {
       margin: 0;
-      font-size: clamp(18px, 2.4vw, 25px);
+      font-size: clamp(17px, 2vw, 22px);
       font-weight: 950;
     }
 
@@ -250,7 +255,7 @@
     iframe {
       display: block;
       width: 100%;
-      height: max(680px, calc(100vh - 250px));
+      height: max(680px, calc(100vh - 176px));
       min-height: 680px;
       border: 0;
       background: #ffffff;
@@ -277,10 +282,10 @@
       }
 
       .brand-mark {
-        flex-basis: 54px;
-        width: 54px;
-        height: 54px;
-        font-size: 25px;
+        flex-basis: 46px;
+        width: 46px;
+        height: 46px;
+        font-size: 22px;
       }
 
       .mode-label {
@@ -294,9 +299,9 @@
       }
 
       .lesson-tab {
-        min-height: 72px;
+        min-height: 62px;
         padding: 9px 8px;
-        font-size: 20px;
+        font-size: 18px;
         text-align: center;
       }
 
@@ -322,7 +327,7 @@
       }
 
       iframe {
-        height: calc(100vh - 240px);
+        height: calc(100vh - 210px);
       }
     }
 
@@ -404,7 +409,18 @@
         data-title="數學樂園 Maths Fun"
       >
         數學練習
-        <small>基礎數學與一年級奧數</small>
+        <small>加減、乘除與文字題</small>
+      </button>
+      <button
+        class="lesson-tab"
+        type="button"
+        data-kind="olympiad"
+        data-icon="O"
+        data-src="https://mybreakthrough630-droid.github.io/kids-math-learning-site/grade1-olympiad-math.html"
+        data-title="小一奧數 Olympiad Maths"
+      >
+        小一奧數
+        <small>12類題型、五個難度</small>
       </button>
     </nav>
 
