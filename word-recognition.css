@@ -190,6 +190,7 @@ h1 {
 
 .word.medium { font-size: clamp(62px, 10vw, 116px); }
 .word.long { font-size: clamp(44px, 7.2vw, 82px); }
+.word.extra-long { font-size: clamp(32px, 5vw, 58px); line-height: 1.08; }
 
 .pronunciation {
   margin: 7px auto 0;

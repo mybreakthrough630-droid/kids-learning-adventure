@@ -86,7 +86,7 @@
     $("#categoryTitle").textContent = `${currentCategory.icon} ${language === "en" ? currentCategory.en : currentCategory.zh}`;
     wordElement.textContent = language === "en" ? item.en : item.zh;
     const length = [...wordElement.textContent].length;
-    wordElement.className = `word${length > 15 ? " long" : length > 8 ? " medium" : ""}`;
+    wordElement.className = `word${length > 34 ? " extra-long" : length > 15 ? " long" : length > 8 ? " medium" : ""}`;
     const pronunciation = $("#pronunciation");
     const pronunciationText = language === "en" ? item.ipa : "";
     pronunciation.textContent = pronunciationText;

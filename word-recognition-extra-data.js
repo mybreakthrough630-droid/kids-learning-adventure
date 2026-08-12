@@ -288,20 +288,22 @@
   // Hong Kong general holidays. Substitute-day wording and dates change from
   // year to year, so children learn the festival name itself here.
   library.items.festivals = [
-    ["hk-new-years-day", "元旦", "jyun4 daan3", "New Year's Day"],
-    ["hk-lunar-new-year", "農曆新年", "nung4 lik6 san1 nin4", "Lunar New Year"],
-    ["hk-ching-ming", "清明節", "cing1 ming4 zit3", "Ching Ming Festival"],
-    ["hk-good-friday", "耶穌受難節", "je4 sou1 sau6 naan6 zit3", "Good Friday"],
-    ["hk-easter-saturday", "復活節星期六", "fuk6 wut6 zit3 sing1 kei4 luk6", "Easter Saturday"],
-    ["hk-easter-monday", "復活節星期一", "fuk6 wut6 zit3 sing1 kei4 jat1", "Easter Monday"],
-    ["hk-labour-day", "勞動節", "lou4 dung6 zit3", "Labour Day"],
-    ["hk-buddhas-birthday", "佛誕", "fat6 daan3", "Birthday of the Buddha"],
-    ["hk-tuen-ng", "端午節", "dyun1 ng5 zit3", "Tuen Ng Festival"],
-    ["hk-establishment-day", "香港特別行政區成立紀念日", "hoeng1 gong2 dak6 bit6 hang4 zing3 keoi1 sing4 lap6 gei2 nim6 jat6", "HKSAR Establishment Day"],
-    ["hk-mid-autumn", "中秋節", "zung1 cau1 zit3", "Mid-Autumn Festival"],
-    ["hk-national-day", "國慶日", "gwok3 hing3 jat6", "National Day"],
-    ["hk-chung-yeung", "重陽節", "cung4 joeng4 zit3", "Chung Yeung Festival"],
-    ["hk-christmas-day", "聖誕節", "sing3 daan3 zit3", "Christmas Day"],
-    ["hk-boxing-day", "聖誕節翌日", "sing3 daan3 zit3 jik6 jat6", "Boxing Day"]
+    ["hk2026-first-day-january", "一月一日", "jat1 jyut6 jat1 jat6", "The first day of January"],
+    ["hk2026-lunar-new-years-day", "農曆年初一", "nung4 lik6 nin4 co1 jat1", "Lunar New Year’s Day"],
+    ["hk2026-second-day-lunar-new-year", "農曆年初二", "nung4 lik6 nin4 co1 ji6", "The second day of Lunar New Year"],
+    ["hk2026-third-day-lunar-new-year", "農曆年初三", "nung4 lik6 nin4 co1 saam1", "The third day of Lunar New Year"],
+    ["hk2026-good-friday", "耶穌受難節", "je4 sou1 sau6 naan6 zit3", "Good Friday"],
+    ["hk2026-day-following-good-friday", "耶穌受難節翌日", "je4 sou1 sau6 naan6 zit3 jik6 jat6", "The day following Good Friday"],
+    ["hk2026-day-following-ching-ming", "清明節翌日", "cing1 ming4 zit3 jik6 jat6", "The day following Ching Ming Festival"],
+    ["hk2026-day-following-easter-monday", "復活節星期一翌日", "fuk6 wut6 zit3 sing1 kei4 jat1 jik6 jat6", "The day following Easter Monday"],
+    ["hk2026-labour-day", "勞動節", "lou4 dung6 zit3", "Labour Day"],
+    ["hk2026-day-following-buddha", "佛誕翌日", "fat6 daan3 jik6 jat6", "The day following the Birthday of the Buddha"],
+    ["hk2026-tuen-ng", "端午節", "dyun1 ng5 zit3", "Tuen Ng Festival"],
+    ["hk2026-establishment-day", "香港特別行政區成立紀念日", "hoeng1 gong2 dak6 bit6 hang4 zing3 keoi1 sing4 lap6 gei2 nim6 jat6", "Hong Kong Special Administrative Region Establishment Day"],
+    ["hk2026-day-following-mid-autumn", "中秋節翌日", "zung1 cau1 zit3 jik6 jat6", "The day following the Chinese Mid-Autumn Festival"],
+    ["hk2026-national-day", "國慶日", "gwok3 hing3 jat6", "National Day"],
+    ["hk2026-day-following-chung-yeung", "重陽節翌日", "cung4 joeng4 zit3 jik6 jat6", "The day following Chung Yeung Festival"],
+    ["hk2026-christmas-day", "聖誕節", "sing3 daan3 zit3", "Christmas Day"],
+    ["hk2026-first-weekday-after-christmas", "聖誕節後第一個周日", "sing3 daan3 zit3 hau6 dai6 jat1 go3 zau1 jat6", "The first weekday after Christmas Day"]
   ].map((row) => makeWord("festivals", row));
 })();
