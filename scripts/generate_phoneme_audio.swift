@@ -68,12 +68,21 @@ guard let voice = AVSpeechSynthesisVoice(identifier: requestedVoice)
 print("Generating with \(voice.name) (\(voice.language))")
 
 for phoneme in phonemes {
-    let ssml = "<speak version=\"1.1\" xml:lang=\"en-GB\"><phoneme alphabet=\"ipa\" ph=\"\(phoneme.ipa)\">sound</phoneme></speak>"
+    // Continuous consonants need a little extra length to be clearly audible to
+    // young learners. Stops and affricates stay short so that /p/ does not turn
+    // into "puh". The length mark changes duration, not the target phoneme.
+    let sustained = Set(["f", "v", "θ", "ð", "s", "z", "ʃ", "ʒ", "h", "m", "n", "ŋ", "l", "ɹ"])
+    let recordingIPA = sustained.contains(phoneme.ipa) ? "\(phoneme.ipa)ː" : phoneme.ipa
+    let repeatCount = phoneme.ipa == "ɹ" ? 5 : (sustained.contains(phoneme.ipa) ? 3 : 1)
+    let units = (0..<repeatCount).map { _ in
+        "<phoneme alphabet=\"ipa\" ph=\"\(recordingIPA)\">sound</phoneme>"
+    }.joined(separator: "<break time=\"35ms\"/>")
+    let ssml = "<speak version=\"1.1\" xml:lang=\"en-GB\">\(units)</speak>"
     guard let utterance = AVSpeechUtterance(ssmlRepresentation: ssml) else {
         throw NSError(domain: "PhonemeAudio", code: 2, userInfo: [NSLocalizedDescriptionKey: "Could not create the /\(phoneme.ipa)/ utterance"])
     }
     utterance.voice = voice
-    utterance.rate = 0.34
+    utterance.rate = 0.28
     utterance.pitchMultiplier = 1.04
     utterance.preUtteranceDelay = 0.04
     utterance.postUtteranceDelay = 0.08

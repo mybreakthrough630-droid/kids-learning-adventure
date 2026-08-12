@@ -456,7 +456,7 @@
 
   <main>
     <nav class="lesson-modes" aria-label="選擇拼音活動">
-      <button class="mode-button active" type="button" data-view="sounds">42個字母音</button>
+      <button class="mode-button active" type="button" data-view="sounds">英式字母音</button>
       <button class="mode-button" type="button" data-view="blend">拼讀 Blend</button>
       <button class="mode-button" type="button" data-view="segment">拆音 Segment</button>
       <button class="mode-button" type="button" data-view="tricky">Tricky Words</button>
@@ -466,14 +466,14 @@
     <section class="lesson-view active" id="view-sounds">
       <div class="section-heading">
         <div>
-          <h2>42個常用英式字母音</h2>
+          <h2>常用英式字母音</h2>
           <p>依照七組教學次序學純音，再用拼讀和拆音鞏固。</p>
         </div>
-        <span class="help-text" id="soundCount">42 sounds</span>
+        <span class="help-text" id="soundCount">47 sounds</span>
       </div>
 
       <div class="filters" id="soundFilters" aria-label="七組常用字母音">
-        <button class="filter-button active" type="button" data-filter="all">全部42音</button>
+        <button class="filter-button active" type="button" data-filter="all">全部音素</button>
         <button class="filter-button" type="button" data-filter="1">第1組</button>
         <button class="filter-button" type="button" data-filter="2">第2組</button>
         <button class="filter-button" type="button" data-filter="3">第3組</button>
@@ -491,7 +491,7 @@
           <p class="focus-word" id="focusWord">sun</p>
           <p class="focus-spellings" id="focusSpellings">第 1 組 · 常見寫法：s, ss, c</p>
           <div class="action-row">
-            <button class="primary-action phoneme-action" id="playPhoneme" type="button">▶ 女聲純音 /s/</button>
+            <button class="primary-action phoneme-action" id="playPhoneme" type="button">▶ 英式音素 /s/</button>
             <button class="primary-action" id="playExample" type="button">▶ 英式例字 sun</button>
             <a class="secondary-action" id="dictionaryLink" href="https://dictionary.cambridge.org/pronunciation/english/sun" target="_blank" rel="noopener">Cambridge UK</a>
           </div>
@@ -647,7 +647,12 @@
       { g: "oi", ipa: "/ɔɪ/", word: "coin", spellings: "oi, oy", type: "vowel", group: 7, tip: "由圓唇音平滑滑向 /ɪ/。" },
       { g: "ue", ipa: "/uː/", word: "blue", spellings: "ue, oo, u-e, ew", type: "vowel", group: 7, tip: "嘴唇收圓，平穩地拉長 /oo/ 音。" },
       { g: "er", ipa: "/ə/", word: "farmer", spellings: "er", type: "vowel", group: 7, tip: "在英式詞尾讀輕而短的弱音，不要捲舌或用力。" },
-      { g: "ar", ipa: "/ɑː/", word: "car", spellings: "ar, a", type: "vowel", group: 7, tip: "嘴巴張開，聲音拉長；英式讀音不捲舌。" }
+      { g: "ar", ipa: "/ɑː/", word: "car", spellings: "ar, a", type: "vowel", group: 7, tip: "嘴巴張開，聲音拉長；英式讀音不捲舌。" },
+      { g: "ur ir", ipa: "/ɜː/", word: "bird", spellings: "ur, ir, er, ear", type: "vowel", group: 7, tip: "讀英式長音，舌頭放鬆，尾部不要捲舌。" },
+      { g: "ear", ipa: "/ɪə/", word: "hear", spellings: "ear, eer, ere", type: "vowel", group: 7, tip: "由短 /ɪ/ 平滑滑向輕 /ə/，不要分成兩拍。" },
+      { g: "air", ipa: "/eə/", word: "chair", spellings: "air, are, ear", type: "vowel", group: 7, tip: "由 /e/ 平滑滑向輕 /ə/，英式讀音不捲舌。" },
+      { g: "ure", ipa: "/ʊə/", word: "pure", spellings: "ure, our", type: "vowel", group: 7, tip: "由短 /ʊ/ 平滑滑向輕 /ə/；先聽完整例字再模仿。" },
+      { g: "s si", ipa: "/ʒ/", word: "vision", spellings: "s, si, ge", type: "consonant", group: 7, tip: "口形像 /sh/，但要讓喉嚨持續震動；這個音常在字的中間。" }
     ];
 
     const levelNotes = [
@@ -785,7 +790,7 @@
       "/p/": "p", "/b/": "b", "/t/": "t", "/d/": "d", "/k/": "k", "/g/": "g",
       "/f/": "f", "/v/": "v", "/θ/": "theta", "/ð/": "eth", "/s/": "s", "/z/": "z",
       "/ʃ/": "sh", "/ʒ/": "zh", "/h/": "h", "/tʃ/": "ch", "/dʒ/": "j", "/m/": "m",
-      "/n/": "n", "/ŋ/": "ng", "/l/": "l", "/r/": "r", "/w/": "w", "/j/": "y",
+      "/n/": "n", "/ŋ/": "ng", "/l/": "l", "/r/": "../phonics-examples/red", "/w/": "w", "/j/": "y",
       "/iː/": "i-long", "/ɪ/": "i-short", "/e/": "e", "/æ/": "a", "/ɑː/": "ar", "/ɒ/": "o-short",
       "/ɔː/": "or", "/ʊ/": "u-short", "/uː/": "u-long", "/ʌ/": "uh", "/ɜː/": "ur", "/ə/": "schwa",
       "/eɪ/": "ai", "/aɪ/": "igh", "/ɔɪ/": "oi", "/əʊ/": "oa", "/aʊ/": "ow",
@@ -903,7 +908,7 @@
       focusSpellings.textContent = `第 ${sound.group} 組 · 常見寫法：${sound.spellings}`;
       soundTip.textContent = `${sound.tip} 先聽 ${sound.word}，再模仿目標音。`;
       dictionaryLink.href = `https://dictionary.cambridge.org/pronunciation/english/${encodeURIComponent(sound.word)}`;
-      playPhonemeButton.textContent = `▶ 女聲純音 ${sound.ipa}`;
+      playPhonemeButton.textContent = `▶ 英式音素 ${sound.ipa}`;
       playExampleButton.textContent = `▶ 英式例字 ${sound.word}`;
       renderSounds();
       if (window.matchMedia("(max-width: 850px)").matches) {
