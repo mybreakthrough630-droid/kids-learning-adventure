@@ -28,28 +28,25 @@ for (const file of ["word-recognition-data.js", "word-recognition-extra-data.js"
   vm.runInContext(fs.readFileSync(path.join(root, file), "utf8"), libraryContext, { filename: file });
 }
 const library = libraryContext.window.WORD_LIBRARY;
-const official2026HolidayNames = [
-  ["一月一日", "The first day of January"],
-  ["農曆年初一", "Lunar New Year’s Day"],
-  ["農曆年初二", "The second day of Lunar New Year"],
-  ["農曆年初三", "The third day of Lunar New Year"],
+const requestedHongKongFestivalNames = [
+  ["農曆新年", "Lunar New Year"],
+  ["清明節", "Ching Ming Festival"],
+  ["復活節", "Easter"],
   ["耶穌受難節", "Good Friday"],
-  ["耶穌受難節翌日", "The day following Good Friday"],
-  ["清明節翌日", "The day following Ching Ming Festival"],
-  ["復活節星期一翌日", "The day following Easter Monday"],
+  ["佛誕", "Birthday of the Buddha"],
+  ["端午節", "Dragon Boat Festival"],
   ["勞動節", "Labour Day"],
-  ["佛誕翌日", "The day following the Birthday of the Buddha"],
-  ["端午節", "Tuen Ng Festival"],
-  ["香港特別行政區成立紀念日", "Hong Kong Special Administrative Region Establishment Day"],
-  ["中秋節翌日", "The day following the Chinese Mid-Autumn Festival"],
-  ["國慶日", "National Day"],
-  ["重陽節翌日", "The day following Chung Yeung Festival"],
-  ["聖誕節", "Christmas Day"],
-  ["聖誕節後第一個周日", "The first weekday after Christmas Day"]
+  ["回歸紀念日", "Hong Kong Special Administrative Region Establishment Day"],
+  ["中秋節", "Mid-Autumn Festival"],
+  ["國慶節", "National Day"],
+  ["重陽節", "Chung Yeung Festival"],
+  ["聖誕節", "Christmas"],
+  ["平安夜", "Christmas Eve"],
+  ["除夕", "Chinese New Year’s Eve"]
 ];
 const actualHolidayNames = library.items.festivals.map((item) => [item.zh, item.en]);
-if (JSON.stringify(actualHolidayNames) !== JSON.stringify(official2026HolidayNames)) {
-  errors.push("Festival names do not exactly match the official 2026 Hong Kong general-holiday list.");
+if (JSON.stringify(actualHolidayNames) !== JSON.stringify(requestedHongKongFestivalNames)) {
+  errors.push("Festival names do not exactly match the requested Hong Kong festival list.");
 }
 
 function addFile(file, minimumDuration, label) {
@@ -110,7 +107,7 @@ let vocabularyTotal = 0;
 for (const category of library.categories) {
   const items = library.items[category.id];
   vocabularyTotal += items.length;
-  const minimum = category.id === "feelings" ? 35 : category.id === "festivals" ? 17 : 25;
+  const minimum = category.id === "feelings" ? 35 : category.id === "festivals" ? 14 : 25;
   if (items.length < minimum) errors.push(`${category.id} has ${items.length} words; needs at least ${minimum}.`);
   const ids = new Set();
   for (const item of items) {
