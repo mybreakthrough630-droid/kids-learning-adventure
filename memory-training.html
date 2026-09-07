@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>記憶力訓練 Memory Fun</title>
+<link rel="stylesheet" href="memory-training.css">
+<main>
+  <header><span class="badge">★ MEMORY FUN</span><h1>記憶力小冒險</h1><p>看一看、記一記，把圖案放回原位！</p></header>
+  <section class="settings" aria-label="練習設定">
+    <label>難度 <select id="level"><option value="easy">淺 · 2 種 / 4 個</option><option value="medium">中 · 2 種 / 5–6 個</option><option value="hard">難 · 3 種 / 7–8 個</option></select></label>
+    <button id="new">開始新題</button>
+  </section>
+  <div class="status"><h2 id="heading">準備好挑戰嗎？</h2><span id="timer"></span></div>
+  <p id="instruction" role="status" aria-live="polite">選擇難度，按「開始新題」。每題圖案及位置都會隨機變化。</p>
+  <div id="palette" class="palette" aria-label="選擇要放的圖案" hidden></div>
+  <div id="grid" class="grid" aria-label="四欄三行記憶格"></div>
+  <div class="actions"><button id="recall" hidden>我記住了，開始作答</button><button id="check" hidden>完成，核對答案</button><button id="retry" hidden>再試同一題</button></div>
+  <section id="review" hidden><h2>原圖對照</h2><p>綠色係放啱嘅格；橙色係需要再練習嘅格。</p><div id="solution" class="grid"></div></section>
+  <footer>也可以在紙上畫 4×3 格，記住後把圖案畫出來。簡單線條就可以！</footer>
+</main>
+<script src="memory-training.js"></script>
+</html>
