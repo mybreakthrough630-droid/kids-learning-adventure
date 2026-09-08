@@ -99,7 +99,7 @@
 
     .switcher {
       display: grid;
-      grid-template-columns: repeat(9, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 6px;
       padding: 6px;
       border: 2px solid var(--line);
@@ -164,6 +164,11 @@
     .lesson-tab.active {
       border-color: #d59b27;
       background: var(--active);
+    }
+
+    .lesson-tab[data-kind="family"]::before {
+      color: #b0455c;
+      background: #ffe7ed;
     }
 
     .lesson-tab[data-kind="reading"]::before {
@@ -374,6 +379,17 @@
       <button class="lesson-tab" type="button" data-kind="memory" data-icon="★" data-src="memory-training.html" data-title="記憶力訓練 Memory Fun">
         記憶力訓練
         <small>4×3 隨機圖案・淺中難三級</small>
+      </button>
+      <button
+        class="lesson-tab"
+        type="button"
+        data-kind="family"
+        data-icon="♥"
+        data-src="family-memories.html"
+        data-title="我同爸爸媽媽活動回憶"
+      >
+        活動回憶
+        <small>科學・藝術・運動真實相片</small>
       </button>
       <button
         class="lesson-tab active"
