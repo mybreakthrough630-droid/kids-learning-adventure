@@ -12,53 +12,65 @@
     balloon:['氣球','<ellipse cx="50" cy="35" rx="25" ry="29" fill="#e99abf"/><path d="m50 64-4 8h8zM50 72q-13 10 0 22"/>'],
     icecream:['雪糕','<path d="m28 47 44 0-22 47z" fill="#e7b775"/><circle cx="50" cy="33" r="25" fill="#e99abf"/>']
   };
-  const config={easy:{counts:[3,1],seconds:30},medium:{counts:[3,2],seconds:25},hard:{counts:[3,2,2],seconds:25}};
+  const names={cars:'車車出發',animals:'動物派對',dolls:'公仔朋友',gems:'寶石記憶',classic:'圖案放回原位'};
+  const questions={cars:'哪些車原本有司機？',animals:'哪些動物原本戴帽子？',dolls:'哪些公仔原本抱着小熊？',gems:'星星、鑽石、心心原本在哪一格？',classic:'把圖案放回原位。'};
+  const labels={star:'星星',diamond:'鑽石',heart:'心心'};
   const $=id=>document.getElementById(id);
   const svg=k=>`<svg viewBox="0 0 100 100" aria-hidden="true" fill="#27364a" stroke="#27364a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${drawings[k][1]}</svg>`;
-  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-  let target=Array(12).fill(null),answer=Array(12).fill(null),types=[],selected=null,phase='idle',timer=null,deadline=0,round=0,lastSignature='';
+  let puzzle=null,answer=[],selected=null,phase='idle',timer=null,deadline=0,round=0,lastSignature='';
+  const placement=()=>puzzle.game==='gems'||puzzle.game==='classic';
+  const label=k=>labels[k]||drawings[k]?.[0]||'空白';
+  const art=(value,i)=>puzzle.game==='classic'?(value?svg(value):''):puzzle.game==='gems'?(value?MemoryArt.shape(value):''):MemoryArt.picture(puzzle.game,puzzle.cells[i],value);
   function stop(){clearInterval(timer);timer=null;}
   function renderGrid(id,values,editable=false,feedback=false){
-    $(id).replaceChildren();
+    $(id).replaceChildren();$(id).style.gridTemplateColumns=`repeat(${puzzle.columns},minmax(0,1fr))`;
     values.forEach((value,i)=>{
       const b=document.createElement('button');b.type='button';b.className='cell';b.disabled=!editable;
-      const position=`第 ${Math.floor(i/4)+1} 行第 ${i%4+1} 格`;
-      b.setAttribute('aria-label',`${position}：${value?drawings[value][0]:'空白'}`);
-      if(value)b.innerHTML=svg(value);
-      if(feedback){const ok=value===target[i];b.classList.add(ok?'correct':'wrong');const mark=document.createElement('span');mark.className='mark';mark.textContent=ok?'✓':'×';b.append(mark);}
-      b.addEventListener('click',()=>{if(phase!=='recall')return;answer[i]=selected;b.innerHTML=selected?svg(selected):'';b.setAttribute('aria-label',`${position}：${selected?drawings[selected][0]:'空白'}`);});
+      const position=`第 ${i+1} 格`;
+      const shown=editable&&!placement()?false:value;
+      b.setAttribute('aria-label',`${position}：${placement()?label(value):editable?(value?'已選':'未選'):(value?'有目標':'沒有目標')}`);
+      b.innerHTML=art(shown,i)+`<span class="cell-number">${i+1}</span>`;
+      if(editable&&!placement()){b.setAttribute('aria-pressed',String(value));b.classList.toggle('picked',value);}
+      if(feedback){const ok=value===puzzle.target[i];b.classList.add(ok?'correct':'wrong');const mark=document.createElement('span');mark.className='mark';mark.textContent=ok?'✓':'×';b.append(mark);}
+      b.addEventListener('click',()=>{
+        if(phase!=='recall')return;answer[i]=placement()?selected:!answer[i];
+        if(placement())b.innerHTML=art(answer[i],i)+`<span class="cell-number">${i+1}</span>`;
+        else {b.setAttribute('aria-pressed',String(answer[i]));b.classList.toggle('picked',answer[i]);}
+        b.setAttribute('aria-label',`${position}：${placement()?label(answer[i]):answer[i]?'已選':'未選'}`);
+      });
       $(id).append(b);
     });
   }
   function palette(){
     $('palette').replaceChildren();
-    [...types,null].forEach(k=>{const b=document.createElement('button');b.type='button';b.innerHTML=(k?svg(k):'⌫')+(k?drawings[k][0]:'擦膠');b.setAttribute('aria-pressed',String(k===selected));b.addEventListener('click',()=>{selected=k;palette();});$('palette').append(b);});
+    [...puzzle.types,null].forEach(k=>{const b=document.createElement('button');b.type='button';b.innerHTML=(k?(puzzle.game==='gems'?MemoryArt.shape(k):svg(k)):'⌫')+(k?label(k):'擦膠');b.setAttribute('aria-pressed',String(k===selected));b.addEventListener('click',()=>{selected=k;palette();});$('palette').append(b);});
   }
   function recall(){
-    if(phase!=='observe')return;stop();phase='recall';answer=Array(12).fill(null);selected=types[0];
+    if(phase!=='observe')return;stop();phase='recall';answer=Array(puzzle.size).fill(placement()?null:false);selected=puzzle.types[0]||null;
     $('timer').textContent='';$('heading').textContent=`第 ${round} 題 · 輪到你了`;
-    $('instruction').textContent='先揀圖案，再點格子放入；用擦膠清空。記得保留原本的空白格！';
-    $('recall').hidden=true;$('palette').hidden=false;$('check').hidden=false;palette();renderGrid('grid',answer,true);
+    $('instruction').textContent=placement()?'先揀圖案，再點格子放入；用擦膠清空。記得保留原本的空白格！':questions[puzzle.game]+' 點選原本有目標的格子，再點一下可以取消。';
+    $('recall').hidden=true;$('palette').hidden=!placement();$('check').hidden=false;if(placement())palette();renderGrid('grid',answer,true);
   }
   function observe(){
     stop();phase='observe';$('review').hidden=true;$('solution').replaceChildren();$('palette').hidden=true;$('check').hidden=true;$('retry').hidden=true;$('recall').hidden=false;
-    $('heading').textContent=`第 ${round} 題 · 記住位置`;$('instruction').textContent=`記住 ${types.length} 種物品的位置，也留意哪些格是空白。`;
-    renderGrid('grid',target);deadline=Date.now()+config[$('level').value].seconds*1000;
+    $('heading').textContent=`${names[puzzle.game]} · 第 ${round} 題`;$('instruction').textContent=questions[puzzle.game]+(placement()?' 記住圖案與空白格的位置。':' 記住目標的位置；作答時目標會消失。');
+    $('difficulty-note').textContent=`${puzzle.size} 格 · 記住 ${puzzle.target.filter(Boolean).length} 個目標 · ${puzzle.seconds} 秒`;
+    renderGrid('grid',puzzle.target);deadline=Date.now()+puzzle.seconds*1000;
     const tick=()=>{const seconds=Math.max(0,Math.ceil((deadline-Date.now())/1000));$('timer').textContent=`${seconds} 秒`;if(!seconds)recall();};tick();timer=setInterval(tick,200);
   }
   function next(){
-    const level=$('level').value,counts=[...config[level].counts];
-    if(level!=='easy'&&Math.random()<.5)counts[1]++;
-    do{types=shuffle(Object.keys(drawings)).slice(0,counts.length);target=shuffle([...types.flatMap((k,i)=>Array(counts[i]).fill(k)),...Array(12-counts.reduce((a,b)=>a+b,0)).fill(null)]);}while(JSON.stringify(target)===lastSignature);
-    lastSignature=JSON.stringify(target);round++;observe();
+    let signature;do{puzzle=MemoryCore.generate($('game').value,$('level').value,Object.keys(drawings));signature=JSON.stringify([puzzle.game,puzzle.target]);}while(signature===lastSignature);
+    lastSignature=signature;round++;observe();
   }
   $('new').addEventListener('click',next);$('level').addEventListener('change',next);$('recall').addEventListener('click',recall);$('retry').addEventListener('click',observe);
+  $('game').addEventListener('change',()=>{round=0;next();});
   $('check').addEventListener('click',()=>{
-    if(phase!=='recall')return;phase='result';const correct=answer.filter((v,i)=>v===target[i]).length;
-    $('heading').textContent=correct===12?'太棒了！全部記住！':`答對 ${correct} / 12 格`;
-    $('instruction').textContent=correct===12?'圖案和空白格全部正確！可以開始新題。':'一起看看原圖，再試一次。空白格也計分。';
+    if(phase!=='recall')return;phase='result';const result=MemoryCore.score(puzzle.target,answer);
+    $('heading').textContent=result.correct===puzzle.size?'太棒了！全部記住！':`記對 ${result.hits} / ${result.targets} 個目標`;
+    $('instruction').textContent=`記對 ${result.hits} 個；漏記或放錯 ${result.missed} 個；多選或錯放 ${result.extra} 個。一起看看原圖，再試一次。`;
     $('palette').hidden=true;$('check').hidden=true;$('retry').hidden=false;$('review').hidden=false;
-    renderGrid('grid',answer,false,true);renderGrid('solution',target);
+    renderGrid('grid',answer,false,true);renderGrid('solution',puzzle.target);
   });
-  window.addEventListener('pagehide',stop);renderGrid('grid',answer);
+  window.addEventListener('pagehide',stop);
+  window.addEventListener('pageshow',event=>{if(event.persisted&&phase==='observe')observe();});
 })();
