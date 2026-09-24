@@ -5,268 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>小一奧數：圖形規律</title>
   <style>
-    :root {
-      color-scheme: light;
-      --ink: #26384b;
-      --muted: #5b6f81;
-      --line: #cbdce7;
-      --paper: #f8fcff;
-      --panel: #ffffff;
-      --purple: #7156bf;
-      --purple-soft: #eee8ff;
-      --orange: #df7b3d;
-      --orange-soft: #fff0e4;
-      --green: #238460;
-      --green-soft: #e8f8ef;
-      --red: #b64e58;
-      --shadow: 0 14px 32px rgba(38, 56, 75, .14);
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      min-height: 100vh;
-      margin: 0;
-      color: var(--ink);
-      font-family: "Avenir Next", "Segoe UI", "PingFang HK", "Microsoft JhengHei", Arial, sans-serif;
-      background:
-        radial-gradient(circle at 8% 7%, rgba(255, 211, 92, .36), transparent 20rem),
-        radial-gradient(circle at 94% 5%, rgba(151, 207, 255, .35), transparent 22rem),
-        linear-gradient(145deg, #fffaf0, #f3fbff 54%, #f3fff7);
-    }
-
-    main { width: min(980px, 100%); margin: 0 auto; padding: clamp(14px, 3vw, 30px); }
-
-    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 15px; }
-    .eyebrow { margin: 0; color: var(--purple); font-size: 14px; font-weight: 950; letter-spacing: .08em; }
-    h1 { margin: 4px 0 3px; font-size: clamp(30px, 5vw, 46px); line-height: 1.08; }
-    .intro { margin: 0; color: var(--muted); font-size: clamp(16px, 2.3vw, 20px); font-weight: 750; line-height: 1.45; }
-    .score { display: grid; place-items: center; flex: 0 0 auto; width: 82px; height: 82px; border: 3px solid #e7bd47; border-radius: 50%; background: #fff6cb; color: #725300; box-shadow: 0 6px 0 rgba(104, 81, 0, .1); font-weight: 950; text-align: center; line-height: 1.05; }
-    .score strong { display: block; font-size: 25px; }
-    .score span { font-size: 13px; }
-
-    .card { padding: clamp(16px, 3vw, 26px); border: 2px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.96); box-shadow: var(--shadow); }
-    .question-title { margin: 0; color: #25445e; font-size: clamp(22px, 3.1vw, 30px); line-height: 1.3; }
-    .question-help { margin: 6px 0 18px; color: var(--muted); font-size: clamp(16px, 2.2vw, 19px); font-weight: 700; line-height: 1.45; }
-
-    .pattern-row { display: grid; grid-template-columns: minmax(0, 1fr) 82px minmax(0, 1fr); align-items: center; gap: clamp(10px, 3vw, 26px); }
-    .group { min-width: 0; }
-    .group-label { display: block; margin: 0 0 8px; color: #496277; font-size: 15px; font-weight: 900; text-align: center; }
-    .grid-box { display: grid; grid-template-columns: repeat(2, minmax(66px, 1fr)); width: min(100%, 270px); margin: auto; overflow: hidden; border: 4px solid #4e6376; border-radius: 10px; background: #4e6376; gap: 3px; }
-    .cell { display: grid; place-items: center; aspect-ratio: 1; min-height: 66px; padding: 10px; background: #fffdf8; }
-    .cell.missing { background: repeating-linear-gradient(135deg, #fffaf1 0 12px, #f6ebd9 12px 24px); }
-    .question-cell { border: 0; cursor: pointer; transition: transform 130ms ease, background 130ms ease; }
-    .question-cell:hover:not(:disabled) { background: #fff5d7; transform: scale(.98); }
-    .question-cell:focus-visible, .option:focus-visible, .new-question:focus-visible { outline: 4px solid #f2bd33; outline-offset: 3px; }
-    .question-cell:disabled { cursor: default; }
-    .question-cell.selected { background: #fff0c4; }
-    .cell svg, .option svg { display: block; width: min(100%, 86px); height: min(100%, 86px); }
-
-    .arrow { display: grid; place-items: center; gap: 3px; color: var(--purple); text-align: center; }
-    .arrow b { font-size: clamp(40px, 7vw, 62px); line-height: .85; }
-    .arrow span { font-size: 13px; font-weight: 900; line-height: 1.2; }
-
-    .divider { margin: 22px 0; border: 0; border-top: 2px dashed #b7c9d7; }
-    .your-turn { margin: 0 0 13px; color: var(--orange); font-size: clamp(20px, 2.8vw, 27px); font-weight: 950; }
-    .answer-area { margin-top: 20px; }
-    .answer-label { margin: 0 0 10px; font-size: clamp(17px, 2.4vw, 20px); font-weight: 900; }
-    .options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-    .option { display: grid; place-items: center; min-height: 100px; padding: 12px; border: 3px solid #bcd1df; border-radius: 15px; background: #fff; color: var(--ink); cursor: pointer; transition: transform 130ms ease, box-shadow 130ms ease, background 130ms ease; }
-    .option:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 7px 14px rgba(38,56,75,.13); background: #fff9e9; }
-    .option:disabled { cursor: default; }
-    .option.correct { border-color: var(--green); background: var(--green-soft); }
-    .option.wrong { border-color: var(--red); background: #ffebec; }
-    .option .shape-name { margin-top: 5px; font-size: 14px; font-weight: 850; }
-    .feedback { min-height: 28px; margin: 15px 0 0; padding: 0 4px; font-size: clamp(16px, 2.2vw, 19px); font-weight: 850; line-height: 1.45; }
-    .feedback.good { color: var(--green); }
-    .feedback.try { color: var(--red); }
-    .actions { display: flex; justify-content: center; margin-top: 17px; }
-    .new-question { min-height: 52px; padding: 10px 19px; border: 2px solid #4c7fc1; border-radius: 14px; background: #e6f3ff; color: #204c7c; font: inherit; font-size: 18px; font-weight: 900; cursor: pointer; }
-    .tip { margin: 18px 2px 0; padding: 13px 16px; border-left: 5px solid var(--purple); border-radius: 8px; background: var(--purple-soft); color: #463778; font-size: 16px; font-weight: 750; line-height: 1.45; }
-    [hidden] { display: none !important; }
-
-    @media (max-width: 620px) {
-      header { align-items: flex-start; }
-      .score { width: 66px; height: 66px; }
-      .score strong { font-size: 21px; }
-      .pattern-row { grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr); gap: 6px; }
-      .arrow b { font-size: 36px; }
-      .arrow span { display: none; }
-      .grid-box { border-width: 3px; gap: 2px; }
-      .cell { min-height: 54px; padding: 6px; }
-      .options { gap: 7px; }
-      .option { min-height: 76px; padding: 7px 3px; border-width: 2px; border-radius: 11px; }
-      .option .shape-name { font-size: 12px; }
-    }
+    :root { --ink:#26384b; --muted:#5b6f81; --line:#cbdce7; --purple:#7156bf; --purple-soft:#eee8ff; --orange:#df7b3d; --green:#238460; --red:#b64e58; --shadow:0 14px 32px rgba(38,56,75,.14); }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; color:var(--ink); font-family:"Avenir Next","Segoe UI","PingFang HK","Microsoft JhengHei",Arial,sans-serif; background:radial-gradient(circle at 8% 7%,rgba(255,211,92,.36),transparent 20rem),radial-gradient(circle at 94% 5%,rgba(151,207,255,.35),transparent 22rem),linear-gradient(145deg,#fffaf0,#f3fbff 54%,#f3fff7); }
+    main { width:min(1120px,100%); margin:auto; padding:clamp(14px,3vw,30px); }
+    header { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:15px; }
+    .eyebrow { margin:0; color:var(--purple); font-size:14px; font-weight:950; letter-spacing:.08em; }
+    h1 { margin:4px 0 3px; font-size:clamp(30px,5vw,46px); line-height:1.08; }
+    .intro { margin:0; color:var(--muted); font-size:clamp(16px,2.3vw,20px); font-weight:750; line-height:1.45; }
+    .score { display:grid; place-items:center; flex:0 0 auto; width:79px; height:79px; border:3px solid #e7bd47; border-radius:50%; background:#fff6cb; color:#725300; box-shadow:0 6px 0 rgba(104,81,0,.1); font-weight:950; text-align:center; line-height:1.05; }
+    .score strong { display:block; font-size:25px; } .score span { font-size:12px; }
+    .card { padding:clamp(16px,3vw,27px); border:2px solid var(--line); border-radius:21px; background:rgba(255,255,255,.96); box-shadow:var(--shadow); }
+    .toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+    .levels { display:flex; flex-wrap:wrap; gap:7px; }
+    .level { min-height:45px; min-width:53px; padding:7px 9px; border:2px solid #cbdbe6; border-radius:13px; background:#fff; color:#566978; font:inherit; font-size:16px; font-weight:950; cursor:pointer; }
+    .level.active { border-color:#d99c29; background:#fff3bb; color:#6e4c00; box-shadow:inset 0 -3px 0 rgba(108,75,0,.1); }
+    button:focus-visible { outline:4px solid #f2bd33; outline-offset:3px; }
+    .level-note { margin:17px 0 5px; color:var(--orange); font-size:16px; font-weight:950; }
+    h2 { margin:0; color:#25445e; font-size:clamp(23px,3.5vw,32px); line-height:1.3; }
+    .help { margin:6px 0 18px; color:var(--muted); font-size:clamp(16px,2.2vw,19px); font-weight:750; line-height:1.45; }
+    .timeline { --step-count:4; display:grid; grid-template-columns:repeat(var(--step-count),minmax(0,1fr)); gap:clamp(10px,2.1vw,23px); align-items:center; padding:clamp(11px,2.2vw,18px); border:2px dashed #b6ccdc; border-radius:19px; background:#f5fbff; }
+    .step { position:relative; min-width:0; } .step:not(:last-child)::after { content:"→"; position:absolute; z-index:2; top:50%; right:calc(clamp(10px,2.1vw,23px) / -2); transform:translate(50%,-50%); color:var(--purple); font-size:clamp(22px,3.3vw,39px); font-weight:950; line-height:1; }
+    .step-label { display:block; margin:0 0 7px; color:#4b667b; font-size:14px; font-weight:900; text-align:center; }
+    .grid-box { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:min(100%,176px); margin:auto; overflow:hidden; border:4px solid #4e6376; border-radius:10px; background:#4e6376; gap:3px; }
+    .cell { display:grid; place-items:center; aspect-ratio:1; min-height:48px; padding:7px; background:#fffdf8; } .cell.blank { background:repeating-linear-gradient(135deg,#fffaf1 0 11px,#f6ebd9 11px 22px); }
+    .cell svg, .option svg { display:block; width:min(100%,72px); height:min(100%,72px); }
+    .question-box { margin-top:20px; padding:clamp(14px,2.5vw,20px); border:3px solid #ecd0ef; border-radius:18px; background:linear-gradient(135deg,#fffaff,#f7f1ff); }
+    .question-box h3 { margin:0; color:#60409e; font-size:clamp(19px,2.7vw,25px); } .question-box p { margin:5px 0 0; color:#5b6f81; font-size:16px; font-weight:750; }
+    .options { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:15px; }
+    .option { display:grid; gap:6px; justify-items:center; padding:9px; border:3px solid #bcd1df; border-radius:15px; background:#fff; color:var(--ink); font:inherit; font-weight:900; cursor:pointer; transition:transform 130ms ease,box-shadow 130ms ease,background 130ms ease; }
+    .option:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 7px 14px rgba(38,56,75,.13); background:#fff9e9; } .option:disabled { cursor:default; }
+    .option-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:min(100%,130px); overflow:hidden; border:3px solid #4e6376; border-radius:8px; background:#4e6376; gap:2px; } .option-cell { display:grid; place-items:center; aspect-ratio:1; padding:4px; background:#fffdf8; }
+    .option-label { color:#5b6f81; font-size:14px; } .option.correct { border-color:var(--green); background:#e8f8ef; } .option.wrong { border-color:var(--red); background:#ffebec; }
+    .feedback { min-height:30px; margin:15px 2px 0; font-size:clamp(16px,2.2vw,19px); font-weight:850; line-height:1.5; } .feedback.good { color:var(--green); } .feedback.try { color:var(--red); }
+    .actions { display:flex; justify-content:center; margin-top:16px; } .new-question { min-height:52px; padding:10px 20px; border:2px solid #4c7fc1; border-radius:14px; background:#e6f3ff; color:#204c7c; font:inherit; font-size:18px; font-weight:900; cursor:pointer; }
+    .tip { margin:18px 2px 0; padding:13px 16px; border-left:5px solid var(--purple); border-radius:8px; background:var(--purple-soft); color:#463778; font-size:16px; font-weight:750; line-height:1.45; }
+    @media (max-width:690px) { header { align-items:flex-start; } .score { width:65px; height:65px; } .score strong { font-size:21px; } .timeline { grid-template-columns:repeat(2,minmax(0,1fr)); gap:23px 33px; } .timeline[style*="5"] .step:last-child { grid-column:1 / -1; width:calc(50% - 17px); justify-self:center; } .step:nth-child(2)::after { content:"↓"; top:auto; right:50%; bottom:-23px; transform:translate(50%,50%); } .step:nth-child(4)::after { content:""; } .step:nth-child(3)::after { content:"→"; } .options { grid-template-columns:repeat(2,minmax(0,1fr)); } .option-grid { width:min(100%,112px); } }
   </style>
 </head>
 <body>
   <main>
-    <header>
-      <div>
-        <p class="eyebrow">P1 OLYMPIAD · SHAPE PATTERNS</p>
-        <h1>圖形規律小偵探</h1>
-        <p class="intro">找出左圖如何變成右圖，再用同一個方法完成下一組！</p>
-      </div>
-      <div class="score" aria-label="本次答對題數"><strong id="score">0</strong><span>答對題數</span></div>
-    </header>
-
+    <header><div><p class="eyebrow">P1 OLYMPIAD · SHAPE PATTERNS</p><h1>圖形規律小偵探</h1><p class="intro">觀察圖案如何一步一步變化，找出最後一個完整方格！</p></div><div class="score" aria-label="本次答對題數"><strong id="score">0</strong><span>答對題數</span></div></header>
     <section class="card" aria-labelledby="questionTitle">
-      <h2 class="question-title" id="questionTitle">哪一個圖形應該放進空格？</h2>
-      <p class="question-help">第一組給你一個提示。觀察每個圖形的位置怎樣改變。</p>
-
-      <div class="pattern-row">
-        <div class="group"><span class="group-label">第一組：左圖</span><div class="grid-box" id="exampleStart" aria-label="第一組左圖"></div></div>
-        <div class="arrow" aria-hidden="true"><b>→</b><span>找規律</span></div>
-        <div class="group"><span class="group-label">第一組：右圖</span><div class="grid-box" id="exampleEnd" aria-label="第一組右圖"></div></div>
-      </div>
-
-      <hr class="divider">
-      <p class="your-turn">輪到你！</p>
-      <div class="pattern-row">
-        <div class="group"><span class="group-label">第二組：左圖</span><div class="grid-box" id="questionStart" aria-label="第二組左圖"></div></div>
-        <div class="arrow" aria-hidden="true"><b>→</b><span>同一規律</span></div>
-        <div class="group"><span class="group-label">第二組：右圖</span><div class="grid-box" id="questionEnd" aria-label="第二組右圖，有一格空白"></div></div>
-      </div>
-
-      <div class="answer-area">
-        <p class="answer-label">選擇答案：</p>
-        <div class="options" id="options" aria-label="答案選項"></div>
-        <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
-      </div>
-      <div class="actions"><button class="new-question" id="newQuestion" type="button">↻ 換一題</button></div>
+      <div class="toolbar"><div class="levels" id="levels" aria-label="選擇難度"></div></div>
+      <p class="level-note" id="levelNote"></p><h2 id="questionTitle">哪個是下一步的完整圖案？</h2><p class="help" id="help">由第一步開始，逐格觀察每個圖形的位置怎樣改變。</p>
+      <div class="timeline" id="timeline" aria-label="圖形規律步驟"></div>
+      <section class="question-box" aria-label="選擇答案"><h3>最後一格應該是？</h3><p>選出最符合整條規律的完整 2×2 方格。</p><div class="options" id="options" aria-label="答案選項"></div></section>
+      <p class="feedback" id="feedback" role="status" aria-live="polite"></p><div class="actions"><button class="new-question" id="newQuestion" type="button">↻ 換一題</button></div>
     </section>
-
-    <p class="tip"><strong>小貼士：</strong>不用急著猜答案。先由左至右、由上至下，逐個看看圖形搬了到哪個位置。</p>
+    <p class="tip"><strong>小貼士：</strong>不要只看第一個變化。由第 1 步慢慢跟到第 4 或第 5 步，看看每次圖形是轉動、左右交換，還是上下交換。</p>
   </main>
-
   <script>
     "use strict";
     (() => {
       const SHAPES = {
-        square: { name: "正方形", svg: '<svg viewBox="0 0 100 100" aria-hidden="true"><rect x="22" y="22" width="56" height="56" rx="3" fill="#9ed8f7" stroke="#31495d" stroke-width="6"/></svg>' },
-        triangle: { name: "三角形", svg: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 15 88 82H12Z" fill="#ffd58a" stroke="#31495d" stroke-width="6" stroke-linejoin="round"/></svg>' },
-        circle: { name: "圓形", svg: '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="31" fill="#f5acc3" stroke="#31495d" stroke-width="6"/></svg>' },
-        star: { name: "星形", svg: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="m50 12 10.5 24.5 26.5 2.2-20.1 17.4 6.1 26-23-13.7-23 13.7 6.1-26L13 38.7l26.5-2.2Z" fill="#cbb4f1" stroke="#31495d" stroke-width="6" stroke-linejoin="round"/></svg>' }
+        square:{name:"正方形",svg:'<svg viewBox="0 0 100 100" aria-hidden="true"><rect x="22" y="22" width="56" height="56" rx="3" fill="#9ed8f7" stroke="#31495d" stroke-width="6"/></svg>'},
+        triangle:{name:"三角形",svg:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 15 88 82H12Z" fill="#ffd58a" stroke="#31495d" stroke-width="6" stroke-linejoin="round"/></svg>'},
+        circle:{name:"圓形",svg:'<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="31" fill="#f5acc3" stroke="#31495d" stroke-width="6"/></svg>'},
+        star:{name:"星形",svg:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="m50 12 10.5 24.5 26.5 2.2-20.1 17.4 6.1 26-23-13.7-23 13.7 6.1-26L13 38.7l26.5-2.2Z" fill="#cbb4f1" stroke="#31495d" stroke-width="6" stroke-linejoin="round"/></svg>'}
       };
-
-      const TRANSFORMS = [
-        { name: "向左轉一轉", positions: [1, 3, 0, 2], explain: "整個方格向左轉了四分之一圈。" },
-        { name: "向右轉一轉", positions: [2, 0, 3, 1], explain: "整個方格向右轉了四分之一圈。" },
-        { name: "左右交換", positions: [1, 0, 3, 2], explain: "每一行的左右位置交換了。" },
-        { name: "上下交換", positions: [2, 3, 0, 1], explain: "每一列的上下位置交換了。" }
+      const MOVES={horizontal:{positions:[1,0,3,2]},vertical:{positions:[2,3,0,1]},left:{positions:[1,3,0,2]},right:{positions:[2,0,3,1]}};
+      const LEVELS=[
+        {name:"一星 · 4 步",count:4,moves:["horizontal"],note:"每一步只做左右交換。"},
+        {name:"二星 · 4 步",count:4,moves:["left"],note:"每一步都向左轉一轉。"},
+        {name:"三星 · 5 步",count:5,moves:["right"],note:"由第 1 步一路向右轉到第 5 步。"},
+        {name:"四星 · 5 步",count:5,moves:["horizontal","vertical"],note:"變化輪流：左右交換、上下交換、左右交換……"},
+        {name:"五星 · 5 步",count:5,moves:["left","horizontal"],note:"變化輪流：向左轉、左右交換、向左轉……"}
       ];
-
-      const $ = id => document.getElementById(id);
-      const keys = Object.keys(SHAPES);
-      const shuffle = values => {
-        const copy = [...values];
-        for (let i = copy.length - 1; i > 0; i -= 1) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [copy[i], copy[j]] = [copy[j], copy[i]];
-        }
-        return copy;
-      };
-      const transform = (values, rule) => rule.positions.map(index => values[index]);
-      const cellMarkup = shape => `<span class="cell">${SHAPES[shape].svg}</span>`;
-      let current = null;
-      let score = Number(sessionStorage.getItem("shapePatternScore") || 0);
-      let lastKey = "";
-
-      function renderGrid(id, values, blankIndex, selectable) {
-        const root = $(id);
-        root.replaceChildren();
-        values.forEach((shape, index) => {
-          const isBlank = index === blankIndex;
-          const element = document.createElement(selectable ? "button" : "span");
-          if (selectable) {
-            element.type = "button";
-            element.disabled = Boolean(current.answered);
-            element.className = `cell question-cell${isBlank ? " missing" : ""}`;
-            element.setAttribute("aria-label", isBlank ? "空格，按此選擇圖形" : SHAPES[shape].name);
-            element.addEventListener("click", () => {
-              if (!isBlank || current.answered) return;
-              document.querySelectorAll(".question-cell").forEach(cell => cell.classList.remove("selected"));
-              element.classList.add("selected");
-              $("options").scrollIntoView({ behavior: "smooth", block: "nearest" });
-            });
-          } else {
-            element.className = "cell";
-            element.setAttribute("aria-label", SHAPES[shape].name);
-          }
-          if (!isBlank) element.innerHTML = SHAPES[shape].svg;
-          root.append(element);
-        });
+      const $=id=>document.getElementById(id),keys=Object.keys(SHAPES);
+      const shuffle=values=>{const copy=[...values];for(let i=copy.length-1;i>0;i-=1){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}return copy;};
+      const transform=(values,move)=>move.positions.map(index=>values[index]);
+      const gridMarkup=(grid,blank=false,option=false)=>`<span class="${option?"option-grid":"grid-box"}" aria-label="${blank?"空白方格":"圖形方格"}">${grid.map(shape=>`<span class="${option?"option-cell":"cell"}${blank?" blank":""}">${blank?"":SHAPES[shape].svg}</span>`).join("")}</span>`;
+      let level=0,score=Number(sessionStorage.getItem("shapePatternScore")||0),current=null,lastKey="";
+      function renderLevels(){$("levels").innerHTML=LEVELS.map((item,index)=>`<button class="level ${index===level?"active":""}" type="button" data-level="${index}" aria-label="${item.name}">${"★".repeat(index+1)}</button>`).join("");}
+      function buildOptions(answer){const options=[answer];while(options.length<4){const candidate=shuffle(keys);if(!options.some(item=>item.join("")===candidate.join("")))options.push(candidate);}return shuffle(options);}
+      function render(){const config=LEVELS[level];let problem;do{const grids=[shuffle(keys)];for(let index=1;index<config.count;index+=1){const move=MOVES[config.moves[(index-1)%config.moves.length]];grids.push(transform(grids[index-1],move));}problem={config,grids,answer:grids.at(-1),answered:false};problem.key=`${level}|${grids.map(grid=>grid.join("")).join("|")}`;}while(problem.key===lastKey);lastKey=problem.key;current=problem;
+        renderLevels();$("score").textContent=score;$("levelNote").textContent=config.name;$("help").textContent=`這題有 ${config.count} 步。先找出前面幾步的共同變化，再選出最後一格。`;
+        const timeline=$("timeline");timeline.style.setProperty("--step-count",config.count);timeline.dataset.stepCount=config.count;timeline.innerHTML=grids.map((grid,index)=>`<div class="step"><span class="step-label">第 ${index+1} 步${index===grids.length-1?" · ?":""}</span>${gridMarkup(grid,index===grids.length-1)}</div>`).join("");
+        $("options").innerHTML=buildOptions(current.answer).map((grid,index)=>`<button class="option" type="button" data-grid="${grid.join(",")}" aria-label="選項 ${index+1}">${gridMarkup(grid,false,true)}<span class="option-label">選項 ${"甲乙丙丁"[index]}</span></button>`).join("");const feedback=$("feedback");feedback.className="feedback";feedback.textContent="由頭到尾看清楚每一步，才選答案。";
       }
-
-      function renderOptions() {
-        const root = $("options");
-        root.replaceChildren();
-        shuffle(keys).forEach(shape => {
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "option";
-          button.dataset.shape = shape;
-          button.setAttribute("aria-label", `選擇${SHAPES[shape].name}`);
-          button.innerHTML = `${SHAPES[shape].svg}<span class="shape-name">${SHAPES[shape].name}</span>`;
-          button.addEventListener("click", () => checkAnswer(shape, button));
-          root.append(button);
-        });
-      }
-
-      function checkAnswer(shape, button) {
-        if (current.answered) return;
-        current.answered = true;
-        const correct = shape === current.answer;
-        document.querySelectorAll(".option").forEach(option => {
-          option.disabled = true;
-          if (option.dataset.shape === current.answer) option.classList.add("correct");
-        });
-        document.querySelectorAll(".question-cell").forEach(cell => cell.disabled = true);
-        const blank = $("questionEnd").children[current.blankIndex];
-        blank.classList.remove("missing");
-        blank.innerHTML = SHAPES[current.answer].svg;
-        blank.setAttribute("aria-label", SHAPES[current.answer].name);
-        const feedback = $("feedback");
-        if (correct) {
-          score += 1;
-          sessionStorage.setItem("shapePatternScore", String(score));
-          $("score").textContent = score;
-          feedback.className = "feedback good";
-          feedback.textContent = `答對了！${current.rule.explain} 所以空格是${SHAPES[current.answer].name}。`;
-        } else {
-          button.classList.add("wrong");
-          feedback.className = "feedback try";
-          feedback.textContent = `再看看第一組。${current.rule.explain} 正確答案是${SHAPES[current.answer].name}。`;
-        }
-      }
-
-      function newQuestion() {
-        let generated;
-        do {
-          const rule = TRANSFORMS[Math.floor(Math.random() * TRANSFORMS.length)];
-          const exampleStart = shuffle(keys);
-          const questionStart = shuffle(keys);
-          const blankIndex = Math.floor(Math.random() * 4);
-          generated = { rule, exampleStart, exampleEnd: transform(exampleStart, rule), questionStart, questionEnd: transform(questionStart, rule), blankIndex, answered: false };
-          generated.answer = generated.questionEnd[blankIndex];
-          generated.key = `${rule.name}|${exampleStart.join("")}|${questionStart.join("")}|${blankIndex}`;
-        } while (generated.key === lastKey);
-        lastKey = generated.key;
-        current = generated;
-        renderGrid("exampleStart", current.exampleStart);
-        renderGrid("exampleEnd", current.exampleEnd);
-        renderGrid("questionStart", current.questionStart);
-        renderGrid("questionEnd", current.questionEnd, current.blankIndex, true);
-        renderOptions();
-        const feedback = $("feedback");
-        feedback.className = "feedback";
-        feedback.textContent = "先看看第一組的規律，再選一個圖形。";
-      }
-
-      $("newQuestion").addEventListener("click", newQuestion);
-      $("score").textContent = score;
-      newQuestion();
+      function check(button){if(current.answered)return;current.answered=true;const chosen=button.dataset.grid.split(","),right=chosen.join("")===current.answer.join("");document.querySelectorAll(".option").forEach(item=>{item.disabled=true;if(item.dataset.grid.split(",").join("")===current.answer.join(""))item.classList.add("correct");});const feedback=$("feedback");if(right){score+=1;sessionStorage.setItem("shapePatternScore",String(score));$("score").textContent=score;feedback.className="feedback good";feedback.textContent=`答對了！${current.config.note}`;}else{button.classList.add("wrong");feedback.className="feedback try";feedback.textContent=`再看看每一步。${current.config.note}`;}}
+      $("levels").addEventListener("click",event=>{const button=event.target.closest("[data-level]");if(!button)return;level=Number(button.dataset.level);render();});$("options").addEventListener("click",event=>{const button=event.target.closest(".option");if(button)check(button);});$("newQuestion").addEventListener("click",render);render();
     })();
   </script>
 </body>
