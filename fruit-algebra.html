@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小一奧數：水果代數</title>
+  <style>
+    :root { --ink:#293947; --muted:#627382; --line:#d6e0e8; --red:#d74e63; --orange:#e68136; --cream:#fff9ec; --rose:#fff0f1; --blue:#e9f5ff; --green:#28855f; --shadow:0 16px 36px rgba(41,57,71,.14); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); font-family:"Avenir Next","Segoe UI","PingFang HK","Microsoft JhengHei",Arial,sans-serif; background:radial-gradient(circle at 8% 5%,rgba(255,210,100,.36),transparent 20rem),radial-gradient(circle at 94% 2%,rgba(255,157,177,.26),transparent 22rem),linear-gradient(145deg,#fff9ed,#f3fbff 55%,#f6fff8); }
+    main { width:min(1060px,100%); margin:auto; padding:clamp(13px,3vw,30px); }
+    .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,350px); align-items:center; overflow:hidden; margin-bottom:15px; border:2px solid #d6dfe8; border-radius:22px; background:#fff; box-shadow:var(--shadow); }
+    .hero-copy { padding:clamp(18px,3vw,30px); }
+    .eyebrow { margin:0; color:#a34158; font-size:14px; font-weight:950; letter-spacing:.09em; }
+    h1 { margin:5px 0 5px; font-size:clamp(31px,5vw,48px); line-height:1.05; }
+    .subtitle { margin:0; color:var(--muted); font-size:clamp(16px,2.3vw,20px); font-weight:750; line-height:1.45; }
+    .hero-art { display:block; width:100%; min-height:190px; height:100%; object-fit:cover; object-position:center; background:#23211b; }
+    .game { padding:clamp(16px,3vw,27px); border:2px solid var(--line); border-radius:22px; background:rgba(255,255,255,.96); box-shadow:var(--shadow); }
+    .topline { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
+    .stars { display:flex; gap:7px; flex-wrap:wrap; }
+    .level { min-height:45px; min-width:52px; padding:7px 9px; border:2px solid #cbdbe6; border-radius:13px; background:#fff; color:#566978; font:inherit; font-size:16px; font-weight:950; cursor:pointer; }
+    .level.active { border-color:#d99c29; background:#fff3bb; color:#6e4c00; box-shadow:inset 0 -3px 0 rgba(108,75,0,.1); }
+    button:focus-visible { outline:4px solid #f1bd3c; outline-offset:3px; }
+    .score { display:flex; align-items:center; gap:7px; color:#496277; font-size:16px; font-weight:900; }
+    .score strong { display:grid; place-items:center; min-width:39px; height:39px; padding:2px 8px; border:2px solid #e6b741; border-radius:50%; background:#fff7ce; color:#704f00; font-size:20px; }
+    .level-note { margin:16px 0 7px; color:#a34158; font-size:16px; font-weight:950; }
+    h2 { margin:0; font-size:clamp(25px,3.6vw,34px); line-height:1.25; }
+    .instruction { margin:6px 0 17px; color:var(--muted); font-size:clamp(16px,2.2vw,19px); font-weight:750; line-height:1.45; }
+    .clues { display:grid; gap:10px; padding:clamp(13px,2.5vw,19px); border:2px dashed #bad1df; border-radius:18px; background:var(--blue); }
+    .clue { display:flex; flex-wrap:wrap; align-items:center; gap:8px; min-height:59px; padding:8px 11px; border:2px solid #d5e2ec; border-radius:13px; background:#fff; font-size:clamp(25px,4vw,37px); font-weight:950; line-height:1; }
+    .fruit { display:inline-grid; place-items:center; width:1.22em; height:1.22em; border-radius:50%; font-family:"Segoe UI Emoji","Apple Color Emoji",sans-serif; line-height:1; vertical-align:middle; }
+    .fruit.orange { background:#fff0de; } .fruit.apple { background:#ffebed; }
+    .operator, .number { padding:0 2px; } .number { color:#234962; }
+    .question { margin:20px 0 0; padding:clamp(14px,2.5vw,20px); border:3px solid #f0c6ce; border-radius:18px; background:linear-gradient(135deg,#fffaf3,#fff0f3); }
+    .question-label { margin:0 0 7px; color:#a34158; font-size:16px; font-weight:950; }
+    .ask { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0; font-size:clamp(28px,4.6vw,43px); font-weight:950; line-height:1.25; }
+    .answers { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:17px; }
+    .answer { min-height:66px; border:3px solid #bed0dd; border-radius:14px; background:#fff; color:var(--ink); font:inherit; font-size:clamp(22px,3.4vw,31px); font-weight:950; cursor:pointer; transition:transform 130ms ease,box-shadow 130ms ease,background 130ms ease; }
+    .answer:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 17px rgba(41,57,71,.12); background:#fff9e9; }
+    .answer:disabled { cursor:default; } .answer.correct { border-color:var(--green); background:#e9f9ee; color:#176b4c; } .answer.wrong { border-color:#c55260; background:#ffebed; color:#9c3443; }
+    .feedback { min-height:30px; margin:15px 2px 0; font-size:clamp(16px,2.2vw,19px); font-weight:850; line-height:1.5; } .feedback.good { color:#19734f; } .feedback.try { color:#a23d4d; }
+    .actions { display:flex; justify-content:center; margin-top:16px; } .new { min-height:51px; padding:9px 20px; border:2px solid #4d82bf; border-radius:14px; background:#e8f4ff; color:#24517e; font:inherit; font-size:18px; font-weight:950; cursor:pointer; }
+    .tip { margin:16px 3px 0; padding:13px 16px; border-left:5px solid var(--orange); border-radius:8px; background:#fff2e5; color:#754420; font-size:16px; font-weight:750; line-height:1.45; }
+    @media (max-width:660px) { .hero { grid-template-columns:1fr; } .hero-art { height:170px; min-height:0; object-position:center 44%; } .answers { gap:7px; } .answer { min-height:57px; border-width:2px; } .level { min-width:47px; padding:7px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div class="hero-copy"><p class="eyebrow">P1 OLYMPIAD · FRUIT ALGEBRA</p><h1>水果代數小偵探</h1><p class="subtitle">每種水果都代表一個數。先找出它的數值，再把數值代入算式！</p></div>
+      <img class="hero-art" src="assets/algebra-fruit-characters.png" alt="笑臉橙和笑臉蘋果插圖">
+    </header>
+    <section class="game" aria-labelledby="questionTitle">
+      <div class="topline"><div class="stars" id="levels" aria-label="選擇難度"></div><div class="score" aria-label="本次答對題數">答對 <strong id="score">0</strong> 題</div></div>
+      <p class="level-note" id="levelNote"></p><h2 id="questionTitle">水果代表幾多？</h2><p class="instruction" id="instruction"></p>
+      <div class="clues" id="clues" aria-label="題目資料"></div>
+      <section class="question" aria-label="問題"><p class="question-label">請計算：</p><p class="ask" id="ask"></p></section>
+      <div class="answers" id="answers" aria-label="答案選項"></div><p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+      <div class="actions"><button class="new" id="newQuestion" type="button">↻ 換一題</button></div>
+    </section>
+    <p class="tip"><strong>小貼士：</strong>水果不是普通圖畫，它們是「數字的朋友」。先看清楚每種水果等於幾多，才慢慢相加。</p>
+  </main>
+  <script>
+    "use strict";
+    (() => {
+      const LEVELS = ["一星 · 認識水果數值", "二星 · 兩個水果相加", "三星 · 多個水果相加", "四星 · 先找未知水果", "五星 · 兩條線索推理"];
+      const $ = id => document.getElementById(id);
+      const pick = values => values[Math.floor(Math.random() * values.length)];
+      const integer = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+      const shuffle = values => { const copy = [...values]; for (let i = copy.length - 1; i > 0; i -= 1) { const j = integer(0, i); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; };
+      const fruit = kind => `<span class="fruit ${kind}" aria-label="${kind === "orange" ? "橙" : "蘋果"}" role="img">${kind === "orange" ? "🍊" : "🍎"}</span>`;
+      const fruits = (kind, count) => Array.from({ length:count }, () => fruit(kind)).join(" ");
+      const expression = (orangeCount, appleCount) => [orangeCount ? fruits("orange", orangeCount) : "", orangeCount && appleCount ? '<span class="operator">＋</span>' : "", appleCount ? fruits("apple", appleCount) : ""].join("");
+      const equation = (orangeCount, appleCount, answer) => `<span>${expression(orangeCount, appleCount)}</span><span class="operator">＝</span><span class="number">${answer}</span>`;
+      let level = 0, score = Number(sessionStorage.getItem("fruitAlgebraScore") || 0), current = null, lastSignature = "";
+
+      function optionsFor(answer) {
+        const set = new Set([answer]);
+        const shifts = shuffle([-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6]);
+        shifts.forEach(shift => { if (set.size < 4 && answer + shift > 0 && answer + shift <= 35) set.add(answer + shift); });
+        let candidate = 1; while (set.size < 4) { if (!set.has(candidate)) set.add(candidate); candidate += 1; }
+        return shuffle([...set]);
+      }
+
+      function directQuestion(star) {
+        const orange = integer(2, star === 0 ? 6 : 8), apple = integer(1, 5);
+        let orangeCount = 1, appleCount = 1;
+        if (star === 1) [orangeCount, appleCount] = pick([[2,1],[1,2],[2,2]]);
+        if (star === 2) [orangeCount, appleCount] = pick([[3,1],[2,2],[3,2],[1,3]]);
+        const answer = orangeCount * orange + appleCount * apple;
+        return { orange, apple, clues:[`${fruit("orange")} <span class="operator">＝</span><span class="number">${orange}</span>`, `${fruit("apple")} <span class="operator">＝</span><span class="number">${apple}</span>`], ask:expression(orangeCount, appleCount), answer, explain:`橙是 ${orange}，蘋果是 ${apple}。${orangeCount * orange} ＋ ${appleCount * apple} ＝ ${answer}。` };
+      }
+
+      function hiddenFruitQuestion() {
+        const apple = integer(2, 6), orange = integer(4, 9), total = orange + apple;
+        const [orangeCount, appleCount] = pick([[2,1],[1,2],[2,2],[3,1]]);
+        const answer = orangeCount * orange + appleCount * apple;
+        return { orange, apple, clues:[equation(1,1,total), `${fruit("apple")} <span class="operator">＝</span><span class="number">${apple}</span>`], ask:expression(orangeCount, appleCount), answer, explain:`先用 ${total} 減去蘋果 ${apple}，橙就是 ${orange}。然後 ${orangeCount * orange} ＋ ${appleCount * apple} ＝ ${answer}。` };
+      }
+
+      function twoClueQuestion() {
+        const apple = integer(1, 5), difference = integer(2, 5), orange = apple + difference, total = orange + apple;
+        const [orangeCount, appleCount] = pick([[2,1],[1,2],[2,2],[3,1]]);
+        const answer = orangeCount * orange + appleCount * apple;
+        return { orange, apple, clues:[equation(1,1,total), `${fruit("orange")} <span class="operator">－</span>${fruit("apple")} <span class="operator">＝</span><span class="number">${difference}</span>`], ask:expression(orangeCount, appleCount), answer, explain:`兩種水果合共 ${total}，相差 ${difference}。較小的蘋果是 ${apple}，橙是 ${orange}；所以答案是 ${answer}。` };
+      }
+
+      function makeQuestion() { return level <= 2 ? directQuestion(level) : level === 3 ? hiddenFruitQuestion() : twoClueQuestion(); }
+      function renderLevels() { $("levels").innerHTML = LEVELS.map((name, index) => `<button class="level ${index === level ? "active" : ""}" type="button" data-level="${index}" aria-label="${name}">${"★".repeat(index + 1)}</button>`).join(""); }
+      function render() {
+        let next; do { next = makeQuestion(); next.signature = `${level}|${next.orange}|${next.apple}|${next.ask}`; } while (next.signature === lastSignature); lastSignature = next.signature; current = next;
+        renderLevels(); $("score").textContent = score; $("levelNote").textContent = LEVELS[level];
+        $("instruction").textContent = level < 3 ? "看清楚每種水果代表的數值，然後直接代入計算。" : "先由線索找出橙和蘋果的數值，再計算最後一條算式。";
+        $("clues").innerHTML = current.clues.map(clue => `<div class="clue">${clue}</div>`).join(""); $("ask").innerHTML = `${current.ask}<span class="operator">＝</span><span>？</span>`;
+        $("answers").innerHTML = optionsFor(current.answer).map(answer => `<button class="answer" type="button" data-answer="${answer}">${answer}</button>`).join("");
+        const feedback = $("feedback"); feedback.className = "feedback"; feedback.textContent = "慢慢看資料，找出每種水果的數值。";
+      }
+      function check(button) {
+        if (current.answered) return; current.answered = true; const answer = Number(button.dataset.answer), good = answer === current.answer;
+        document.querySelectorAll(".answer").forEach(item => { item.disabled = true; if (Number(item.dataset.answer) === current.answer) item.classList.add("correct"); });
+        const feedback = $("feedback"); if (good) { score += 1; sessionStorage.setItem("fruitAlgebraScore", String(score)); $("score").textContent = score; feedback.className = "feedback good"; feedback.textContent = `答對了！${current.explain}`; } else { button.classList.add("wrong"); feedback.className = "feedback try"; feedback.textContent = `差一點。${current.explain}`; }
+      }
+      $("levels").addEventListener("click", event => { const button = event.target.closest("[data-level]"); if (!button) return; level = Number(button.dataset.level); render(); });
+      $("answers").addEventListener("click", event => { const button = event.target.closest(".answer"); if (button) check(button); }); $("newQuestion").addEventListener("click", render); render();
+    })();
+  </script>
+</body>
+</html>
