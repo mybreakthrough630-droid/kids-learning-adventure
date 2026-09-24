@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小一奧數：圖形規律</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #26384b;
+      --muted: #5b6f81;
+      --line: #cbdce7;
+      --paper: #f8fcff;
+      --panel: #ffffff;
+      --purple: #7156bf;
+      --purple-soft: #eee8ff;
+      --orange: #df7b3d;
+      --orange-soft: #fff0e4;
+      --green: #238460;
+      --green-soft: #e8f8ef;
+      --red: #b64e58;
+      --shadow: 0 14px 32px rgba(38, 56, 75, .14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", "PingFang HK", "Microsoft JhengHei", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 8% 7%, rgba(255, 211, 92, .36), transparent 20rem),
+        radial-gradient(circle at 94% 5%, rgba(151, 207, 255, .35), transparent 22rem),
+        linear-gradient(145deg, #fffaf0, #f3fbff 54%, #f3fff7);
+    }
+
+    main { width: min(980px, 100%); margin: 0 auto; padding: clamp(14px, 3vw, 30px); }
+
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 15px; }
+    .eyebrow { margin: 0; color: var(--purple); font-size: 14px; font-weight: 950; letter-spacing: .08em; }
+    h1 { margin: 4px 0 3px; font-size: clamp(30px, 5vw, 46px); line-height: 1.08; }
+    .intro { margin: 0; color: var(--muted); font-size: clamp(16px, 2.3vw, 20px); font-weight: 750; line-height: 1.45; }
+    .score { display: grid; place-items: center; flex: 0 0 auto; width: 82px; height: 82px; border: 3px solid #e7bd47; border-radius: 50%; background: #fff6cb; color: #725300; box-shadow: 0 6px 0 rgba(104, 81, 0, .1); font-weight: 950; text-align: center; line-height: 1.05; }
+    .score strong { display: block; font-size: 25px; }
+    .score span { font-size: 13px; }
+
+    .card { padding: clamp(16px, 3vw, 26px); border: 2px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.96); box-shadow: var(--shadow); }
+    .question-title { margin: 0; color: #25445e; font-size: clamp(22px, 3.1vw, 30px); line-height: 1.3; }
+    .question-help { margin: 6px 0 18px; color: var(--muted); font-size: clamp(16px, 2.2vw, 19px); font-weight: 700; line-height: 1.45; }
+
+    .pattern-row { display: grid; grid-template-columns: minmax(0, 1fr) 82px minmax(0, 1fr); align-items: center; gap: clamp(10px, 3vw, 26px); }
+    .group { min-width: 0; }
+    .group-label { display: block; margin: 0 0 8px; color: #496277; font-size: 15px; font-weight: 900; text-align: center; }
+    .grid-box { display: grid; grid-template-columns: repeat(2, minmax(66px, 1fr)); width: min(100%, 270px); margin: auto; overflow: hidden; border: 4px solid #4e6376; border-radius: 10px; background: #4e6376; gap: 3px; }
+    .cell { display: grid; place-items: center; aspect-ratio: 1; min-height: 66px; padding: 10px; background: #fffdf8; }
+    .cell.missing { background: repeating-linear-gradient(135deg, #fffaf1 0 12px, #f6ebd9 12px 24px); }
+    .question-cell { border: 0; cursor: pointer; transition: transform 130ms ease, background 130ms ease; }
+    .question-cell:hover:not(:disabled) { background: #fff5d7; transform: scale(.98); }
+    .question-cell:focus-visible, .option:focus-visible, .new-question:focus-visible { outline: 4px solid #f2bd33; outline-offset: 3px; }
+    .question-cell:disabled { cursor: default; }
+    .question-cell.selected { background: #fff0c4; }
+    .cell svg, .option svg { display: block; width: min(100%, 86px); height: min(100%, 86px); }
+
+    .arrow { display: grid; place-items: center; gap: 3px; color: var(--purple); text-align: center; }
+    .arrow b { font-size: clamp(40px, 7vw, 62px); line-height: .85; }
+    .arrow span { font-size: 13px; font-weight: 900; line-height: 1.2; }
+
+    .divider { margin: 22px 0; border: 0; border-top: 2px dashed #b7c9d7; }
+    .your-turn { margin: 0 0 13px; color: var(--orange); font-size: clamp(20px, 2.8vw, 27px); font-weight: 950; }
+    .answer-area { margin-top: 20px; }
+    .answer-label { margin: 0 0 10px; font-size: clamp(17px, 2.4vw, 20px); font-weight: 900; }
+    .options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .option { display: grid; place-items: center; min-height: 100px; padding: 12px; border: 3px solid #bcd1df; border-radius: 15px; background: #fff; color: var(--ink); cursor: pointer; transition: transform 130ms ease, box-shadow 130ms ease, background 130ms ease; }
+    .option:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 7px 14px rgba(38,56,75,.13); background: #fff9e9; }
+    .option:disabled { cursor: default; }
+    .option.correct { border-color: var(--green); background: var(--green-soft); }
+    .option.wrong { border-color: var(--red); background: #ffebec; }
+    .option .shape-name { margin-top: 5px; font-size: 14px; font-weight: 850; }
+    .feedback { min-height: 28px; margin: 15px 0 0; padding: 0 4px; font-size: clamp(16px, 2.2vw, 19px); font-weight: 850; line-height: 1.45; }
+    .feedback.good { color: var(--green); }
+    .feedback.try { color: var(--red); }
+    .actions { display: flex; justify-content: center; margin-top: 17px; }
+    .new-question { min-height: 52px; padding: 10px 19px; border: 2px solid #4c7fc1; border-radius: 14px; background: #e6f3ff; color: #204c7c; font: inherit; font-size: 18px; font-weight: 900; cursor: pointer; }
+    .tip { margin: 18px 2px 0; padding: 13px 16px; border-left: 5px solid var(--purple); border-radius: 8px; background: var(--purple-soft); color: #463778; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    [hidden] { display: none !important; }
+
+    @media (max-width: 620px) {
+      header { align-items: flex-start; }
+      .score { width: 66px; height: 66px; }
+      .score strong { font-size: 21px; }
+      .pattern-row { grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr); gap: 6px; }
+      .arrow b { font-size: 36px; }
+      .arrow span { display: none; }
+      .grid-box { border-width: 3px; gap: 2px; }
+      .cell { min-height: 54px; padding: 6px; }
+      .options { gap: 7px; }
+      .option { min-height: 76px; padding: 7px 3px; border-width: 2px; border-radius: 11px; }
+      .option .shape-name { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <p class="eyebrow">P1 OLYMPIAD · SHAPE PATTERNS</p>
+        <h1>圖形規律小偵探</h1>
+        <p class="intro">找出左圖如何變成右圖，再用同一個方法完成下一組！</p>
+      </div>
+      <div class="score" aria-label="本次答對題數"><strong id="score">0</strong><span>答對題數</span></div>
+    </header>
+
+    <section class="card" aria-labelledby="questionTitle">
+      <h2 class="question-title" id="questionTitle">哪一個圖形應該放進空格？</h2>
+      <p class="question-help">第一組給你一個提示。觀察每個圖形的位置怎樣改變。</p>
+
+      <div class="pattern-row">
+        <div class="group"><span class="group-label">第一組：左圖</span><div class="grid-box" id="exampleStart" aria-label="第一組左圖"></div></div>
+        <div class="arrow" aria-hidden="true"><b>→</b><span>找規律</span></div>
+        <div class="group"><span class="group-label">第一組：右圖</span><div class="grid-box" id="exampleEnd" aria-label="第一組右圖"></div></div>
+      </div>
+
+      <hr class="divider">
+      <p class="your-turn">輪到你！</p>
+      <div class="pattern-row">
+        <div class="group"><span class="group-label">第二組：左圖</span><div class="grid-box" id="questionStart" aria-label="第二組左圖"></div></div>
+        <div class="arrow" aria-hidden="true"><b>→</b><span>同一規律</span></div>
+        <div class="group"><span class="group-label">第二組：右圖</span><div class="grid-box" id="questionEnd" aria-label="第二組右圖，有一格空白"></div></div>
+      </div>
+
+      <div class="answer-area">
+        <p class="answer-label">選擇答案：</p>
+        <div class="options" id="options" aria-label="答案選項"></div>
+        <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+      </div>
+      <div class="actions"><button class="new-question" id="newQuestion" type="button">↻ 換一題</button></div>
+    </section>
+
+    <p class="tip"><strong>小貼士：</strong>不用急著猜答案。先由左至右、由上至下，逐個看看圖形搬了到哪個位置。</p>
+  </main>
+
+  <script>
+    "use strict";
+    (() => {
+      const SHAPES = {
+        square: { name: "正方形", svg: '<svg viewBox="0 0 100 100" aria-hidden="true"><rect x="22" y="22" width="56" height="56" rx="3" fill="#9ed8f7" stroke="#31495d" stroke-width="6"/></svg>' },
+        triangle: { name: "三角形", svg: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 15 88 82H12Z" fill="#ffd58a" stroke="#31495d" stroke-width="6" stroke-linejoin="round"/></svg>' },
+        circle: { name: "圓形", svg: '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="31" fill="#f5acc3" stroke="#31495d" stroke-width="6"/></svg>' },
+        star: { name: "星形", svg: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="m50 12 10.5 24.5 26.5 2.2-20.1 17.4 6.1 26-23-13.7-23 13.7 6.1-26L13 38.7l26.5-2.2Z" fill="#cbb4f1" stroke="#31495d" stroke-width="6" stroke-linejoin="round"/></svg>' }
+      };
+
+      const TRANSFORMS = [
+        { name: "向左轉一轉", positions: [1, 3, 0, 2], explain: "整個方格向左轉了四分之一圈。" },
+        { name: "向右轉一轉", positions: [2, 0, 3, 1], explain: "整個方格向右轉了四分之一圈。" },
+        { name: "左右交換", positions: [1, 0, 3, 2], explain: "每一行的左右位置交換了。" },
+        { name: "上下交換", positions: [2, 3, 0, 1], explain: "每一列的上下位置交換了。" }
+      ];
+
+      const $ = id => document.getElementById(id);
+      const keys = Object.keys(SHAPES);
+      const shuffle = values => {
+        const copy = [...values];
+        for (let i = copy.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      };
+      const transform = (values, rule) => rule.positions.map(index => values[index]);
+      const cellMarkup = shape => `<span class="cell">${SHAPES[shape].svg}</span>`;
+      let current = null;
+      let score = Number(sessionStorage.getItem("shapePatternScore") || 0);
+      let lastKey = "";
+
+      function renderGrid(id, values, blankIndex, selectable) {
+        const root = $(id);
+        root.replaceChildren();
+        values.forEach((shape, index) => {
+          const isBlank = index === blankIndex;
+          const element = document.createElement(selectable ? "button" : "span");
+          if (selectable) {
+            element.type = "button";
+            element.disabled = Boolean(current.answered);
+            element.className = `cell question-cell${isBlank ? " missing" : ""}`;
+            element.setAttribute("aria-label", isBlank ? "空格，按此選擇圖形" : SHAPES[shape].name);
+            element.addEventListener("click", () => {
+              if (!isBlank || current.answered) return;
+              document.querySelectorAll(".question-cell").forEach(cell => cell.classList.remove("selected"));
+              element.classList.add("selected");
+              $("options").scrollIntoView({ behavior: "smooth", block: "nearest" });
+            });
+          } else {
+            element.className = "cell";
+            element.setAttribute("aria-label", SHAPES[shape].name);
+          }
+          if (!isBlank) element.innerHTML = SHAPES[shape].svg;
+          root.append(element);
+        });
+      }
+
+      function renderOptions() {
+        const root = $("options");
+        root.replaceChildren();
+        shuffle(keys).forEach(shape => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "option";
+          button.dataset.shape = shape;
+          button.setAttribute("aria-label", `選擇${SHAPES[shape].name}`);
+          button.innerHTML = `${SHAPES[shape].svg}<span class="shape-name">${SHAPES[shape].name}</span>`;
+          button.addEventListener("click", () => checkAnswer(shape, button));
+          root.append(button);
+        });
+      }
+
+      function checkAnswer(shape, button) {
+        if (current.answered) return;
+        current.answered = true;
+        const correct = shape === current.answer;
+        document.querySelectorAll(".option").forEach(option => {
+          option.disabled = true;
+          if (option.dataset.shape === current.answer) option.classList.add("correct");
+        });
+        document.querySelectorAll(".question-cell").forEach(cell => cell.disabled = true);
+        const blank = $("questionEnd").children[current.blankIndex];
+        blank.classList.remove("missing");
+        blank.innerHTML = SHAPES[current.answer].svg;
+        blank.setAttribute("aria-label", SHAPES[current.answer].name);
+        const feedback = $("feedback");
+        if (correct) {
+          score += 1;
+          sessionStorage.setItem("shapePatternScore", String(score));
+          $("score").textContent = score;
+          feedback.className = "feedback good";
+          feedback.textContent = `答對了！${current.rule.explain} 所以空格是${SHAPES[current.answer].name}。`;
+        } else {
+          button.classList.add("wrong");
+          feedback.className = "feedback try";
+          feedback.textContent = `再看看第一組。${current.rule.explain} 正確答案是${SHAPES[current.answer].name}。`;
+        }
+      }
+
+      function newQuestion() {
+        let generated;
+        do {
+          const rule = TRANSFORMS[Math.floor(Math.random() * TRANSFORMS.length)];
+          const exampleStart = shuffle(keys);
+          const questionStart = shuffle(keys);
+          const blankIndex = Math.floor(Math.random() * 4);
+          generated = { rule, exampleStart, exampleEnd: transform(exampleStart, rule), questionStart, questionEnd: transform(questionStart, rule), blankIndex, answered: false };
+          generated.answer = generated.questionEnd[blankIndex];
+          generated.key = `${rule.name}|${exampleStart.join("")}|${questionStart.join("")}|${blankIndex}`;
+        } while (generated.key === lastKey);
+        lastKey = generated.key;
+        current = generated;
+        renderGrid("exampleStart", current.exampleStart);
+        renderGrid("exampleEnd", current.exampleEnd);
+        renderGrid("questionStart", current.questionStart);
+        renderGrid("questionEnd", current.questionEnd, current.blankIndex, true);
+        renderOptions();
+        const feedback = $("feedback");
+        feedback.className = "feedback";
+        feedback.textContent = "先看看第一組的規律，再選一個圖形。";
+      }
+
+      $("newQuestion").addEventListener("click", newQuestion);
+      $("score").textContent = score;
+      newQuestion();
+    })();
+  </script>
+</body>
+</html>
