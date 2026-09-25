@@ -99,7 +99,7 @@
 
     .switcher {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 6px;
       padding: 6px;
       border: 2px solid var(--line);
@@ -169,6 +169,11 @@
     .lesson-tab[data-kind="family"]::before {
       color: #b0455c;
       background: #ffe7ed;
+    }
+
+    .lesson-tab[data-kind="memory-practice"]::before {
+      color: #5e5ab7;
+      background: #eeedff;
     }
 
     .lesson-tab[data-kind="reading"]::before {
@@ -386,9 +391,13 @@
     </header>
 
     <nav class="switcher" aria-label="選擇學習活動">
-      <button class="lesson-tab" type="button" data-kind="memory" data-icon="★" data-src="memory-training.html?v=20260917" data-title="記憶力訓練 Memory Fun">
-        記憶力訓練
-        <small>四款新遊戲＋原有圖案・淺中難三級</small>
+      <button class="lesson-tab" type="button" data-kind="memory-practice" data-icon="◎" data-src="memory-practice.html?v=20260925" data-title="記憶力小練習 Memory Practice">
+        記憶力小練習
+        <small>4×3 格・位置、分組與次序</small>
+      </button>
+      <button class="lesson-tab" type="button" data-kind="memory" data-icon="★" data-src="memory-training.html?v=20260925" data-title="記憶力小冒險 Memory Adventure">
+        記憶力小冒險
+        <small>食物・交通・動物・圖案主題</small>
       </button>
       <button
         class="lesson-tab"

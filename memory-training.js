@@ -12,8 +12,8 @@
     balloon:['氣球','<ellipse cx="50" cy="35" rx="25" ry="29" fill="#e99abf"/><path d="m50 64-4 8h8zM50 72q-13 10 0 22"/>'],
     icecream:['雪糕','<path d="m28 47 44 0-22 47z" fill="#e7b775"/><circle cx="50" cy="33" r="25" fill="#e99abf"/>']
   };
-  const names={cars:'車車出發',animals:'動物派對',dolls:'公仔朋友',gems:'寶石記憶',classic:'圖案放回原位'};
-  const questions={cars:'哪些車原本有司機？',animals:'哪些動物原本戴帽子？',dolls:'哪些公仔原本抱着小熊？',gems:'星星、鑽石、心心原本在哪一格？',classic:'把圖案放回原位。'};
+  const names={cars:'車車出發',animals:'動物派對',dolls:'公仔朋友',food:'美食記憶',transport:'交通出發',gems:'寶石記憶',classic:'圖案放回原位'};
+  const questions={cars:'哪些車原本有司機？',animals:'哪些動物原本戴帽子？',dolls:'哪些公仔原本抱着小熊？',food:'哪些食物原本插着小旗？',transport:'哪些交通工具原本有乘客？',gems:'星星、鑽石、心心原本在哪一格？',classic:'把圖案放回原位。'};
   const labels={star:'星星',diamond:'鑽石',heart:'心心'};
   const $=id=>document.getElementById(id);
   const svg=k=>`<svg viewBox="0 0 100 100" aria-hidden="true" fill="#27364a" stroke="#27364a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${drawings[k][1]}</svg>`;

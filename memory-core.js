@@ -17,7 +17,7 @@
       const shapes=shuffle(types,rng);
       target=shuffle([...Array.from({length:cfg.targets},(_,i)=>shapes[i%3]),...Array(size-cfg.targets).fill(null)],rng);
     }else{
-      if(!['cars','animals','dolls'].includes(game))throw Error('Unknown game');
+      if(!['cars','animals','dolls','food','transport'].includes(game))throw Error('Unknown game');
       target=shuffle([...Array(cfg.targets).fill(true),...Array(size-cfg.targets).fill(false)],rng);
     }
     return {game,level,size,columns:game==='classic'?4:cfg.columns,seconds:cfg.seconds,cells,types,target};

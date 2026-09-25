@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>記憶力小練習</title>
+<link rel="stylesheet" href="memory-practice.css?v=20260925">
+<main>
+  <header>
+    <span class="badge">★ MEMORY PRACTICE</span>
+    <h1>記憶力小練習</h1>
+    <p>用固定路線看 4 × 3 格：由左至右、由上至下。</p>
+  </header>
+
+  <section class="method" aria-label="記憶方法">
+    <div><b>① 看位置</b><span>先講行，再講格。</span></div>
+    <div><b>② 分小組</b><span>一次先記 2 對圖形。</span></div>
+    <div><b>③ 記次序</b><span>跟住 1 → 2 → 3。</span></div>
+  </section>
+
+  <section class="settings" aria-label="遊戲設定">
+    <label>練習 <select id="mode"><option value="location">找圖形位置</option><option value="sequence">記住次序</option></select></label>
+    <label>程度 <select id="level"><option value="warmup">起步：2 對</option><option value="middle">進階：4 對</option><option value="full">挑戰：6 對</option></select></label>
+    <button id="new" type="button">開始新題</button>
+  </section>
+
+  <section class="status" aria-live="polite">
+    <h2 id="heading">準備好練習嗎？</h2>
+    <span id="timer"></span>
+  </section>
+  <p id="instruction">按「開始新題」，先用手指跟住格子由左至右、由上至下看一遍。</p>
+  <p id="route" class="route" hidden>觀察時：第 1 行 → 第 2 行 → 第 3 行</p>
+  <div id="grid" class="grid" aria-label="四乘三記憶格"></div>
+
+  <div class="actions">
+    <button id="recall" type="button" hidden>我記住了，開始作答</button>
+    <button id="check" type="button" hidden>核對答案</button>
+    <button id="retry" type="button" hidden>再試同一題</button>
+  </div>
+
+  <section id="review" hidden>
+    <h2>答案和方法</h2>
+    <p id="feedback"></p>
+    <div id="solution" class="grid" aria-label="原圖答案"></div>
+  </section>
+  <footer>小提示：答錯時先講「第幾行、第幾格」，再看原圖一次。每次練習約 5 至 10 分鐘已經足夠。</footer>
+</main>
+<script src="memory-practice.js?v=20260925"></script>
+</html>
