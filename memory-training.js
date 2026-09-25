@@ -13,14 +13,14 @@
     icecream:['雪糕','<path d="m28 47 44 0-22 47z" fill="#e7b775"/><circle cx="50" cy="33" r="25" fill="#e99abf"/>']
   };
   const names={cars:'車車出發',animals:'動物派對',dolls:'公仔朋友',food:'美食記憶',transport:'交通出發',gems:'寶石記憶',classic:'圖案放回原位'};
-  const questions={cars:'哪些車原本有司機？',animals:'哪些動物原本戴帽子？',dolls:'哪些公仔原本抱着小熊？',food:'哪些食物原本插着小旗？',transport:'哪些交通工具原本有乘客？',gems:'星星、鑽石、心心原本在哪一格？',classic:'把圖案放回原位。'};
-  const labels={star:'星星',diamond:'鑽石',heart:'心心'};
+  const questions={cars:'哪些車原本有司機？',animals:'哪些動物原本戴帽子？',dolls:'哪些公仔原本抱着小熊？',food:'漢堡、芝士和汽水原本在哪一格？',transport:'汽車、飛機和帆船原本在哪一格？',gems:'星星、鑽石、心心原本在哪一格？',classic:'把圖案放回原位。'};
+  const labels={star:'星星',diamond:'鑽石',heart:'心心',burger:'漢堡',cheese:'芝士',soda:'汽水',car:'汽車',plane:'飛機',boat:'帆船'};
   const $=id=>document.getElementById(id);
   const svg=k=>`<svg viewBox="0 0 100 100" aria-hidden="true" fill="#27364a" stroke="#27364a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${drawings[k][1]}</svg>`;
   let puzzle=null,answer=[],selected=null,phase='idle',timer=null,deadline=0,round=0,lastSignature='';
-  const placement=()=>puzzle.game==='gems'||puzzle.game==='classic';
+  const placement=()=>['gems','food','transport','classic'].includes(puzzle.game);
   const label=k=>labels[k]||drawings[k]?.[0]||'空白';
-  const art=(value,i)=>puzzle.game==='classic'?(value?svg(value):''):puzzle.game==='gems'?(value?MemoryArt.shape(value):''):MemoryArt.picture(puzzle.game,puzzle.cells[i],value);
+  const art=(value,i)=>puzzle.game==='classic'?(value?svg(value):''):puzzle.game==='gems'?(value?MemoryArt.shape(value):''):['food','transport'].includes(puzzle.game)?(value?MemoryArt.token(puzzle.game,value):''):MemoryArt.picture(puzzle.game,puzzle.cells[i],value);
   function stop(){clearInterval(timer);timer=null;}
   function renderGrid(id,values,editable=false,feedback=false){
     $(id).replaceChildren();$(id).style.gridTemplateColumns=`repeat(${puzzle.columns},minmax(0,1fr))`;
@@ -43,7 +43,7 @@
   }
   function palette(){
     $('palette').replaceChildren();
-    [...puzzle.types,null].forEach(k=>{const b=document.createElement('button');b.type='button';b.innerHTML=(k?(puzzle.game==='gems'?MemoryArt.shape(k):svg(k)):'⌫')+(k?label(k):'擦膠');b.setAttribute('aria-pressed',String(k===selected));b.addEventListener('click',()=>{selected=k;palette();});$('palette').append(b);});
+    [...puzzle.types,null].forEach(k=>{const b=document.createElement('button');b.type='button';b.innerHTML=(k?(puzzle.game==='gems'?MemoryArt.shape(k):['food','transport'].includes(puzzle.game)?MemoryArt.token(puzzle.game,k):svg(k)):'⌫')+(k?label(k):'擦膠');b.setAttribute('aria-pressed',String(k===selected));b.addEventListener('click',()=>{selected=k;palette();});$('palette').append(b);});
   }
   function recall(){
     if(phase!=='observe')return;stop();phase='recall';answer=Array(puzzle.size).fill(placement()?null:false);selected=puzzle.types[0]||null;

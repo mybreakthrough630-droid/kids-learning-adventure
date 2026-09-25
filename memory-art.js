@@ -39,5 +39,9 @@
     }
     return wrap(`${style%2?'<circle cx="32" cy="25" r="12" fill="#69514a"/><circle cx="88" cy="25" r="12" fill="#69514a"/>':''}<circle cx="60" cy="31" r="25" fill="#69514a"/>${face(60,36,21)}<path d="m43 60-13 34h60L77 60z" fill="${color}"/><path d="m43 65-20 17m54-17 20 17" stroke="#e7ba94" stroke-width="8"/><path d="M46 96v6m28-6v6" stroke-width="7"/>${active?'<g fill="#bf9469"><circle cx="48" cy="68" r="6"/><circle cx="72" cy="68" r="6"/><ellipse cx="60" cy="88" rx="14" ry="12"/><circle cx="60" cy="77" r="14"/></g><circle cx="55" cy="75" r="1.5"/><circle cx="65" cy="75" r="1.5"/><circle cx="60" cy="81" r="2"/>':''}`);
   }
-  window.MemoryArt={picture,shape};
+  function token(game,key){
+    const styles={food:{burger:1,cheese:3,soda:2},transport:{car:0,plane:1,boat:2}};
+    return picture(game,{style:styles[game]?.[key]??0,color:styles[game]?.[key]??0},false);
+  }
+  window.MemoryArt={picture,shape,token};
 })();

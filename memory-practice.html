@@ -18,8 +18,8 @@
   </section>
 
   <section class="settings" aria-label="遊戲設定">
-    <label>練習 <select id="mode"><option value="location">找圖形位置</option><option value="sequence">記住次序</option></select></label>
-    <label>程度 <select id="level"><option value="warmup">起步：2 對</option><option value="middle">進階：4 對</option><option value="full">挑戰：6 對</option></select></label>
+    <label>圖案 <select id="mode"><option value="gems">寶石記憶</option><option value="shapes">圖形記憶</option></select></label>
+    <label>程度 <select id="level"><option value="warmup">起步：2 個圖形</option><option value="middle">進階：4 個圖形</option><option value="full">挑戰：6 個圖形</option></select></label>
     <button id="new" type="button">開始新題</button>
   </section>
 
@@ -29,6 +29,7 @@
   </section>
   <p id="instruction">按「開始新題」，先用手指跟住格子由左至右、由上至下看一遍。</p>
   <p id="route" class="route" hidden>觀察時：第 1 行 → 第 2 行 → 第 3 行</p>
+  <div id="palette" class="palette" aria-label="選擇要放的圖案" hidden></div>
   <div id="grid" class="grid" aria-label="四乘三記憶格"></div>
 
   <div class="actions">

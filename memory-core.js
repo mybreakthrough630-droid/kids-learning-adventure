@@ -12,12 +12,17 @@
       const counts=level==='easy'?[3,1]:level==='medium'?[3,2+Math.floor(rng()*2)]:[3,2+Math.floor(rng()*2),2];
       types=shuffle(classicKeys,rng).slice(0,counts.length);
       target=shuffle([...types.flatMap((k,i)=>Array(counts[i]).fill(k)),...Array(12-counts.reduce((a,b)=>a+b,0)).fill(null)],rng);
-    }else if(game==='gems'){
-      types=['star','diamond','heart'];
+    }else if(['gems','food','transport'].includes(game)){
+      const themeTypes={
+        gems:['star','diamond','heart'],
+        food:['burger','cheese','soda'],
+        transport:['car','plane','boat']
+      };
+      types=themeTypes[game];
       const shapes=shuffle(types,rng);
       target=shuffle([...Array.from({length:cfg.targets},(_,i)=>shapes[i%3]),...Array(size-cfg.targets).fill(null)],rng);
     }else{
-      if(!['cars','animals','dolls','food','transport'].includes(game))throw Error('Unknown game');
+      if(!['cars','animals','dolls'].includes(game))throw Error('Unknown game');
       target=shuffle([...Array(cfg.targets).fill(true),...Array(size-cfg.targets).fill(false)],rng);
     }
     return {game,level,size,columns:game==='classic'?4:cfg.columns,seconds:cfg.seconds,cells,types,target};
