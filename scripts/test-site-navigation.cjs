@@ -8,7 +8,7 @@ const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 for(const reduced of [false,true]){
  const els={},calls=[];const element=()=>({classList:{toggle(){},remove(){},add(){}},setAttribute(){},addEventListener(){},focus(x){calls.push(['focus',x])}});
  for(const id of ['lessonFrame','frameWrap','stageTitle','directLink'])els[id]=element();
- const tab={...element(),dataset:{src:'memory-train.html?v=20261001d',title:'形狀記憶列車'}};
+ const tab={...element(),dataset:{src:'memory-train.html?v=20261001e',title:'形狀記憶列車'}};
  const stage={scrollIntoView(x){calls.push(['scroll',x])}};
  const ctx={document:{getElementById:k=>els[k],querySelectorAll:()=>[tab],querySelector:()=>stage},matchMedia:()=>({matches:reduced})};
  vm.createContext(ctx);vm.runInContext(script,ctx);ctx.openLesson(tab);

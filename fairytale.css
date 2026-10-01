@@ -95,7 +95,28 @@ html body.train-page .train .slot { pointer-events:none; background-color:transp
 .train-page .carriage-0{background-position:0 0}.train-page .carriage-1{background-position:33.333% 0}.train-page .carriage-2{background-position:66.667% 0}.train-page .carriage-3{background-position:100% 0}
 .train-page .carriage-4{background-position:0 100%}.train-page .carriage-5{background-position:33.333% 100%}.train-page .carriage-6{background-position:66.667% 100%}.train-page .carriage-7{background-position:100% 100%}
 .train-page .train .slot:after { content:none; }
-.train-page .slot .shape-art { width:70%; position:absolute; top:14%; left:15%; }
+/* Register the visible sprite, not its asymmetric transparent square.
+   Carriage panels occupy about x25–85%, y31–66% of each atlas cell. */
+.train-page .slot .shape-art {
+ width:42%; height:auto; aspect-ratio:1; position:absolute;
+ left:var(--panel-x,54.5%); top:var(--panel-y,48.5%);
+ transform:translate(calc(-1 * var(--shape-x,50%)),calc(-1 * var(--shape-y,50%)));
+}
+.shape-0{--shape-x:52.93%;--shape-y:59.57%}
+.shape-1{--shape-x:50.11%;--shape-y:59.48%}
+.shape-2{--shape-x:49.32%;--shape-y:58.35%}
+.shape-3{--shape-x:49.55%;--shape-y:57.32%}
+.shape-4{--shape-x:54.50%;--shape-y:50.79%}
+.shape-5{--shape-x:50.23%;--shape-y:49.44%}
+.shape-6{--shape-x:49.21%;--shape-y:51.35%}
+.shape-7{--shape-x:49.10%;--shape-y:49.32%}
+.train-page .carriage-1{--panel-x:54%;--panel-y:48.5%}
+.train-page .carriage-2{--panel-x:54%;--panel-y:48.5%}
+.train-page .carriage-3{--panel-x:53.5%;--panel-y:48.5%}
+.train-page .carriage-4{--panel-x:54.5%;--panel-y:47.5%}
+.train-page .carriage-5{--panel-x:54%;--panel-y:47.5%}
+.train-page .carriage-6{--panel-x:54%;--panel-y:47.5%}
+.train-page .carriage-7{--panel-x:53.5%;--panel-y:47.5%}
 .train-page .number { top:-24px; width:32px; height:32px; color:#865722; border:2px solid #d8a85d; background:#fff0cc; }
 .train-page .mark { bottom:-26px; left:0; width:100%; border-radius:12px; background:#fff4dc; padding:3px 0; font-size:14px; }
 .train-page .active .number { background:#ffdc67; }

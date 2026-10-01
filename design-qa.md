@@ -49,6 +49,22 @@ No actionable P0/P1/P2 findings in the scoped release. Native control positions 
 P3: fine texture variation is expected in generated pairs; no pixel-identical-outside-edits claim. Sound quality not independently recorded.
 Remaining16pairs are unfinished due production interruption, not claimed as part of this pass. Do not expose unpaired drafts as playable questions.
 
-Implementation checklist: scoped local visual/functional QA complete; preserve primary checkout user edits; publish only tested assets/pages and verify public result.
+Publication verification: commit154b05bd733b3cdf07ab338ee849e04c90372cfa pushed non-force to main. Public GitHub Pages checked after deployment: bottomMenu=true, navTop876.58 > frameBottom813.25; both bus-pairPNGsloaded1536×1024; six live clicks produced success; candy background and branded art loaded, no console errors. Evidence: review/live-human-pair.png and review/live-candy.png. Primary checkout user edits remained unchanged.
+
+Implementation checklist: scoped local and public verification complete. Remaining16pairs are not complete.
+
+## Follow-up: train artwork registration correction
+
+User reported distorted-looking wagon symbols and misplaced gemstone. Before evidence: review/train-before-alignment.png,1280×720CSSviewport (1264×724full capture). All source sprite boxes were87.42×87.42px, so the browser was not independently stretching width/height. P1 was actual panel overflow/occlusion:70%-wide sprites covered the short cream panel, frame and wheels; asymmetric transparent padding shifted the visible diamond relative to the panel.
+
+Kept both original PNGs unchanged. Measured solid-alpha sprite bounds (A>=200) without modifying pixels; each shape now uses its actual visible centre and each carriage its cream-panel centre. Uniform42% square-cell fit keeps all64shape/wagon combinations within cream x25–85%,y31–66%, with no roof/wheel overlap. This is visible-art registration, not a new drawing or nonuniform stretch.
+
+Post-fix evidence: review/train-after-alignment.png and review/train-alignment-comparison.png, produced by review/train-alignment-comparison.html. SAME combined input contains approved source, before/after full views and focused train rows. Source1672×941retains aspect ratio; implementation desktop1280×720retains aspect ratio in equal-width columns. Approved static eight-shape display is compared to the equivalent filled eight-slot answer state. Every symbol is inside the cream panel, and blue diamond centred.
+
+Desktop rendered sprite boxes52.4479×52.4479px; mobile390×844boxes35.1354×35.1354px. No independent-axis scaling. True mobile full-page evidence: review/train-alignment-mobile.png; document375pxwith native scrollbar, no horizontal overflow. Initial stale viewport override was rejected and replaced using a fresh viewport handler.
+
+Fidelity surfaces: fonts/brand/copy unchanged; spacing limited to wagon art registration, eight slots retained; colors/opacity/PNGquality unchanged; same rich3Dtoy direction preserved. Carriage cream panels are shorter than the mock and symbols therefore fit smaller—existing regenerated-art proportion is retained, not silently claimed pixel-identical. No current P0/P1/P2 in this scoped alignment fix.
+
+Tests: scripts/test-train-layout.cjs verifies square atlas cells, actual visible centres and64in-panel combinations. Existing fairytale/adventure/navigation suites pass. Browser geometry checked for every shape at desktop/mobile, error logs empty. Shared stylesheets cache version bumped to20261001e; scene/game logic and other assets unchanged. Remaining16scene pairs still unfinished.
 
 final result: passed
