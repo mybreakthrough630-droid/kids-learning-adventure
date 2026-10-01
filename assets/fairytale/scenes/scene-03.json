@@ -1,0 +1,24 @@
+{
+  "title": "學校操場",
+  "style": "近寫實真人；香港學校操場，兩名虛構東亞小學生近景，自然面孔、皮膚、布料和日光，非 3D 人物。",
+  "image": "assets/fairytale/scenes/scene-03-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-03-changed.png",
+  "imageWidth": 1536,
+  "imageHeight": 1024,
+  "boundsUnit": "percent; x/y are top-left, w/h are width/height",
+  "verification": {
+    "toolMode": "built-in imagegen precise-object-edit",
+    "checked": ["皮球藍轉黃", "交通雪糕筒黃轉橙", "水樽紅轉藍", "書包橙轉紫", "旗幟紅轉藍", "長椅座位綠轉黃，椅背仍綠色"],
+    "visualReview": "六個目標顏色均已改動；人物身份、姿勢、服飾、背景、光線和構圖保留，目視未發現額外的遊戲差異。AI 編輯並非逐像素相同。",
+    "meanRgbErrorOutsideTargetBoxes": 3.6782,
+    "outsideTargetPixelsMeanRgbErrorAbove20Ratio": 0.0071
+  },
+  "items": [
+    { "name": "皮球", "x": 24.5, "y": 35, "w": 12, "h": 17, "description": "將女孩雙手捧着的藍色皮球改成黃色；保留球面紋理、光影、形狀、手指及衣服。" },
+    { "name": "交通雪糕筒", "x": 1.5, "y": 62.5, "w": 13.5, "h": 33, "description": "將左前方黃色交通雪糕筒改成橙色；保留底座造型、光影和地面。" },
+    { "name": "水樽", "x": 47, "y": 71.5, "w": 5.5, "h": 21, "description": "將前景中央紅色水樽的樽身、樽蓋和提環改成藍色；保留輪廓、細節、反光及影子。" },
+    { "name": "書包", "x": 73, "y": 62, "w": 20.5, "h": 31.5, "description": "將右前方橙色書包布料改成紫色；保留黑色提手、拉鏈、肩帶、布料質感及影子。" },
+    { "name": "旗幟", "x": 88.5, "y": 4.5, "w": 9, "h": 11.5, "description": "將右上方紅色三角旗的旗面改成藍色；保留旗杆、旗面皺摺、形狀和背景。" },
+    { "name": "長椅座位", "x": 73, "y": 49, "w": 23.5, "h": 3.5, "description": "只將右側中景長椅綠色水平座位木條改成黃色；保留綠色椅背、椅腳、結構、光影及背景。" }
+  ]
+}

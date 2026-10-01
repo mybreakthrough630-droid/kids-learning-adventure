@@ -97,6 +97,8 @@
       white-space: nowrap;
     }
 
+    .activity-menu-title { margin: 22px 6px 10px; font-size: 20px; }
+
     .switcher {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -285,7 +287,7 @@
     iframe {
       display: block;
       width: 100%;
-      height: max(680px, calc(100vh - 176px));
+      height: max(680px, calc(100vh - 112px));
       min-height: 680px;
       border: 0;
       background: #ffffff;
@@ -357,13 +359,13 @@
       }
 
       iframe {
-        height: calc(100vh - 210px);
+        height: max(620px, calc(100svh - 150px));
       }
     }
 
     @media (max-width: 390px) {
       .switcher {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .lesson-tab small {
@@ -390,8 +392,33 @@
       <div class="mode-label">Choose an activity</div>
     </header>
 
-    <nav class="switcher" aria-label="選擇學習活動">
-      <button class="lesson-tab" type="button" data-kind="memory" data-icon="♫" data-src="memory-adventure.html?v=20261001" data-title="記憶力小遊戲">記憶力小遊戲<small>四個獨立遊戲・五星挑戰</small></button>
+
+    <section class="learning-stage" aria-labelledby="stageTitle">
+      <div class="stage-bar">
+        <h2 class="stage-title" id="stageTitle" tabindex="-1">閱讀理解 Reading Fun</h2>
+        <a
+          class="direct-link"
+          id="directLink"
+          href="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
+          target="_blank"
+          rel="noopener"
+        >在新頁開啟</a>
+      </div>
+      <div class="frame-wrap" id="frameWrap">
+        <div class="loading" id="loading" role="status">正在準備學習內容...</div>
+        <iframe
+          id="lessonFrame"
+          title="閱讀理解 Reading Fun"
+          src="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
+          allow="autoplay; microphone"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+    </section>
+
+    <h2 class="activity-menu-title" id="activityMenuTitle">切換學習活動</h2>
+    <nav class="switcher" id="activityMenu" aria-labelledby="activityMenuTitle">
+      <button class="lesson-tab" type="button" data-kind="memory" data-icon="♫" data-src="memory-adventure.html?v=20261001d" data-title="記憶力小遊戲">記憶力小遊戲<small>四個獨立遊戲・五星挑戰</small></button>
       <button class="lesson-tab" type="button" data-kind="memory-practice" data-icon="◎" data-src="memory-practice.html?v=20260925b" data-title="記憶力小練習 Memory Practice">
         記憶力小練習
         <small>4×3 格・位置、分組與次序</small>
@@ -521,34 +548,11 @@
         圖像代數
         <small>水果・糖果・交通工具・一至五星</small>
       </button>
-      <button class="lesson-tab" type="button" data-kind="shape-memory" data-icon="♥" data-src="shape-memory.html" data-title="形狀記憶列車">
+      <button class="lesson-tab" type="button" data-kind="shape-memory" data-icon="♥" data-src="memory-train.html?v=20261001d" data-title="形狀記憶列車">
         形狀記憶列車
         <small>順序記憶・五級難度・隨機停留</small>
       </button>
     </nav>
-
-    <section class="learning-stage" aria-labelledby="stageTitle">
-      <div class="stage-bar">
-        <h2 class="stage-title" id="stageTitle">閱讀理解 Reading Fun</h2>
-        <a
-          class="direct-link"
-          id="directLink"
-          href="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
-          target="_blank"
-          rel="noopener"
-        >在新頁開啟</a>
-      </div>
-      <div class="frame-wrap" id="frameWrap">
-        <div class="loading" id="loading" role="status">正在準備學習內容...</div>
-        <iframe
-          id="lessonFrame"
-          title="閱讀理解 Reading Fun"
-          src="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
-          allow="autoplay; microphone"
-          referrerpolicy="strict-origin-when-cross-origin"
-        ></iframe>
-      </div>
-    </section>
   </main>
 
   <script>
@@ -570,6 +574,11 @@
       frame.title = tab.dataset.title;
       stageTitle.textContent = tab.dataset.title;
       directLink.href = tab.dataset.src;
+      stageTitle.focus({ preventScroll: true });
+      document.querySelector('.learning-stage').scrollIntoView({
+        block: 'start',
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+      });
     }
 
     tabs.forEach((tab) => {

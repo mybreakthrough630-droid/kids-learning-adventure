@@ -1,0 +1,148 @@
+/* Native controls over the selected fairytale raster artwork. */
+.candy-art,.animal-art { display:block; width:85px; aspect-ratio:1; background-size:400% 200%; background-repeat:no-repeat; flex-shrink:0; }
+.candy-art { background-image:url('assets/fairytale/candies-atlas.png'); }
+.animal-art { background-image:url('assets/fairytale/animals-atlas.png'); }
+.sprite-0{background-position:0 0}.sprite-1{background-position:33.333% 0}.sprite-2{background-position:66.667% 0}.sprite-3{background-position:100% 0}
+.sprite-4{background-position:0 100%}.sprite-5{background-position:33.333% 100%}.sprite-6{background-position:66.667% 100%}.sprite-7{background-position:100% 100%}
+.fairytale .palette .candy-art,.fairytale .palette .animal-art{width:85px;margin:auto}
+.fairytale .review .candy-art,.fairytale .review .animal-art{display:inline-block;width:48px;vertical-align:middle}
+.candy-page{background:#ffe9db url('assets/fairytale/candy-backdrop.png') center top/100% 100svh no-repeat;min-height:100vh}
+.candy-page .wrap{position:relative;max-width:1920px;min-height:100svh;padding:18px}
+.candy-page header{justify-content:center}.candy-page header .button{position:absolute;left:18px;top:28px}
+.candy-page .toolbar{justify-content:center;background:#fff4dee8;border-radius:18px;padding:10px;width:fit-content;margin:12px auto}
+.candy-page #note{width:fit-content;margin:10px auto;text-align:center;background:#fff4def5;padding:6px 16px;border-radius:20px}
+.candy-page .status{position:absolute;left:28%;width:70%;top:31%;margin:0;min-height:40px;background:#fff4def0;border-radius:18px;font-size:19px}
+html body.candy-page .board.candy{position:absolute;top:43%;left:28%;width:70%;min-height:0;padding:24px 8px 20px;background:none!important;border:0;box-shadow:none;overflow:visible}
+.candy-page .slots{grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
+html body.candy-page .slot{background:#fff6de!important;border:3px solid #d8a85d;box-shadow:0 5px 0 #b7833b;border-radius:18px}
+.candy-page .slot .candy-art{width:95%}.candy-page .number{color:#865722;background:#fff0cc;border:2px solid #d8a85d}
+.candy-page .mark{bottom:-28px;background:#fff4dc;border-radius:8px;width:100%;font-size:13px}
+.candy-page .answer-panel{position:absolute;top:73%;left:30px;width:calc(100% - 60px);background:#fff6e8f5;border:5px solid #d8a85d;border-radius:26px;padding:12px}
+.candy-page .palette{margin:0;gap:10px}.candy-page .actions{margin:12px 0 3px}
+.candy-page footer{position:absolute;top:66%;left:50%;transform:translateX(-50%);width:max-content;max-width:95%;margin:0;padding:5px 16px;background:#fff3dc;border:2px solid #d8a85d;border-radius:18px;color:#674324}
+.animals-page,.menu-page{background:#e5f2dc url('assets/fairytale/train-backdrop.png') center top/cover fixed}
+.animals-page .wrap,.menu-page .wrap{background:#fff7e5f2;border:4px solid #d8a85d;border-radius:28px;margin:16px auto;padding:18px;max-width:1260px}
+.animals-page header,.menu-page header{justify-content:center;position:relative}.animals-page header .button,.menu-page header .button{position:absolute;left:0;top:12px}
+.animals-page .brand-picture,.menu-page .brand-picture{width:500px;height:94px}.animals-page .brand-picture img,.menu-page .brand-picture img{top:-32px}
+.animals-page .toolbar{justify-content:center;margin:12px 0}.animals-page #note{text-align:center;margin:8px 0}
+.animals-page .status{min-height:32px;margin:8px 0;font-size:19px}
+html body.animals-page .board.animals{min-height:0;background:none!important;border:0;box-shadow:none;padding:24px 16px 40px;overflow:visible}
+.animals-page .slots{max-width:920px;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px 8px}
+html body.animals-page .animal-house{border:0;box-shadow:none;border-radius:0;background-color:transparent!important;background-image:url('assets/fairytale/houses-atlas.png');background-size:400% 200%;background-repeat:no-repeat}
+.animals-page .carriage-0{background-position:0 0}.animals-page .carriage-1{background-position:33.333% 0}.animals-page .carriage-2{background-position:66.667% 0}.animals-page .carriage-3{background-position:100% 0}
+.animals-page .carriage-4{background-position:0 100%}.animals-page .carriage-5{background-position:33.333% 100%}.animals-page .carriage-6{background-position:66.667% 100%}.animals-page .carriage-7{background-position:100% 100%}
+.animals-page .animal-house .animal-art{position:absolute;top:41%;left:26%;width:48%}
+.animals-page .number{top:-15px;background:#fff0cc;border:2px solid #d8a85d;color:#865722}
+.animals-page .mark{bottom:-22px;background:#fff4dc;border-radius:8px;width:100%}
+.animals-page .answer-panel{background:#fff6e8;border:3px solid #d8a85d;border-radius:26px;padding:14px}
+.animals-page .palette{margin:0}.animals-page .actions{margin:12px 0}
+.menu-page .hero{margin:16px 0}.menu-page .hero img{max-height:300px}
+.menu-page .hero-copy{padding:16px;margin:16px;background:#fff3dcf5;border:2px solid #d8a85d}
+.menu-page .card{border:3px solid #d8a85d;box-shadow:0 5px 0 #b7833b;color:#674324;background:#fff5dc}
+.menu-page .card img{height:180px}.menu-page .cards{gap:16px}.menu-page .card h2{font-size:24px}
+.menu-page .future{flex-wrap:wrap;margin:14px 0}
+@media(max-width:1400px) and (min-width:761px){
+ .candy-page .brand-picture{width:500px;height:94px}.candy-page .brand-picture img{top:-32px}.candy-page h1{font-size:23px}
+ .candy-page .palette button{width:85px;height:95px}.candy-page .palette .candy-art{width:65px}.candy-page .answer-panel{padding:9px}.candy-page .actions{margin:8px 0}
+}
+@media(max-width:760px){
+ .candy-page{background-size:auto 600px;background-position:22% top}.candy-page .wrap{padding:12px}
+ .candy-page header,.animals-page header,.menu-page header{flex-direction:column;gap:12px}
+ .candy-page header .button,.animals-page header .button,.menu-page header .button{position:static;order:2}
+ .animals-page .brand-picture,.menu-page .brand-picture{width:min(350px,90vw);height:66px}.animals-page .brand-picture img,.menu-page .brand-picture img{top:-22px}
+ .candy-page .status{position:static;width:auto;margin:16px 0}
+ html body.candy-page .board.candy{position:static;width:auto;padding:28px 8px 32px;background:#fff4deb5!important}
+ .candy-page .slots{grid-template-columns:repeat(4,minmax(0,1fr));gap:44px 8px}
+ .candy-page .answer-panel{position:static;width:auto;margin:20px 0;padding:12px;border-width:3px}
+ .candy-page footer{position:static;transform:none;width:auto;font-size:13px;margin:16px 0}
+ .fairytale .palette .candy-art,.fairytale .palette .animal-art{width:68px}.candy-page .palette button,.animals-page .palette button{width:78px;height:97px}
+ .animals-page .wrap,.menu-page .wrap{padding:12px;margin:8px;border-width:2px}
+ .animals-page .slots{grid-template-columns:repeat(4,minmax(0,1fr));gap:40px 3px}
+ .animals-page .board.animals{padding:24px 0 40px!important}
+ .menu-page .hero-copy{position:static;margin:0}.menu-page .card img{height:125px}.menu-page .card h2{font-size:20px}
+}
+html body .board .slot:disabled { opacity: 1; }
+.shape-art { display:block; width:78px; aspect-ratio:1; background-image:url('assets/fairytale/shapes-atlas.png'); background-size:400% 200%; background-repeat:no-repeat; flex-shrink:0; }
+.shape-0{background-position:0 0}.shape-1{background-position:33.333% 0}.shape-2{background-position:66.667% 0}.shape-3{background-position:100% 0}
+.shape-4{background-position:0 100%}.shape-5{background-position:33.333% 100%}.shape-6{background-position:66.667% 100%}.shape-7{background-position:100% 100%}
+.fairytale { color:#674324; background:#e0f2fd; }
+.fairytale button,.fairytale .button,.fairytale select { color:#674324; background:#fff5dc; border:2px solid #d8a85d; box-shadow:0 4px 0 #b7833b; }
+.fairytale .primary { background:#ffda70; }
+.fairytale .eyebrow { font-size:clamp(23px,3vw,43px); font-weight:900; letter-spacing:0; color:#946023; }
+.fairytale .brand { padding:12px 30px; background:#fff2d3; border:4px solid #d8a85d; border-radius:23px; box-shadow:0 5px 0 #b7833b; text-align:center; }
+.fairytale .brand { background:transparent; border:0; box-shadow:none; padding:0; }
+.fairytale .brand-picture { width:600px; height:112px; display:block; overflow:hidden; position:relative; }
+.fairytale .brand-picture img { width:100%; position:absolute; top:-38px; left:0; }
+.fairytale .brand h1 { display:inline-block; background:#fff3da; border:2px solid #d8a85d; border-radius:14px; padding:4px 25px; margin-top:0; box-shadow:0 3px 0 #b7833b; }
+.fairytale h1 { font-size:30px; margin:4px 0 0; }
+.fairytale .slot:disabled { opacity:1; }
+.fairytale .palette button { height:116px; width:110px; padding:4px; }
+.fairytale .palette .shape-art { width:85px; margin:auto; }
+.fairytale .review .shape-art { display:inline-block; width:48px; vertical-align:middle; }
+.fairytale .confetti { width:40px; }
+.fairytale .success-box .shape-art { width:130px; margin:0 auto; }
+.fairytale .success-box { border:6px solid #d8a85d; background:#fff4d8; }
+.train-page { background:#d8eff8 url('assets/fairytale/train-backdrop.png') center top/100% 100svh no-repeat; min-height:100vh; }
+.train-page .wrap { position:relative; max-width:1920px; padding:22px; min-height:100svh; }
+.train-page header { justify-content:center; }
+.train-page header .button { position:absolute; left:22px; top:28px; }
+.train-page .toolbar { justify-content:center; margin:20px auto 0; background:#fff4dedf; border-radius:18px; padding:10px; width:fit-content; }
+.train-page #note { text-align:center; background:#fff4def2; padding:6px 16px; border-radius:20px; width:fit-content; margin:14px auto; }
+.train-page .status { position:absolute; left:20%; width:78%; top:30%; margin:0; padding:10px; color:#674324; text-shadow:0 1px 2px #fff; }
+html body.train-page .board.train { position:absolute; inset:0; padding:0; background:none!important; border:0; border-radius:0; box-shadow:none; min-height:0; pointer-events:none; }
+.train-page .train .slots { position:absolute; left:20%; width:79%; top:45.5%; margin:0; grid-template-columns:repeat(8,minmax(0,1fr)); gap:0; }
+html body.train-page .train .slot { pointer-events:none; background-color:transparent!important; background-image:url('assets/fairytale/carriages-tall-atlas.png'); background-size:400% 200%; background-repeat:no-repeat; border:0; box-shadow:none; border-radius:0; aspect-ratio:1; padding:0; }
+.train-page .carriage-0{background-position:0 0}.train-page .carriage-1{background-position:33.333% 0}.train-page .carriage-2{background-position:66.667% 0}.train-page .carriage-3{background-position:100% 0}
+.train-page .carriage-4{background-position:0 100%}.train-page .carriage-5{background-position:33.333% 100%}.train-page .carriage-6{background-position:66.667% 100%}.train-page .carriage-7{background-position:100% 100%}
+.train-page .train .slot:after { content:none; }
+.train-page .slot .shape-art { width:70%; position:absolute; top:14%; left:15%; }
+.train-page .number { top:-24px; width:32px; height:32px; color:#865722; border:2px solid #d8a85d; background:#fff0cc; }
+.train-page .mark { bottom:-26px; left:0; width:100%; border-radius:12px; background:#fff4dc; padding:3px 0; font-size:14px; }
+.train-page .active .number { background:#ffdc67; }
+.train-page .correct .number { background:#d9f6da; border-color:#67b67c; }
+.train-page .wrong .number { background:#fff0d6; border-color:#efa64c; }
+.train-page .answer-panel { position:absolute; top:75%; width:calc(100% - 60px); left:30px; padding:12px 18px; background:#fff6e8f5; border:5px solid #d8a85d; border-radius:26px; }
+.train-page .palette { margin:0; gap:10px; }
+.train-page .actions { margin:12px 0 3px; }
+.train-page .review { position:relative; margin:8px 0 0; }
+.train-page footer { position:absolute; top:70%; left:50%; transform:translateX(-50%); width:max-content; max-width:95%; margin:0; padding:5px 16px; color:#5c442d; background:#fff3dc; border:2px solid #d8a85d; border-radius:18px; font-weight:700; }
+.intrinsic-pair .scene { aspect-ratio:3/2; border:5px solid #d8a85d; background:#e6f5e5; }
+html body .intrinsic-pair .scene img { object-fit:contain; transform:none; }
+.intrinsic-pair .object { background:transparent; border:0; border-radius:12px; box-shadow:none; }
+.intrinsic-pair .object:not(.found):not(:focus-visible) { outline:none; }
+.intrinsic-pair .object.found { outline:4px solid #e79114; background:#ffd86b26; }
+.intrinsic-pair .object:hover { transform:translate(-50%,-50%); }
+.intrinsic-pair .object:focus-visible { outline:4px dashed #4c83ba; }
+.difference-page { background:#def2dc url('assets/fairytale/train-backdrop.png') center/cover fixed; }
+.difference-page .wrap { background:#fff7e5ec; border:4px solid #d8a85d; border-radius:24px; margin:15px auto; padding:16px; }
+.difference-page .brand-picture { width:420px; height:79px; }
+.difference-page .brand-picture img { top:-27px; }
+.difference-page h1{font-size:25px}
+.difference-page .status { font-size:19px; }
+.difference-page .status { min-height:28px; margin:12px 0; }
+.difference-page header { justify-content:space-between; }
+.difference-page .toolbar { justify-content:center; margin:10px 0; }
+.difference-page #note { text-align:center; margin:6px 0; }
+.difference-page .scene-label { margin:8px 0; }
+.difference-page .actions { margin:12px 0; }
+@media(max-width:1400px) and (min-width:761px){.train-page .wrap{padding:12px}.train-page .brand{padding:0}.train-page .brand-picture{width:500px;height:94px}.train-page .brand-picture img{top:-32px}.train-page .eyebrow{font-size:30px}.train-page h1{font-size:23px}.train-page .toolbar{margin-top:12px;padding:6px}.train-page #note{margin:10px auto}.train-page .status{top:36%;font-size:19px}.train-page .answer-panel{top:75%;padding:9px}.train-page footer{top:69%}.train-page .palette button{width:85px;height:95px}.train-page .palette .shape-art{width:65px}.train-page .actions{margin:8px 0 2px}}
+@media(max-width:760px){
+ .train-page{background-size:auto 600px;background-position:20% top}.train-page .wrap{min-height:100vh;padding:12px}
+ .train-page header{display:flex;flex-direction:column;gap:12px}.train-page header .button{position:static;order:2}.fairytale .brand{padding:0}.fairytale .brand-picture{width:min(350px,90vw);height:66px}.fairytale .brand-picture img{top:-22px}.fairytale .eyebrow{font-size:24px}.fairytale h1{font-size:25px}
+ .train-page .toolbar{margin-top:12px;width:100%;font-size:14px;gap:8px}.train-page .toolbar button{padding:9px}.train-page .status{position:static;width:auto;margin:16px 0;background:#fff3dedf;border-radius:16px;font-size:18px}
+ html body.train-page .board.train{position:relative;inset:auto;min-height:320px;background:#ffffffb5!important;border-radius:20px;padding:40px 8px 25px}
+ .train-page .train .slots{position:static;width:100%;grid-template-columns:repeat(4,minmax(0,1fr));gap:50px 0;margin:0}.train-page .number{top:-24px}
+ .train-page .answer-panel{position:static;width:auto;margin:20px 0;padding:12px;border-width:3px}.train-page .palette{gap:8px}.train-page .palette button{width:78px;height:97px}.train-page .palette .shape-art{width:68px}.train-page footer{position:static;transform:none;width:auto;font-size:13px;margin:16px 0}
+ .difference-page header{align-items:center}.intrinsic-pair{grid-template-columns:1fr}.fairytale .success-box h2{font-size:27px}
+}
+/* Keep illustrated backgrounds after the shared fairytale surface. */
+html body.candy-page{background:#ffe9db url('assets/fairytale/candy-backdrop.png') center top/100% 100svh no-repeat}
+html body.animals-page,html body.menu-page{background:#e5f2dc url('assets/fairytale/train-backdrop.png') center top/cover fixed}
+.candy-page .status{position:static;width:fit-content;max-width:98%;margin:8px auto;min-height:32px;padding:3px 16px}
+@media(min-width:761px){html body.candy-page .board.candy{top:47%}}
+@media(min-width:761px) and (max-width:1400px){
+ .candy-page .brand-picture{width:500px;height:94px}.candy-page .brand-picture img{top:-32px}
+}
+@media(max-width:760px){
+ html body.candy-page{background-size:auto 600px;background-position:22% top}
+}

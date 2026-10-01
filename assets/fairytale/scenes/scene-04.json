@@ -1,0 +1,35 @@
+{
+  "title": "溫馨客廳",
+  "style": "photorealistic-natural",
+  "image": "assets/fairytale/scenes/scene-04-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-04-changed.png",
+  "items": [
+    { "name": "梳化靠墊", "x": 0, "y": 32.5, "w": 19.6, "h": 37.5, "description": "左邊紅色靠墊改為藍色；保留針織紋理、形狀及梳化。" },
+    { "name": "陶瓷花瓶", "x": 5.2, "y": 64.2, "w": 14.8, "h": 26, "description": "茶几左前方藍色花瓶改為紫色；保留花瓶位置、反光及形狀。" },
+    { "name": "圓形時鐘", "x": 85.6, "y": 6.2, "w": 9.6, "h": 13.4, "description": "右上層架黃色圓形時鐘改為藍色；保留指針及時鐘形狀。" },
+    { "name": "陶瓷杯", "x": 30.7, "y": 69, "w": 15.3, "h": 19.6, "description": "茶几前方綠色杯改為紅色；保留杯柄、大小及位置。" },
+    { "name": "合上的書", "x": 48.4, "y": 75, "w": 26.1, "h": 15.2, "description": "茶几中右方橙色書封改為綠色；書頁保持原樣。" },
+    { "name": "碟上的蘋果", "x": 76, "y": 72, "w": 23.5, "h": 18.2, "description": "右前方白碟上的兩個紅蘋果減少一個，留下另一個蘋果；白碟及桌面保持原樣。" }
+  ],
+  "changedAssetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "toolMode": "built-in imagegen edit",
+    "prompt": "Edit original photo only: red cushion to blue, blue vase to purple, yellow clock to blue, green cup to red, orange closed book cover to green with pages unchanged, remove only right apple leaving left apple and white plate. Preserve exact people identity, hands, clothes, room, camera, lighting and all other objects. No glyphs, annotations or added icons.",
+    "verification": {
+      "sixRequestedEditsVisible": true,
+      "remainingAppleKeepsLeftPosition": true,
+      "peopleAndRoomVisuallyPreserved": true,
+      "additionalObjectLevelChangesNoticed": false,
+      "method": "Visual inspection of original and generated changed image; pixel-exact identity outside edits is not asserted."
+    }
+  },
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "top-left",
+    "toolMode": "built-in imagegen",
+    "prompt": "Natural near-photorealistic East Asian mother and primary-school daughter reading closely on beige sofa in sunny living room. Six clear targets: red cushion left, blue vase front-left, yellow round clock upper-right shelf, green cup front-center, orange closed book front-center-right, white plate with exactly two red apples front-right. 1536x1024 opaque landscape. No UI, labels, logos, readable text or cartoon humans."
+  }
+}

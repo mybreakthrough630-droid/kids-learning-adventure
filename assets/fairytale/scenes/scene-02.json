@@ -1,0 +1,24 @@
+{
+  "title": "巴士站",
+  "style": "近寫實真人，明亮香港巴士站；人物近景，自然面孔、皮膚及衣服質感",
+  "image": "assets/fairytale/scenes/scene-02-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-02-changed.png",
+  "imageWidth": 1536,
+  "imageHeight": 1024,
+  "boundsUnit": "percent; x/y are top-left, w/h are width/height",
+  "verification": {
+    "method": "Built-in imagegen reference edit; original and changed image visually inspected at original resolution",
+    "intrinsicChangesVerified": 6,
+    "changes": ["雨傘紅變藍", "巴士黃變紅", "外套藍變紫", "書包綠變橙", "雪糕筒橙變藍", "座墊藍變黃"],
+    "peoplePoseIdentityAndCrop": "visually preserved",
+    "unintendedVisibleObjectChanges": "none observed; generated edit is not asserted to be pixel-identical outside changed surfaces"
+  },
+  "items": [
+    { "name": "雨傘", "x": 0, "y": 0, "w": 46.5, "h": 24.5, "description": "將左上方紅色雨傘的傘面改成藍色；保留傘柄、骨架、反光、人物及背景。" },
+    { "name": "巴士", "x": 58.5, "y": 12.5, "w": 38.5, "h": 52, "description": "將右後方黃色雙層巴士的黄色車身改成紅色；保留玻璃、輪胎、車門、燈及所有結構。" },
+    { "name": "外套", "x": 14, "y": 27.5, "w": 30, "h": 52, "description": "將家長的藍色外套改成紫色；保留衣服剪裁、布料、拉鏈、手部、面孔及內衣。" },
+    { "name": "書包", "x": 39.5, "y": 57.5, "w": 24, "h": 35, "description": "將小朋友的綠色書包連綠色肩帶改成橙色；保留皮膚、手、白色上衣、黃色拉鏈及書包造型。" },
+    { "name": "交通雪糕筒", "x": 0, "y": 61, "w": 14, "h": 35, "description": "將左前方交通雪糕筒的橙色部分改成藍色；保留白色反光帶、黑色底座及影子。" },
+    { "name": "座墊", "x": 81, "y": 79, "w": 19, "h": 13, "description": "將右下方長椅的藍色座墊改成黃色；保留椅架、椅背、縫線、形狀及反光。" }
+  ]
+}
