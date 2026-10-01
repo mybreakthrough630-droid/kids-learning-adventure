@@ -234,6 +234,7 @@
 
     .stage-bar {
       display: flex;
+      flex-wrap: wrap;
       gap: 12px;
       align-items: center;
       justify-content: space-between;
@@ -393,13 +394,14 @@
     </header>
 
 
-    <section class="learning-stage" aria-labelledby="stageTitle">
+    <section class="learning-stage" aria-labelledby="stageTitle" hidden>
       <div class="stage-bar">
-        <h2 class="stage-title" id="stageTitle" tabindex="-1">閱讀理解 Reading Fun</h2>
+        <h2 class="stage-title" id="stageTitle" tabindex="-1">揀一個學習活動</h2>
+        <button class="direct-link" id="backToMenu" type="button">返回活動目錄</button>
         <a
           class="direct-link"
           id="directLink"
-          href="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
+          href="#activityMenu"
           target="_blank"
           rel="noopener"
         >在新頁開啟</a>
@@ -408,17 +410,17 @@
         <div class="loading" id="loading" role="status">正在準備學習內容...</div>
         <iframe
           id="lessonFrame"
-          title="閱讀理解 Reading Fun"
-          src="https://mybreakthrough630-droid.github.io/primary-one-reading-fun-lesson-1/"
+          title="學習活動"
+          src="about:blank"
           allow="autoplay; microphone"
           referrerpolicy="strict-origin-when-cross-origin"
         ></iframe>
       </div>
     </section>
 
-    <h2 class="activity-menu-title" id="activityMenuTitle">切換學習活動</h2>
+    <h2 class="activity-menu-title" id="activityMenuTitle" tabindex="-1">學習活動目錄</h2>
     <nav class="switcher" id="activityMenu" aria-labelledby="activityMenuTitle">
-      <button class="lesson-tab" type="button" data-kind="memory" data-icon="♫" data-src="memory-adventure.html?v=20261001f" data-title="記憶力小遊戲">記憶力小遊戲<small>四個獨立遊戲・五星挑戰</small></button>
+      <button class="lesson-tab" type="button" data-kind="memory" data-icon="♫" data-src="memory-adventure.html?v=20261001g" data-title="記憶力小遊戲">記憶力小遊戲<small>五個獨立遊戲・五星挑戰</small></button>
       <button class="lesson-tab" type="button" data-kind="memory-practice" data-icon="◎" data-src="memory-practice.html?v=20260925b" data-title="記憶力小練習 Memory Practice">
         記憶力小練習
         <small>4×3 格・位置、分組與次序</small>
@@ -439,7 +441,7 @@
         <small>科學・藝術・運動真實相片</small>
       </button>
       <button
-        class="lesson-tab active"
+        class="lesson-tab"
         type="button"
         data-kind="reading"
         data-icon="R"
@@ -548,9 +550,9 @@
         圖像代數
         <small>水果・糖果・交通工具・一至五星</small>
       </button>
-      <button class="lesson-tab" type="button" data-kind="shape-memory" data-icon="♥" data-src="memory-train.html?v=20261001e" data-title="形狀記憶列車">
+      <button class="lesson-tab" type="button" data-kind="shape-memory" data-icon="♥" data-src="memory-train.html?v=20261001g" data-title="形狀記憶列車">
         形狀記憶列車
-        <small>順序記憶・五級難度・隨機停留</small>
+        <small>形狀・糖果・交通工具・五星難度</small>
       </button>
     </nav>
   </main>
@@ -563,6 +565,7 @@
     const tabs = document.querySelectorAll("[data-src]");
 
     function openLesson(tab) {
+      document.querySelector('.learning-stage').hidden = false;
       tabs.forEach((item) => {
         const isActive = item === tab;
         item.classList.toggle("active", isActive);
@@ -583,6 +586,14 @@
 
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => openLesson(tab));
+    });
+
+    document.getElementById('backToMenu').addEventListener('click', () => {
+      document.querySelector('.learning-stage').hidden = true;
+      frame.src = 'about:blank';
+      tabs.forEach((tab) => { tab.classList.remove('active'); tab.setAttribute('aria-current', 'false'); });
+      document.getElementById('activityMenuTitle').focus({ preventScroll: true });
+      document.getElementById('activityMenu').scrollIntoView({ block: 'start', behavior: 'auto' });
     });
 
     frame.addEventListener("load", () => {

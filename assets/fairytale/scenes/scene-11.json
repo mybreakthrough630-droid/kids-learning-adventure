@@ -1,0 +1,71 @@
+{
+  "title": "花園種植",
+  "image": "assets/fairytale/scenes/scene-11-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-11-changed.png",
+  "intrinsic": true,
+  "items": [
+    {
+      "name": "草帽絲帶",
+      "kind": "part",
+      "x": 55,
+      "y": 15,
+      "w": 37,
+      "h": 26,
+      "description": "草帽藍色絲帶及蝴蝶結消失。"
+    },
+    {
+      "name": "灑水壺提手",
+      "kind": "part",
+      "x": 13,
+      "y": 58,
+      "w": 20,
+      "h": 25,
+      "description": "灑水壺的提手消失。"
+    },
+    {
+      "name": "花朵數量",
+      "kind": "count",
+      "x": 84,
+      "y": 58,
+      "w": 28,
+      "h": 35,
+      "description": "三朵雛菊變成兩朵。"
+    },
+    {
+      "name": "花園牌形狀",
+      "kind": "shape",
+      "x": 89,
+      "y": 24,
+      "w": 22,
+      "h": 26,
+      "description": "方牌變成橢圓形。"
+    },
+    {
+      "name": "耙齒數量",
+      "kind": "count",
+      "x": 51,
+      "y": 83,
+      "w": 17,
+      "h": 19,
+      "description": "三個耙齒變成四個。"
+    },
+    {
+      "name": "蔬菜種類",
+      "kind": "object",
+      "x": 16,
+      "y": 41,
+      "w": 20,
+      "h": 18,
+      "description": "紅蘿蔔變成紅色蘿蔔。"
+    }
+  ],
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "centre",
+    "toolMode": "built-in imagegen",
+    "promptRecord": "expansion-production.md",
+    "visuallyVerified": true
+  }
+}

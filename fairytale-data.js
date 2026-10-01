@@ -11,6 +11,14 @@
   data.animals = ['兔仔','貓咪','小熊','小狗','熊貓','狐狸','小豬','小雞'].map((name,index)=>({
     name, art: `<span class="animal-art sprite-${index}" role="img" aria-label="${name}"></span>`
   }));
+  data.vehicles = ['小汽車','巴士','火車','飛機','直升機','帆船','單車','消防車'].map((name,index)=>({
+    name, art: `<span class="vehicle-art sprite-${index}" role="img" aria-label="${name}"></span>`
+  }));
+  data.trainTokens = theme => {
+    const shuffle = list => { const a=[...list]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+    if(['shapes','candies','vehicles'].includes(theme))return data[theme];
+    return shuffle([...shuffle(data.shapes).slice(0,3),...shuffle(data.candies).slice(0,3),...shuffle(data.vehicles).slice(0,2)]);
+  };
   // Only complete, visually verified pairs. Coordinates are region centres.
   data.scenes = [{
     title: '童話公園・小狗與貓咪',
@@ -92,4 +100,91 @@
       {name:'車厘子數量',kind:'count',x:86.5,y:77,w:21,h:21}
     ]
   }];
+  // Seven additional close-up scenes; genuine object changes, never overlays.
+  data.scenes.push(
+    {
+      title:"城市街市", image:'assets/fairytale/scenes/scene-08-original.png',
+      changedImage:'assets/fairytale/scenes/scene-08-changed.png', intrinsic:true,
+      items:[
+        {"name":"吊掛水果種類","kind":"object","x":11,"y":17,"w":21,"h":30,"description":"香蕉變成葡萄。"},
+        {"name":"籃內水果種類","kind":"object","x":12,"y":80,"w":18,"h":22,"description":"前方突出籃子的梨變成蘋果。"},
+        {"name":"手袋圖案","kind":"pattern","x":19,"y":65,"w":27,"h":27,"description":"條紋手袋變成素色。"},
+        {"name":"時鐘指針方向","kind":"orientation","x":90,"y":15,"w":18,"h":28,"description":"時鐘指針轉到三點。"},
+        {"name":"展示牌形狀","kind":"shape","x":87,"y":70,"w":24,"h":42,"description":"長方形展示牌變成橢圓形。"},
+        {"name":"蘋果數量","kind":"count","x":56,"y":87,"w":27,"h":23,"description":"兩個蘋果變成一個。"}
+      ]
+    },
+    {
+      title:"圖書館", image:'assets/fairytale/scenes/scene-09-original.png',
+      changedImage:'assets/fairytale/scenes/scene-09-changed.png', intrinsic:true,
+      items:[
+        {"name":"眼鏡形狀","kind":"shape","x":42,"y":44,"w":20,"h":15,"description":"圓眼鏡變成長方形。"},
+        {"name":"書籤","kind":"part","x":57,"y":86,"w":17,"h":13,"description":"書籤及流蘇消失。"},
+        {"name":"燈罩形狀","kind":"shape","x":14,"y":22,"w":22,"h":34,"description":"錐形燈罩變成圓筒形。"},
+        {"name":"書本數量","kind":"count","x":14,"y":80,"w":28,"h":29,"description":"上方綠色書本消失，只剩兩本。"},
+        {"name":"時鐘指針方向","kind":"orientation","x":91,"y":14,"w":16,"h":26,"description":"時鐘轉到三點。"},
+        {"name":"花盆形狀","kind":"shape","x":92,"y":80,"w":16,"h":30,"description":"方形花盆變成圓形。"}
+      ]
+    },
+    {
+      title:"生日派對", image:'assets/fairytale/scenes/scene-10-original.png',
+      changedImage:'assets/fairytale/scenes/scene-10-changed.png', intrinsic:true,
+      items:[
+        {"name":"派對帽圖案","kind":"pattern","x":25,"y":14,"w":18,"h":28,"description":"條紋帽變成波點帽。"},
+        {"name":"蠟燭數量","kind":"count","x":48,"y":64,"w":18,"h":20,"description":"三支蠟燭變成兩支。"},
+        {"name":"禮物蝴蝶結","kind":"part","x":12,"y":70,"w":23,"h":18,"description":"禮物上方蝴蝶結消失。"},
+        {"name":"吊飾形狀","kind":"shape","x":91,"y":13,"w":16,"h":21,"description":"星星吊飾變成心心。"},
+        {"name":"士多啤梨數量","kind":"count","x":60,"y":69,"w":10,"h":12,"description":"右邊士多啤梨消失。"},
+        {"name":"氣球形狀","kind":"shape","x":90,"y":40,"w":20,"h":33,"description":"心形氣球變成圓形。"}
+      ]
+    },
+    {
+      title:"花園種植", image:'assets/fairytale/scenes/scene-11-original.png',
+      changedImage:'assets/fairytale/scenes/scene-11-changed.png', intrinsic:true,
+      items:[
+        {"name":"草帽絲帶","kind":"part","x":55,"y":15,"w":37,"h":26,"description":"草帽藍色絲帶及蝴蝶結消失。"},
+        {"name":"灑水壺提手","kind":"part","x":13,"y":58,"w":20,"h":25,"description":"灑水壺的提手消失。"},
+        {"name":"花朵數量","kind":"count","x":84,"y":58,"w":28,"h":35,"description":"三朵雛菊變成兩朵。"},
+        {"name":"花園牌形狀","kind":"shape","x":89,"y":24,"w":22,"h":26,"description":"方牌變成橢圓形。"},
+        {"name":"耙齒數量","kind":"count","x":51,"y":83,"w":17,"h":19,"description":"三個耙齒變成四個。"},
+        {"name":"蔬菜種類","kind":"object","x":16,"y":41,"w":20,"h":18,"description":"紅蘿蔔變成紅色蘿蔔。"}
+      ]
+    },
+    {
+      title:"火車月台", image:'assets/fairytale/scenes/scene-12-original.png',
+      changedImage:'assets/fairytale/scenes/scene-12-changed.png', intrinsic:true,
+      items:[
+        {"name":"帽徽形狀","kind":"shape","x":32,"y":16,"w":10,"h":10,"description":"圓徽章變成星星徽章。"},
+        {"name":"旗幟形狀","kind":"shape","x":53,"y":36,"w":17,"h":17,"description":"三角旗變成長方旗。"},
+        {"name":"車頭燈形狀","kind":"shape","x":87,"y":39,"w":13,"h":18,"description":"圓車頭燈變成方形。"},
+        {"name":"行李數量","kind":"count","x":15,"y":76,"w":28,"h":27,"description":"上方紅行李消失，只剩啡色行李。"},
+        {"name":"路障條紋","kind":"pattern","x":53,"y":78,"w":11,"h":27,"description":"路障少了一條白色條紋。"},
+        {"name":"煙囪金圈","kind":"part","x":80,"y":5,"w":15,"h":10,"description":"煙囪頂部金圈消失。"}
+      ]
+    },
+    {
+      title:"機場出發", image:'assets/fairytale/scenes/scene-13-original.png',
+      changedImage:'assets/fairytale/scenes/scene-13-changed.png', intrinsic:true,
+      items:[
+        {"name":"書包前袋","kind":"part","x":20,"y":64,"w":15,"h":19,"description":"書包前袋及拉鏈消失。"},
+        {"name":"行李提手","kind":"part","x":9,"y":53,"w":16,"h":32,"description":"行李伸縮提手消失。"},
+        {"name":"飲品數量","kind":"count","x":80,"y":83,"w":16,"h":26,"description":"右邊果汁杯消失。"},
+        {"name":"機尾圖案","kind":"pattern","x":88,"y":23,"w":15,"h":24,"description":"條紋機尾變成波點。"},
+        {"name":"時鐘指針方向","kind":"orientation","x":16,"y":12,"w":15,"h":23,"description":"時鐘轉到三點。"},
+        {"name":"書籤","kind":"part","x":51,"y":55,"w":9,"h":18,"description":"書中粉紅書籤消失。"}
+      ]
+    },
+    {
+      title:"海底水族館", image:'assets/fairytale/scenes/scene-14-original.png',
+      changedImage:'assets/fairytale/scenes/scene-14-changed.png', intrinsic:true,
+      items:[
+        {"name":"海星形狀","kind":"shape","x":12,"y":14,"w":19,"h":25,"description":"五臂海星變成四臂。"},
+        {"name":"魚兒數量","kind":"count","x":83,"y":13,"w":24,"h":24,"description":"三條黃魚變成兩條。"},
+        {"name":"舷窗形狀","kind":"shape","x":28,"y":35,"w":26,"h":34,"description":"圓形舷窗變成橢圓形。"},
+        {"name":"寶箱開合","kind":"state","x":87,"y":69,"w":26,"h":32,"description":"打開的寶箱合上了。"},
+        {"name":"貝殼數量","kind":"count","x":13,"y":64,"w":23,"h":18,"description":"兩個貝殼變成一個。"},
+        {"name":"海龜方向","kind":"orientation","x":69,"y":37,"w":44,"h":33,"description":"海龜由向左變成向右。"}
+      ]
+    }
+  );
 })();

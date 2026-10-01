@@ -1,0 +1,71 @@
+{
+  "title": "機場出發",
+  "image": "assets/fairytale/scenes/scene-13-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-13-changed.png",
+  "intrinsic": true,
+  "items": [
+    {
+      "name": "書包前袋",
+      "kind": "part",
+      "x": 20,
+      "y": 64,
+      "w": 15,
+      "h": 19,
+      "description": "書包前袋及拉鏈消失。"
+    },
+    {
+      "name": "行李提手",
+      "kind": "part",
+      "x": 9,
+      "y": 53,
+      "w": 16,
+      "h": 32,
+      "description": "行李伸縮提手消失。"
+    },
+    {
+      "name": "飲品數量",
+      "kind": "count",
+      "x": 80,
+      "y": 83,
+      "w": 16,
+      "h": 26,
+      "description": "右邊果汁杯消失。"
+    },
+    {
+      "name": "機尾圖案",
+      "kind": "pattern",
+      "x": 88,
+      "y": 23,
+      "w": 15,
+      "h": 24,
+      "description": "條紋機尾變成波點。"
+    },
+    {
+      "name": "時鐘指針方向",
+      "kind": "orientation",
+      "x": 16,
+      "y": 12,
+      "w": 15,
+      "h": 23,
+      "description": "時鐘轉到三點。"
+    },
+    {
+      "name": "書籤",
+      "kind": "part",
+      "x": 51,
+      "y": 55,
+      "w": 9,
+      "h": 18,
+      "description": "書中粉紅書籤消失。"
+    }
+  ],
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "centre",
+    "toolMode": "built-in imagegen",
+    "promptRecord": "expansion-production.md",
+    "visuallyVerified": true
+  }
+}

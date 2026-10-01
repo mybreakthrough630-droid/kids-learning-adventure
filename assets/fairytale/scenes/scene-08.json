@@ -1,0 +1,71 @@
+{
+  "title": "城市街市",
+  "image": "assets/fairytale/scenes/scene-08-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-08-changed.png",
+  "intrinsic": true,
+  "items": [
+    {
+      "name": "吊掛水果種類",
+      "kind": "object",
+      "x": 11,
+      "y": 17,
+      "w": 21,
+      "h": 30,
+      "description": "香蕉變成葡萄。"
+    },
+    {
+      "name": "籃內水果種類",
+      "kind": "object",
+      "x": 12,
+      "y": 80,
+      "w": 18,
+      "h": 22,
+      "description": "前方突出籃子的梨變成蘋果。"
+    },
+    {
+      "name": "手袋圖案",
+      "kind": "pattern",
+      "x": 19,
+      "y": 65,
+      "w": 27,
+      "h": 27,
+      "description": "條紋手袋變成素色。"
+    },
+    {
+      "name": "時鐘指針方向",
+      "kind": "orientation",
+      "x": 90,
+      "y": 15,
+      "w": 18,
+      "h": 28,
+      "description": "時鐘指針轉到三點。"
+    },
+    {
+      "name": "展示牌形狀",
+      "kind": "shape",
+      "x": 87,
+      "y": 70,
+      "w": 24,
+      "h": 42,
+      "description": "長方形展示牌變成橢圓形。"
+    },
+    {
+      "name": "蘋果數量",
+      "kind": "count",
+      "x": 56,
+      "y": 87,
+      "w": 27,
+      "h": 23,
+      "description": "兩個蘋果變成一個。"
+    }
+  ],
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "centre",
+    "toolMode": "built-in imagegen",
+    "promptRecord": "expansion-production.md",
+    "visuallyVerified": true
+  }
+}

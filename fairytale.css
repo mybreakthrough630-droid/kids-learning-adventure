@@ -1,4 +1,8 @@
 /* Native controls over the selected fairytale raster artwork. */
+.vehicle-art{display:block;width:85px;aspect-ratio:1;background:url('assets/fairytale/vehicles-atlas.png') no-repeat;background-size:400% 200%;flex-shrink:0}
+.fairytale .palette .vehicle-art{width:85px;margin:auto}.fairytale .review .vehicle-art{display:inline-block;width:48px;vertical-align:middle}
+.train-page .slot .candy-art,.train-page .slot .vehicle-art{width:32%;height:auto;aspect-ratio:1;position:absolute;left:var(--panel-x,54.5%);top:var(--panel-y,48.5%);transform:translate(-50%,-50%)}
+.fairytale.train-page .palette .candy-art,.fairytale.train-page .palette .vehicle-art{width:65px;margin:auto}
 .candy-art,.animal-art { display:block; width:85px; aspect-ratio:1; background-size:400% 200%; background-repeat:no-repeat; flex-shrink:0; }
 .candy-art { background-image:url('assets/fairytale/candies-atlas.png'); }
 .animal-art { background-image:url('assets/fairytale/animals-atlas.png'); }

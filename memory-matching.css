@@ -1,0 +1,15 @@
+.matching-page{background:#e5f2dc url('assets/fairytale/train-backdrop.png') center/cover fixed}
+.matching-page .wrap{max-width:1040px;margin:16px auto;background:#fff7e5f2;border:4px solid #d8a85d;border-radius:26px;padding:20px}
+.matching-page .brand-picture{width:420px;height:79px}.matching-page .brand-picture img{top:-27px}
+.matching-page .toolbar{justify-content:center}.matching-page #note,.matching-progress{text-align:center;font-weight:800}
+.matching-page .status{min-height:30px;margin:10px 0;font-size:19px}
+.matching-board{padding:18px;background:#e6f2e7;border:4px solid #d8a85d;border-radius:24px;max-width:790px;margin:auto}
+.matching-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.matching-card{position:relative;aspect-ratio:1.05;min-width:0;display:grid;place-items:center;padding:8px;border:3px solid #ba8849;border-radius:20px;background:linear-gradient(145deg,#8cd8ed,#61a4d0);box-shadow:0 4px 0 #8b633c;color:#fff;font-size:42px}
+.matching-card:disabled{opacity:1}.matching-card .card-back{font-size:inherit;text-shadow:0 3px 0 #467694}
+.matching-card.is-face{background:#fff9e9}.matching-card.is-matched{background:#e0f8de;border-color:#549b60;box-shadow:0 4px 0 #549b60}
+.matching-card.is-wrong{border-color:#cc883b;background:#fff0d8}
+.matching-card .shape-art,.matching-card .candy-art,.matching-card .animal-art,.matching-card .vehicle-art{width:90%;max-width:125px;aspect-ratio:1;height:auto;margin:auto}
+.matching-card .match-mark{position:absolute;right:6px;bottom:2px;color:#31713f;font-size:20px;font-weight:900}
+.matching-page footer{margin:15px 0}.matching-progress{margin:18px 0 4px}.matching-page .success-box .shape-art{width:100px}
+@media(max-width:760px){.matching-page .wrap{margin:6px;padding:10px}.matching-page header{flex-direction:column;align-items:center}.matching-page .brand-picture{width:min(350px,88vw);height:66px}.matching-page .brand-picture img{top:-22px}.matching-board{padding:10px}.matching-grid{gap:9px}.matching-card{padding:3px;border-width:2px;border-radius:12px;font-size:30px}.matching-page .toolbar{gap:8px}.matching-page .toolbar button,.matching-page .toolbar select{padding:9px}.matching-page .status{font-size:17px}.matching-card .match-mark{font-size:16px}}

@@ -1,5 +1,9 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const css=fs.readFileSync('fairytale.css','utf8');
+const vehicle=fs.readFileSync('assets/fairytale/vehicles-atlas.png');assert.equal(vehicle.readUInt32BE(16),2*vehicle.readUInt32BE(20));
+assert.match(css,/\.train-page \.slot \.candy-art,\.train-page \.slot \.vehicle-art\{width:32%;height:auto;aspect-ratio:1/);
+// Even a fully filled square at32% centred on each panel stays within its31–66% vertical bounds.
+for(const cy of [47.5,48.5]){assert.ok(cy-16>=31);assert.ok(cy+16<=66);}
 const png=fs.readFileSync('assets/fairytale/shapes-atlas.png');
 assert.equal(png.readUInt32BE(16),1774);assert.equal(png.readUInt32BE(20),887);
 const rule=css.match(/\.train-page \.slot \.shape-art\s*\{([^}]+)\}/)[1];

@@ -1,0 +1,71 @@
+{
+  "title": "海底水族館",
+  "image": "assets/fairytale/scenes/scene-14-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-14-changed.png",
+  "intrinsic": true,
+  "items": [
+    {
+      "name": "海星形狀",
+      "kind": "shape",
+      "x": 12,
+      "y": 14,
+      "w": 19,
+      "h": 25,
+      "description": "五臂海星變成四臂。"
+    },
+    {
+      "name": "魚兒數量",
+      "kind": "count",
+      "x": 83,
+      "y": 13,
+      "w": 24,
+      "h": 24,
+      "description": "三條黃魚變成兩條。"
+    },
+    {
+      "name": "舷窗形狀",
+      "kind": "shape",
+      "x": 28,
+      "y": 35,
+      "w": 26,
+      "h": 34,
+      "description": "圓形舷窗變成橢圓形。"
+    },
+    {
+      "name": "寶箱開合",
+      "kind": "state",
+      "x": 87,
+      "y": 69,
+      "w": 26,
+      "h": 32,
+      "description": "打開的寶箱合上了。"
+    },
+    {
+      "name": "貝殼數量",
+      "kind": "count",
+      "x": 13,
+      "y": 64,
+      "w": 23,
+      "h": 18,
+      "description": "兩個貝殼變成一個。"
+    },
+    {
+      "name": "海龜方向",
+      "kind": "orientation",
+      "x": 69,
+      "y": 37,
+      "w": 44,
+      "h": 33,
+      "description": "海龜由向左變成向右。"
+    }
+  ],
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "centre",
+    "toolMode": "built-in imagegen",
+    "promptRecord": "expansion-production.md",
+    "visuallyVerified": true
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "title": "生日派對",
+  "image": "assets/fairytale/scenes/scene-10-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-10-changed.png",
+  "intrinsic": true,
+  "items": [
+    {
+      "name": "派對帽圖案",
+      "kind": "pattern",
+      "x": 25,
+      "y": 14,
+      "w": 18,
+      "h": 28,
+      "description": "條紋帽變成波點帽。"
+    },
+    {
+      "name": "蠟燭數量",
+      "kind": "count",
+      "x": 48,
+      "y": 64,
+      "w": 18,
+      "h": 20,
+      "description": "三支蠟燭變成兩支。"
+    },
+    {
+      "name": "禮物蝴蝶結",
+      "kind": "part",
+      "x": 12,
+      "y": 70,
+      "w": 23,
+      "h": 18,
+      "description": "禮物上方蝴蝶結消失。"
+    },
+    {
+      "name": "吊飾形狀",
+      "kind": "shape",
+      "x": 91,
+      "y": 13,
+      "w": 16,
+      "h": 21,
+      "description": "星星吊飾變成心心。"
+    },
+    {
+      "name": "士多啤梨數量",
+      "kind": "count",
+      "x": 60,
+      "y": 69,
+      "w": 10,
+      "h": 12,
+      "description": "右邊士多啤梨消失。"
+    },
+    {
+      "name": "氣球形狀",
+      "kind": "shape",
+      "x": 90,
+      "y": 40,
+      "w": 20,
+      "h": 33,
+      "description": "心形氣球變成圓形。"
+    }
+  ],
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "centre",
+    "toolMode": "built-in imagegen",
+    "promptRecord": "expansion-production.md",
+    "visuallyVerified": true
+  }
+}

@@ -14,7 +14,7 @@ function setup(game,level){
 }
 for(let level=1;level<=5;level++){
  const t=setup('train',level),e=t.els,n=[3,4,5,6,8][level-1];assert.equal(e.slots.children.length,n);t.drain();
- assert.ok(e.palette.children.every(b=>b.innerHTML.includes('shape-art')));assert.equal(e.check.disabled,true);
+ assert.ok(e.palette.children.every(b=>/shape-art|candy-art|vehicle-art/.test(b.innerHTML)));assert.equal(e.palette.children.length,8);assert.equal(e.check.disabled,true);
  for(let i=0;i<n;i++)e.palette.children[0].click();e.undo.click();assert.equal(e.check.disabled,true);e.palette.children[0].click();e.check.click();
  assert.equal(e.success.hidden,false);assert.equal(e.round.textContent,'第 1 關');e.next.click();assert.equal(e.round.textContent,'第 2 關');
  assert.ok(t.delays.includes([3000,2500,1500,750,500][level-1]));
@@ -29,6 +29,13 @@ for(const game of ['candy','animals'])for(let level=1;level<=5;level++){
  assert.ok(e.palette.children.every(b=>b.innerHTML.includes(game==='candy'?'candy-art':'animal-art')&&!b.innerHTML.includes('<svg')));
  for(let i=0;i<n;i++){if(game==='candy')e.palette.children[0].click();else e.slots.children[i].click()}
  e.check.click();assert.equal(e.success.hidden,false);assert.equal(e.round.textContent,'第 1 關');e.next.click();assert.equal(e.round.textContent,'第 2 關');
+}
+for(const theme of ['shapes','candies','vehicles','mixed'])for(let level=1;level<=5;level++){
+ const t=setup('train',level),e=t.els;e.tokenSet.value=theme;e.tokenSet.onchange();t.drain();
+ assert.equal(e.palette.children.length,8);assert.equal(e.slots.children.length,[3,4,5,6,8][level-1]);
+ if(theme!=='mixed')assert.ok(e.palette.children.every(b=>b.innerHTML.includes({shapes:'shape-art',candies:'candy-art',vehicles:'vehicle-art'}[theme])));
+ else for(const art of ['shape-art','candy-art','vehicle-art'])assert.ok(e.palette.children.some(b=>b.innerHTML.includes(art)));
+ for(const unused of e.slots.children)e.palette.children[0].click();e.check.click();assert.equal(e.success.hidden,false);e.next.click();assert.equal(e.round.textContent,'第 2 關');
 }
 const sceneCount=setup('differences',1).ctx.window.AdventureData.scenes.length;
 for(let index=0;index<sceneCount;index++){

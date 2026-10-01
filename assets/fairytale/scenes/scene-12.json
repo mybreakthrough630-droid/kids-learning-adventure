@@ -1,0 +1,71 @@
+{
+  "title": "火車月台",
+  "image": "assets/fairytale/scenes/scene-12-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-12-changed.png",
+  "intrinsic": true,
+  "items": [
+    {
+      "name": "帽徽形狀",
+      "kind": "shape",
+      "x": 32,
+      "y": 16,
+      "w": 10,
+      "h": 10,
+      "description": "圓徽章變成星星徽章。"
+    },
+    {
+      "name": "旗幟形狀",
+      "kind": "shape",
+      "x": 53,
+      "y": 36,
+      "w": 17,
+      "h": 17,
+      "description": "三角旗變成長方旗。"
+    },
+    {
+      "name": "車頭燈形狀",
+      "kind": "shape",
+      "x": 87,
+      "y": 39,
+      "w": 13,
+      "h": 18,
+      "description": "圓車頭燈變成方形。"
+    },
+    {
+      "name": "行李數量",
+      "kind": "count",
+      "x": 15,
+      "y": 76,
+      "w": 28,
+      "h": 27,
+      "description": "上方紅行李消失，只剩啡色行李。"
+    },
+    {
+      "name": "路障條紋",
+      "kind": "pattern",
+      "x": 53,
+      "y": 78,
+      "w": 11,
+      "h": 27,
+      "description": "路障少了一條白色條紋。"
+    },
+    {
+      "name": "煙囪金圈",
+      "kind": "part",
+      "x": 80,
+      "y": 5,
+      "w": 15,
+      "h": 10,
+      "description": "煙囪頂部金圈消失。"
+    }
+  ],
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "centre",
+    "toolMode": "built-in imagegen",
+    "promptRecord": "expansion-production.md",
+    "visuallyVerified": true
+  }
+}

@@ -3,7 +3,7 @@
 const $=id=>document.getElementById(id),D=window.AdventureData;
 const type=document.body.dataset.game||new URLSearchParams(location.search).get('game')||location.pathname.match(/memory-(train|candy|animals|differences)\.html$/)?.[1]||'train';
 const names={train:'形狀列車',candy:'糖果小店',animals:'動物回家',differences:'找出變化'};
-const tokens=type==='candy'?D.candies:type==='animals'?D.animals:D.shapes;
+let tokens=type==='candy'?D.candies:type==='animals'?D.animals:D.shapes;
 const config=[{n:3,t:[3000]},{n:4,t:[2500]},{n:5,t:[1500,2000]},{n:6,t:[750,1000,1500]},{n:8,t:[500,1000,2000]}];
 let phase='idle',round=1,puzzle=[],answers=[],times=[],selected=0,sceneIndex=0,found=new Set(),hinted=new Set(),timer=null,generation=0,sound=true,audio=null,musicTimer=null,focusBeforeWin=null;
 const pick=a=>a[Math.floor(Math.random()*a.length)],cfg=()=>config[Number($('level').value)-1];
@@ -39,8 +39,9 @@ function drawScenes(hideOriginal=false){
  });
 }
 function startSpot(){cancel();found=new Set();hinted=new Set();$('review').hidden=true;$('success').hidden=true;$('retry').hidden=true;$('hint').hidden=true;$('pair').hidden=false;const level=Number($('level').value);if(level<=2){phase='spot';drawScenes();state(`《${scene().title}》：點原圖或右圖中有變化嘅物件。`);$('hint').hidden=false;}else{phase='observe';drawScenes();$('start').disabled=true;const seconds=[0,0,12,8,5][level-1],g=generation;state(`《${scene().title}》：觀察原圖 ${seconds} 秒，之後原圖會收起。`);timer=setTimeout(()=>{if(g!==generation)return;phase='spot';drawScenes(true);$('start').disabled=false;$('hint').hidden=false;state('原圖收起咗，右圖邊啲物件變咗？');},seconds*1000);}}
-function start(){cancel();$('start').disabled=false;$('success').hidden=true;$('round').textContent=`第 ${round} 關`;if(type==='differences'){startSpot();return;}puzzle=Array.from({length:cfg().n},()=>Math.floor(Math.random()*tokens.length));times=puzzle.map(()=>pick(cfg().t));observe();}
+function start(){cancel();$('start').disabled=false;$('success').hidden=true;$('round').textContent=`第 ${round} 關`;if(type==='differences'){startSpot();return;}if(type==='train'&&D.trainTokens)tokens=D.trainTokens($('tokenSet')?.value||'mixed');puzzle=Array.from({length:cfg().n},()=>Math.floor(Math.random()*tokens.length));times=puzzle.map(()=>pick(cfg().t));observe();}
 $('title').textContent=names[type];document.title=names[type]+' · Valerie&Hilary冒險樂園';$('board').classList.add(type);if(type!=='differences')$('board').style.background=`linear-gradient(#ffffff40,#ffffff70),url('assets/adventure/scene-${{train:'12',candy:'07',animals:'06'}[type]}.png') center/cover`;$('sound').textContent='♫ 音樂：開';$('sound').setAttribute('aria-pressed','true');note();
+if(type==='train'&&$('tokenSet'))$('tokenSet').onchange=()=>{round=1;start();};
 if(type==='differences'){ $('board').hidden=true;$('scenePicker').hidden=D.scenes.length===1;D.scenes.forEach((s,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${i+1}. ${s.title}`;$('scenePicker').append(o);});$('scenePicker').onchange=()=>{sceneIndex=Number($('scenePicker').value);round=sceneIndex+1;start();};drawScenes(); }else{puzzle=Array(cfg().n).fill(0);draw(Array(cfg().n).fill(null));}
 $('start').onclick=()=>{startMusic();start();};$('level').onchange=()=>{note();start();};$('check').onclick=check;$('retry').onclick=()=>type==='differences'?startSpot():observe();$('undo').onclick=()=>{if(phase!=='answer')return;answers.pop();draw(puzzle.map((_,i)=>answers[i]??null));$('check').disabled=true;$('undo').disabled=!answers.length;state(`已填 ${answers.length}／${puzzle.length} 格`);};
 $('sound').onclick=()=>{sound=!sound;$('sound').textContent=`♫ 音樂：${sound?'開':'關'}`;$('sound').setAttribute('aria-pressed',String(sound));if(sound)startMusic();else{stopMusic();audio?.suspend().catch(()=>{});}};
