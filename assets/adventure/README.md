@@ -30,7 +30,7 @@ Final prompt set: the following template was used once per numbered scene, repla
 
 ## Exact-difference construction
 
-Each pair uses the same background file. Six deterministic vector objects are layered on top, with five differences in levels 1–2 and six in levels 3–5. Only specified object colors or presence change. This prevents incidental differences in generated faces, furniture, lighting, or foliage. SVG shape and candy tokens are native game UI art, not generated screenshots of controls.
+Each pair uses the same background file. Six deterministic vector objects are layered on top, with five differences in level 1 and six in levels 2–5. Levels 1–2 use side-by-side comparison; levels 3–5 hide the original after 12, 8, or 5 seconds. Only specified object colors or presence change. This prevents incidental differences in generated faces, furniture, lighting, or foliage. SVG shape and candy tokens are native game UI art, not generated screenshots of controls. Both panels display the original bitmap at 1.55× zoom with matching crop origins, preserving all original pixels.
 
 ## Verification
 
