@@ -58,5 +58,38 @@
       {name:'書封顏色',x:61.45,y:82.6,w:26.1,h:15.2},
       {name:'蘋果數量',x:87.75,y:81.1,w:23.5,h:18.2}
     ]
+  }, {
+    title:'海灘親子遊・細心觀察', image:'assets/fairytale/scenes/scene-05-original.png',
+    changedImage:'assets/fairytale/scenes/scene-05-changed.png', intrinsic:true,
+    items:[
+      {name:'帽子絲帶',kind:'part',x:43.5,y:25,w:21,h:16},
+      {name:'沙灘球與泳圈',kind:'object',x:11.5,y:74,w:23,h:29},
+      {name:'水桶提手',kind:'part',x:39.5,y:81.5,w:17,h:20},
+      {name:'沙鏟方向',kind:'orientation',x:59.5,y:84,w:23,h:14},
+      {name:'沙堡塔樓數量',kind:'count',x:55,y:70,w:9,h:14},
+      {name:'船帆數量',kind:'count',x:86,y:33,w:8,h:16}
+    ]
+  }, {
+    title:'動物農場・形狀與數量', image:'assets/fairytale/scenes/scene-06-original.png',
+    changedImage:'assets/fairytale/scenes/scene-06-changed.png', intrinsic:true,
+    items:[
+      {name:'窗戶形狀',kind:'shape',x:21.5,y:13.5,w:12,h:14},
+      {name:'水桶提手',kind:'part',x:12.8,y:76.5,w:23,h:28},
+      {name:'頸巾圖案',kind:'pattern',x:39,y:52,w:20,h:22},
+      {name:'兔仔手上食物',kind:'object',x:65,y:63,w:24,h:23},
+      {name:'碗內物件',kind:'addition',x:86.5,y:80.5,w:23,h:19},
+      {name:'蘋果數量',kind:'count',x:48.5,y:71,w:21,h:14}
+    ]
+  }, {
+    title:'兔仔糖果店・圖案與細節', image:'assets/fairytale/scenes/scene-07-original.png',
+    changedImage:'assets/fairytale/scenes/scene-07-changed.png', intrinsic:true,
+    items:[
+      {name:'兔仔帽子款式',kind:'object',x:44,y:24,w:29,h:33},
+      {name:'糖果樽蝴蝶結',kind:'part',x:14.2,y:26.7,w:18,h:20},
+      {name:'包裝糖果形狀',kind:'shape',x:16.1,y:78.5,w:28,h:20},
+      {name:'棒棒糖螺旋方向',kind:'orientation',x:37.5,y:67.8,w:20,h:28},
+      {name:'蛋糕彩糖裝飾',kind:'part',x:61,y:69,w:23,h:24},
+      {name:'車厘子數量',kind:'count',x:86.5,y:77,w:21,h:21}
+    ]
   }];
 })();

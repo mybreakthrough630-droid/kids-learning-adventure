@@ -1,0 +1,72 @@
+{
+  "title": "兔仔糖果店・圖案與細節",
+  "style": "glossy-3d-fairytale",
+  "image": "assets/fairytale/scenes/scene-07-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-07-changed.png",
+  "intrinsic": true,
+  "items": [
+    {
+      "name": "兔仔帽子款式",
+      "kind": "object",
+      "x": 44,
+      "y": 24,
+      "w": 29,
+      "h": 33,
+      "description": "粉紅色貝雷帽變成白色廚師帽。"
+    },
+    {
+      "name": "糖果樽蝴蝶結",
+      "kind": "part",
+      "x": 14.2,
+      "y": 26.7,
+      "w": 18,
+      "h": 20,
+      "description": "糖果樽的蝴蝶結兩個圈消失，保留絲帶及尾部。"
+    },
+    {
+      "name": "包裝糖果形狀",
+      "kind": "shape",
+      "x": 16.1,
+      "y": 78.5,
+      "w": 28,
+      "h": 20,
+      "description": "紅色包裝糖果由圓形變成長方形。"
+    },
+    {
+      "name": "棒棒糖螺旋方向",
+      "kind": "orientation",
+      "x": 37.5,
+      "y": 67.8,
+      "w": 20,
+      "h": 28,
+      "description": "棒棒糖的螺旋圖案左右反轉。"
+    },
+    {
+      "name": "蛋糕彩糖裝飾",
+      "kind": "part",
+      "x": 61,
+      "y": 69,
+      "w": 23,
+      "h": 24,
+      "description": "蛋糕奶油上的彩色糖粒消失。"
+    },
+    {
+      "name": "車厘子數量",
+      "kind": "count",
+      "x": 86.5,
+      "y": 77,
+      "w": 21,
+      "h": 21,
+      "description": "碟上兩粒車厘子變成三粒。"
+    }
+  ],
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "centre",
+    "toolMode": "built-in imagegen",
+    "promptRecord": "varied-scenes-production.md",
+    "visuallyVerified": true
+  }
+}

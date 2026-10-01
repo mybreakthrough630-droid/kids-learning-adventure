@@ -1,0 +1,72 @@
+{
+  "title": "動物農場・形狀與數量",
+  "style": "glossy-3d-fairytale",
+  "image": "assets/fairytale/scenes/scene-06-original.png",
+  "changedImage": "assets/fairytale/scenes/scene-06-changed.png",
+  "intrinsic": true,
+  "items": [
+    {
+      "name": "窗戶形狀",
+      "kind": "shape",
+      "x": 21.5,
+      "y": 13.5,
+      "w": 12,
+      "h": 14,
+      "description": "穀倉上方的方形窗變成圓形窗。"
+    },
+    {
+      "name": "水桶提手",
+      "kind": "part",
+      "x": 12.8,
+      "y": 76.5,
+      "w": 23,
+      "h": 28,
+      "description": "綠色水桶的金屬提手及木握柄消失。"
+    },
+    {
+      "name": "頸巾圖案",
+      "kind": "pattern",
+      "x": 39,
+      "y": 52,
+      "w": 20,
+      "h": 22,
+      "description": "小牛藍色頸巾多了五個白色圓點。"
+    },
+    {
+      "name": "兔仔手上食物",
+      "kind": "object",
+      "x": 65,
+      "y": 63,
+      "w": 24,
+      "h": 23,
+      "description": "兔仔的紅蘿蔔變成橙色南瓜。"
+    },
+    {
+      "name": "碗內物件",
+      "kind": "addition",
+      "x": 86.5,
+      "y": 80.5,
+      "w": 23,
+      "h": 19,
+      "description": "黃色碗內多了一塊骨頭形餅乾。"
+    },
+    {
+      "name": "蘋果數量",
+      "kind": "count",
+      "x": 48.5,
+      "y": 71,
+      "w": 21,
+      "h": 14,
+      "description": "木箱內兩個蘋果變成一個。"
+    }
+  ],
+  "assetMetadata": {
+    "width": 1536,
+    "height": 1024,
+    "coordinateUnit": "percentage",
+    "boxOrigin": "centre",
+    "toolMode": "built-in imagegen",
+    "promptRecord": "varied-scenes-production.md",
+    "visuallyVerified": true
+  }
+}
