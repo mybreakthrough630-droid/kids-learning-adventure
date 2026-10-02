@@ -171,3 +171,25 @@ html body.animals-page,html body.menu-page{background:#e5f2dc url('assets/fairyt
 @media(max-width:760px){
  html body.candy-page{background-size:auto 600px;background-position:22% top}
 }
+/* Train controls must follow content, never a percentage of screen height.
+   Short laptop windows and browser zoom otherwise overlap the status/toolbar
+   and put the answer controls behind the illustration or below its wrapper. */
+.train-page{background-size:100% var(--train-scene-height,800px)}
+.train-page .status{position:static;width:fit-content;max-width:100%;min-height:32px;margin:8px auto;padding:6px 16px;background:#fff3def2;border-radius:16px;font-size:clamp(16px,1.5vw,21px)}
+html body.train-page .board.train{position:relative;inset:auto;display:block;width:100%;height:auto;padding:32px 0 36px;overflow:visible}
+.train-page .train .slots{position:relative;left:auto;top:auto;width:79%;margin:0 0 0 20%;grid-template-columns:repeat(8,minmax(0,1fr))}
+.train-page .answer-panel{position:relative;left:auto;top:auto;width:100%;margin:16px 0;padding:12px 18px;isolation:isolate}
+.train-page .answer-panel:has(#palette[hidden]):has(#review[hidden]):not(:has(.actions button:not([hidden]))){display:none}
+.train-page .palette button{position:relative;touch-action:manipulation;min-width:78px;font-size:13px}
+.train-page footer{position:static;transform:none;width:fit-content;max-width:100%;margin:12px auto;padding:6px 16px}
+.train-page #note{max-width:100%;margin:8px auto}
+@media(min-width:761px) and (max-width:1100px){
+ .train-page header{padding-top:60px}
+ .train-page header .button{top:12px;left:12px}
+}
+@media(max-width:760px){
+ .train-page{background-size:auto 600px}
+ html body.train-page .board.train{padding:40px 8px 36px;min-height:320px}
+ .train-page .train .slots{width:100%;margin:0;grid-template-columns:repeat(4,minmax(0,1fr));gap:50px 0}
+ .train-page .answer-panel{padding:12px}
+}

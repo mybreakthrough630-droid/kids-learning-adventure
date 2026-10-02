@@ -30,3 +30,13 @@ for(let shape=0;shape<8;shape++){
  }
 }
 console.log('PASS: original PNG untouched; square sprite cells; visible-alpha registration; all64shape/wagon combinations fit inside the cream panel without covering roof or wheels.');
+// Short laptop windows must not place interactive areas by viewport percentage.
+const flow=css.slice(css.indexOf('/* Train controls must follow content'));
+assert.match(flow,/\.train-page \.status\{position:static/);
+assert.match(flow,/\.board\.train\{position:relative;inset:auto/);
+assert.match(flow,/\.train-page \.answer-panel\{position:relative;left:auto;top:auto/);
+assert.match(flow,/\.train-page footer\{position:static/);
+assert.match(flow,/grid-template-columns:repeat\(8,minmax\(0,1fr\)\)/);
+assert.match(flow,/grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
+assert.match(fs.readFileSync('memory-train.html','utf8'),/fairytale\.css\?v=20261002a/);
+console.log('PASS: train controls use content flow, laptop eight-slot row, phone four-column layout and refreshed stylesheet.');

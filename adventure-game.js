@@ -49,4 +49,19 @@ $('next').onclick=()=>{if(phase!=='won')return;round++;if(type==='differences'){
 $('hint').onclick=()=>{if(phase!=='spot')return;const n=differenceCount(),j=scene().items.findIndex((_,i)=>i<n&&!found.has(i));if(j<0)return;hinted.add(j);found.add(j);drawScenes(Number($('level').value)>=3);state(`提示：${scene().items[j].name}有變化！已找到 ${found.size}／${n} 處。`);if(found.size===n)win();};
 document.addEventListener('keydown',e=>{if($('success').hidden)return;if(e.key==='Escape')$('closeWin').click();if(e.key==='Tab'){e.preventDefault();(document.activeElement===$('next')?$('closeWin'):$('next')).focus();}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopMusic();audio?.suspend().catch(()=>{});if(phase==='observe'){cancel();phase='paused';$('start').disabled=false;state('遊戲已暫停，按「再試同一題」重新觀察。');$('retry').hidden=false;}}else if(sound)startMusic();});window.addEventListener('pagehide',()=>{cancel();stopMusic();audio?.suspend().catch(()=>{});});
+// Match the decorative railway to the actual flowing carriage row, rather
+// than stretching the scenery to the laptop window's height. No hitbox moves.
+if(type==='train'&&typeof ResizeObserver==='function'){
+ const registerRail=()=>{
+  const slot=$('slots').querySelector('.slot');if(!slot)return;
+  const r=slot.getBoundingClientRect(),body=document.body.getBoundingClientRect();
+  const railY=r.top-body.top+r.height*.955;
+  document.body.style.setProperty('--train-scene-height',`${railY/.6165}px`);
+ };
+ const layoutObserver=new ResizeObserver(registerRail);
+ layoutObserver.observe(document.querySelector('.wrap'));
+ layoutObserver.observe($('board'));
+ window.addEventListener('resize',registerRail);registerRail();
+ window.addEventListener('pagehide',()=>{layoutObserver.disconnect();window.removeEventListener('resize',registerRail);});
+}
 })();
