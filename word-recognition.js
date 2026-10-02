@@ -19,6 +19,11 @@
   const feedback = $("#feedback");
   const micBtn = $("#micBtn");
   const buildBtn = $("#buildBtn");
+  const photoSection = $("#photoSection");
+  const photoPanel = $("#photoPanel");
+  const photoToggle = $("#photoToggle");
+  const wordPhoto = $("#wordPhoto");
+  let photoGeneration = 0;
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   function shuffle(length) {
@@ -95,7 +100,12 @@
     $("#teachingNote").innerHTML = language === "en"
       ? `<strong>拼讀方法：</strong>${item.enGuide}`
       : `<strong>讀音提示：</strong>${item.zhGuide}`;
-    $("#meaning").innerHTML = `<strong>意思：</strong>${language === "en" ? item.enExplain : item.zhExplain}`;
+    const detail = window.WORD_DETAILS?.[`${state.categoryId}/${item.id}`];
+    const explanation = detail
+      ? (language === "en" ? `${item.en} 解作「${item.zh}」。${detail.explanation}` : `「${item.zh}」${detail.explanation}`)
+      : (language === "en" ? item.enExplain : item.zhExplain);
+    $("#meaning").replaceChildren(Object.assign(document.createElement("strong"), { textContent: "意思：" }), document.createTextNode(explanation));
+    resetPhoto(detail);
     feedback.textContent = language === "en"
       ? "Listen, sound it out, then say the word."
       : "先聽一次，再大聲讀出生字。";
@@ -103,6 +113,67 @@
     $("#score").textContent = `⭐ ${state.score}`;
     renderCategories();
   }
+
+  function photoButtonText(expanded) {
+    return language === "en"
+      ? (expanded ? "收起圖片 · Hide photo" : "📷 顯示圖片 · Show photo")
+      : (expanded ? "收起圖片" : "📷 顯示圖片");
+  }
+
+  function resetPhoto(detail) {
+    photoGeneration += 1;
+    wordPhoto.onload = null;
+    wordPhoto.onerror = null;
+    wordPhoto.removeAttribute("src");
+    wordPhoto.hidden = true;
+    wordPhoto.alt = "";
+    photoPanel.hidden = true;
+    photoSection.hidden = !detail?.photo;
+    photoToggle.setAttribute("aria-expanded", "false");
+    photoToggle.textContent = photoButtonText(false);
+    $("#photoStatus").textContent = "";
+    $("#photoCaption").replaceChildren();
+  }
+
+  photoToggle.addEventListener("click", () => {
+    const expanded = photoPanel.hidden;
+    photoPanel.hidden = !expanded;
+    photoToggle.setAttribute("aria-expanded", String(expanded));
+    photoToggle.textContent = photoButtonText(expanded);
+    if (!expanded || wordPhoto.hasAttribute("src")) return;
+    const item = currentItem();
+    const photo = window.WORD_DETAILS[`${state.categoryId}/${item.id}`].photo;
+    const generation = photoGeneration;
+    const status = $("#photoStatus");
+    status.textContent = "圖片載入中…";
+    wordPhoto.alt = `${item.zh}（${item.en}）實物照片`;
+    wordPhoto.onload = () => {
+      if (generation !== photoGeneration) return;
+      wordPhoto.hidden = false;
+      status.textContent = "";
+    };
+    wordPhoto.onerror = () => {
+      if (generation !== photoGeneration) return;
+      status.textContent = "圖片暫時未能載入，請收起再試。";
+      wordPhoto.removeAttribute("src");
+      wordPhoto.hidden = true;
+    };
+    const caption = $("#photoCaption");
+    const name = document.createElement("strong");
+    name.textContent = `${item.zh} · ${item.en}`;
+    const credit = document.createElement("a");
+    credit.href = photo.source;
+    credit.target = "_blank";
+    credit.rel = "noopener noreferrer";
+    credit.textContent = `照片來源：${photo.artist}`;
+    const licence = document.createElement("a");
+    licence.href = /^https?:\/\//.test(photo.licenseUrl) ? photo.licenseUrl : photo.source;
+    licence.target = "_blank";
+    licence.rel = "noopener noreferrer";
+    licence.textContent = photo.license;
+    caption.replaceChildren(name, document.createElement("br"), credit, document.createTextNode(" · "), licence, document.createTextNode("（經縮小；圖片為實物例子）"));
+    wordPhoto.src = photo.src;
+  });
 
   function stopAudio() {
     if (!state.activeAudio) return;

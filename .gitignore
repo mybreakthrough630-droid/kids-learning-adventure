@@ -1,0 +1,5 @@
+tmp/
+scripts/word-photo-cache.json
+scripts/word-photo-fileinfo.json
+scripts/word-photo-leads.json
+__pycache__/

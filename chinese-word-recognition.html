@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中文認字小學堂</title>
-  <link rel="stylesheet" href="word-recognition.css?v=20260812-4">
+  <link rel="stylesheet" href="word-recognition.css?v=20261002-photos">
 </head>
 <body data-language="zh">
   <main class="page">
@@ -42,12 +42,21 @@
         </div>
         <div class="feedback" id="feedback">先聽一次，再大聲讀出生字。</div>
         <p class="support-note" id="supportNote"></p>
+        <section class="photo-section" id="photoSection" hidden aria-label="詞語實物圖片">
+          <button class="action-button photo-toggle" id="photoToggle" type="button" aria-expanded="false" aria-controls="photoPanel">📷 顯示圖片</button>
+          <figure id="photoPanel" hidden>
+            <p id="photoStatus" role="status"></p>
+            <img id="wordPhoto" alt="" decoding="async" hidden>
+            <figcaption id="photoCaption"></figcaption>
+          </figure>
+        </section>
         <div class="confetti" id="confetti" aria-hidden="true"></div>
       </section>
     </div>
   </main>
   <script src="word-recognition-data.js?v=20260812-4"></script>
   <script src="word-recognition-extra-data.js?v=20260812-4"></script>
-  <script src="word-recognition.js?v=20260812-4"></script>
+  <script src="word-recognition-details.js?v=20261002-photos"></script>
+  <script src="word-recognition.js?v=20261002-photos"></script>
 </body>
 </html>
