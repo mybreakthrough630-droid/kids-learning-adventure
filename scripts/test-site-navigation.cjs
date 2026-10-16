@@ -4,7 +4,7 @@ assert.equal((html.match(/<nav\b/g)||[]).length,1);
 assert.ok(html.indexOf('id="lessonFrame"')<html.indexOf('<nav'));
 assert.match(html,/<section class="learning-stage"[^>]* hidden>/);
 assert.match(html,/src="about:blank"/);assert.ok(!html.includes('class="lesson-tab active"'));
-assert.equal((html.match(/class="lesson-tab(?: active)?"/g)||[]).length,15);
+assert.equal((html.match(/class="lesson-tab(?: active)?"/g)||[]).length,16);
 assert.ok(html.includes('id="activityMenu"'));
 const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 for(const reduced of [false,true]){
