@@ -416,6 +416,7 @@
     </div>
   </main>
 
+  <script src="sentence-curated.js?v=20261110"></script>
   <script>
     const levels = [
       { name: "Level 1：短句", detail: "分辨人物、動詞和形容詞" },
@@ -677,10 +678,14 @@
     }
 
     function createRandomQuestion(level) {
-      let question = makeQuestion(level);
+      const makeCuratedQuestion = () => {
+        const [clue, words] = pick(window.curatedSentences.chinese[level]);
+        return { clue, parts: words.split("|").map(word => token(word)) };
+      };
+      let question = makeCuratedQuestion();
       let sentence = sentenceText(question.parts);
       for (let attempt = 0; attempt < 8 && sentence === state.lastSentence[level]; attempt++) {
-        question = makeQuestion(level);
+        question = makeCuratedQuestion();
         sentence = sentenceText(question.parts);
       }
       state.lastSentence[level] = sentence;
